@@ -2,6 +2,12 @@
 
 A simple, static website containing concise summaries for ISTQB Foundation Level v4 chapters. Open `index.html` in your browser to navigate to each chapter.
 
+## Test
+https://shorturl.at/4bqV9
+
+## Mointor Clicks
+https://www.shorturl.at/url-total-clicks.php?u=shorturl.at/4bqV9
+
 ## Overview
 - Pure HTML files, no build tools or dependencies required
 - Works fully offline
