@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.1 What is Testing? - الشرح الكامل والشامل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
+            --highlight-bg: #fef3c7;
+            --highlight-text: #92400e;
+            --purple: #7c3aed;
+            --orange: #ea580c;
+            --pink: #ec4899;
+            --cyan: #06b6d4;
+            --indigo: #6366f1;
+            --green: #059669;
+            --red: #dc2626;
+            --yellow: #d97706;
+            --teal: #0d9488;
+            --lime: #65a30d;
+            --emerald: #059669;
+            --violet: #8b5cf6;
+            --rose: #f43f5e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--success-color), var(--pink));
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        .section-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .section-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+            border-radius: 2px;
+        }
+
+        .english-quote {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-left: 5px solid var(--cyan);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #0277bd;
+            font-weight: 600;
+        }
+
+        .arabic-explanation {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border-right: 5px solid var(--purple);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #6b21a8;
+        }
+
+        .highlight {
+            background: var(--highlight-bg);
+            color: var(--highlight-text);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .code-term {
+            background: #1f2937;
+            color: #f59e0b;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 600;
+        }
+
+        .definition-showcase {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 3px solid var(--success-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .definition-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success-color);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .definition-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .definition-point {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid var(--success-color);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .definition-point:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2);
+        }
+
+        .definition-point h5 {
+            color: var(--success-color);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .definition-point p {
+            color: #14532d;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .misconceptions-section {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 3px solid var(--error-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .misconception-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .misconception-card {
+            background: white;
+            border: 2px solid var(--error-color);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .misconception-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .misconception-card:hover::before {
+            left: 100%;
+        }
+
+        .misconception-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        .misconception-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--error-color);
+        }
+
+        .misconception-card h5 {
+            font-size: 1.3rem;
+            color: var(--error-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .misconception-wrong {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error-color);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            color: #7f1d1d;
+            font-weight: 600;
+        }
+
+        .misconception-correct {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success-color);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            color: #14532d;
+            font-weight: 600;
+        }
+
+        .testing-types {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 3px solid var(--cyan);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .types-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 25px;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .vs-divider {
+            background: linear-gradient(135deg, var(--error-color), var(--accent-color));
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            padding: 20px;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .type-card {
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .type-card.static {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border-color: var(--accent-color);
+        }
+
+        .type-card.dynamic {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-color: var(--success-color);
+        }
+
+        .type-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .type-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+
+        .type-card h4 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .type-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .type-examples {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .type-examples h5 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .type-examples ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .type-examples li {
+            font-size: 0.95rem;
+            margin: 8px 0;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .type-examples li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-3px);
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .objective-item {
+            background: var(--bg-light);
+            border: 3px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .objective-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .objective-item:hover::before {
+            left: 100%;
+        }
+
+        .objective-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .objective-item.evaluating {
+            border-color: var(--emerald);
+            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+        }
+
+        .objective-item.defects {
+            border-color: var(--error-color);
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+
+        .objective-item.coverage {
+            border-color: var(--indigo);
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+        }
+
+        .objective-item.risk {
+            border-color: var(--orange);
+            background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+        }
+
+        .objective-item.requirements {
+            border-color: var(--purple);
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+        }
+
+        .objective-item.compliance {
+            border-color: var(--yellow);
+            background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+        }
+
+        .objective-item.information {
+            border-color: var(--cyan);
+            background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+        }
+
+        .objective-item.confidence {
+            border-color: var(--pink);
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+        }
+
+        .objective-item.validation {
+            border-color: var(--violet);
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+        }
+
+        .objective-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .objective-item h4 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .objective-item .description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .objective-examples {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .objective-examples h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .objective-examples ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .objective-examples li {
+            font-size: 0.9rem;
+            margin: 5px 0;
+            padding: 5px 8px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .objective-examples li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-3px);
+        }
+
+        .testing-debugging {
+            background: linear-gradient(135deg, #fef7ed 0%, #fed7aa 100%);
+            border: 3px solid var(--orange);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .debugging-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 25px;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .debug-card {
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .debug-card.testing {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-color: var(--cyan);
+        }
+
+        .debug-card.debugging {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border-color: var(--accent-color);
+        }
+
+        .debug-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .debug-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+
+        .debug-card h4 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .debug-card .focus {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+
+        .debug-steps {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .debug-steps h5 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .debug-steps ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .debug-steps li {
+            font-size: 1rem;
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .debug-steps li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-3px);
+        }
+
+        .process-flow {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .flow-step {
+            background: white;
+            border: 2px solid var(--orange);
+            border-radius: 15px;
+            padding: 15px 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            transition: all 0.3s ease;
+        }
+
+        .flow-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(234, 88, 12, 0.2);
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--orange);
+            font-weight: 700;
+        }
+
+        .objective-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 3px solid var(--success-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .objective-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .objective-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .objective-card h3 {
+            color: var(--success-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .objective-list {
+            list-style: none;
+            text-align: right;
+            position: relative;
+            z-index: 1;
+        }
+
+        .objective-list li {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .objective-list li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-5px);
+            border-color: var(--success-color);
+        }
+
+        .learning-objectives {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 3px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .learning-objectives h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .learning-objective-item {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .learning-objective-item:hover {
+            border-color: var(--primary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+        }
+
+        .objective-check {
+            color: var(--success-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            min-width: 25px;
+        }
+
+        .objective-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .footer {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-nav {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .nav-btn.current {
+            background: linear-gradient(135deg, var(--accent-color), var(--orange));
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-card {
+                padding: 25px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .objectives-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .types-comparison,
+            .debugging-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .vs-divider {
+                order: 2;
+                margin: 20px auto;
+            }
+
+            .flow-steps {
+                flex-direction: column;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 60%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            80% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🧪 1.1 What is Testing?</h1>
+            <div class="subtitle">إيه هو Testing؟ - الشرح الكامل والشامل</div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🎯 Learning Objectives لهذا القسم:</h2>
+            
+            <div class="learning-objectives">
+                <h3>بعد دراسة هذا القسم هتقدر تـ:</h3>
+                <div class="learning-objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-1.1.1 (K1):</strong> تحدد الأهداف النموذجية للاختبار مع أمثلة شاملة</span>
+                </div>
+                <div class="learning-objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-1.1.2 (K2):</strong> تفرق بين Testing والـ Debugging بوضوح</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Introduction: What is Testing? -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🌟 مقدمة: إيه هو Software Testing؟</h2>
+            
+            <div class="english-quote">
+                "Software systems are an integral part of our daily life. Most people have had experience with software that did not work as expected. <span class="highlight">Software testing assesses software quality and helps reducing the risk of software failure</span> in operation. Software testing is <span class="highlight">a set of activities to discover defects and evaluate the quality of software artifacts</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                الأنظمة البرمجية جزء لا يتجزأ من حياتنا اليومية. معظم الناس مروا بتجربة برامج لم تعمل كما هو متوقع. <span class="code-term">Software Testing بيقيم جودة البرامج ويساعد في تقليل مخاطر فشل البرامج</span> أثناء التشغيل. Software Testing هو <span class="code-term">مجموعة من الأنشطة لاكتشاف العيوب وتقييم جودة منتجات البرامج</span>.
+            </div>
+
+            <!-- Main Definition -->
+            <div class="definition-showcase">
+                <div class="definition-main">
+                    🧪 Software Testing = مجموعة شاملة من الأنشطة لاكتشاف العيوب وتقييم جودة البرامج
+                </div>
+                
+                <div class="definition-details">
+                    <div class="definition-point">
+                        <h5>🎯 الهدف الأساسي</h5>
+                        <p>تقييم جودة البرامج وتقليل مخاطر الفشل في التشغيل</p>
+                    </div>
+                    
+                    <div class="definition-point">
+                        <h5>🔍 اكتشاف العيوب</h5>
+                        <p>العثور على الأخطاء والمشاكل قبل وصولها للمستخدمين</p>
+                    </div>
+                    
+                    <div class="definition-point">
+                        <h5>📊 تقييم الجودة</h5>
+                        <p>قياس مدى مطابقة البرنامج للمتطلبات والمعايير</p>
+                    </div>
+                    
+                    <div class="definition-point">
+                        <h5>🛡️ إدارة المخاطر</h5>
+                        <p>تقليل احتمالية حدوث مشاكل في البيئة التشغيلية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Misconceptions -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">❌ المفاهيم الخاطئة الشائعة</h2>
+            
+            <div class="english-quote">
+                "A common misconception about testing is that it <span class="highlight">only consists of executing tests</span> (i.e., running the software and checking the test results). However, software testing also includes other activities and must be aligned with the software development lifecycle. Another common misconception about testing is that testing focuses entirely on <span class="highlight">verifying the test object</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                من المفاهيم الخاطئة الشائعة حول Testing إنه <span class="code-term">بيتكون فقط من تشغيل الاختبارات</span> (يعني تشغيل البرنامج وفحص النتائج). لكن Software Testing كمان بيشمل أنشطة تانية ولازم يكون متماشي مع دورة تطوير البرامج. مفهوم خاطئ تاني إن Testing بيركز بالكامل على <span class="code-term">التحقق من الكائن المختبر</span>.
+            </div>
+
+            <!-- Misconceptions Grid -->
+            <div class="misconceptions-section">
+                <h3 style="color: var(--error-color); text-align: center; margin-bottom: 25px;">🚫 تصحيح المفاهيم الخاطئة:</h3>
+                
+                <div class="misconception-grid">
+                    <div class="misconception-card">
+                        <div class="misconception-icon">🤖</div>
+                        <h5>المفهوم الخاطئ الأول</h5>
+                        <div class="misconception-wrong">
+                            ❌ "Testing = تشغيل البرنامج فقط"
+                        </div>
+                        <div class="misconception-correct">
+                            ✅ Testing شامل: التخطيط، التصميم، التنفيذ، المراقبة، التقييم، والتوثيق
+                        </div>
+                    </div>
+                    
+                    <div class="misconception-card">
+                        <div class="misconception-icon">🔍</div>
+                        <h5>المفهوم الخاطئ الثاني</h5>
+                        <div class="misconception-wrong">
+                            ❌ "Testing = Verification فقط"
+                        </div>
+                        <div class="misconception-correct">
+                            ✅ Testing = Verification (هل بنينا المنتج صح؟) + Validation (هل بنينا المنتج الصح؟)
+                        </div>
+                    </div>
+                    
+                    <div class="misconception-card">
+                        <div class="misconception-icon">⚡</div>
+                        <h5>المفهوم الخاطئ الثالث</h5>
+                        <div class="misconception-wrong">
+                            ❌ "Testing نشاط تقني فقط"
+                        </div>
+                        <div class="misconception-correct">
+                            ✅ Testing يحتاج تخطيط، إدارة، تقدير، مراقبة، تحكم + مهارات تحليلية وتفكير نقدي
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Static vs Dynamic Testing -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">⚖️ أنواع Testing: Static vs Dynamic</h2>
+            
+            <div class="english-quote">
+                "Testing may be <span class="highlight">dynamic or static</span>. Dynamic testing involves the execution of software, while static testing does not. Static testing includes reviews and static analysis. Dynamic testing uses different types of test techniques and test approaches to derive test cases."
+            </div>
+            
+            <div class="arabic-explanation">
+                Testing ممكن يكون <span class="code-term">ديناميكي أو ثابت</span>. Dynamic Testing بيشمل تشغيل البرنامج، بينما Static Testing لا. Static Testing بيشمل المراجعات والتحليل الثابت. Dynamic Testing بيستخدم أنواع مختلفة من تقنيات ونُهج الاختبار لاشتقاق حالات الاختبار.
+            </div>
+
+            <!-- Types Comparison -->
+            <div class="testing-types">
+                <h3 style="color: var(--cyan); text-align: center; margin-bottom: 25px;">🔄 مقارنة شاملة: Static vs Dynamic Testing</h3>
+                
+                <div class="types-comparison">
+                    <div class="type-card static">
+                        <div class="type-icon" style="color: var(--accent-color);">📋</div>
+                        <h4 style="color: var(--accent-color);">Static Testing</h4>
+                        <div class="type-description" style="color: #92400e;">
+                            اختبار بدون تشغيل البرنامج - فحص الكود والوثائق والتصميم
+                        </div>
+                        <div class="type-examples">
+                            <h5 style="color: var(--accent-color);">🛠️ أمثلة:</h5>
+                            <ul>
+                                <li>• Code Reviews (مراجعة الكود)</li>
+                                <li>• Requirements Reviews (مراجعة المتطلبات)</li>
+                                <li>• Design Reviews (مراجعة التصميم)</li>
+                                <li>• Static Analysis Tools (أدوات التحليل الثابت)</li>
+                                <li>• Walkthroughs (جولات فحص)</li>
+                                <li>• Inspections (عمليات تفتيش)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="vs-divider">VS</div>
+
+                    <div class="type-card dynamic">
+                        <div class="type-icon" style="color: var(--success-color);">▶️</div>
+                        <h4 style="color: var(--success-color);">Dynamic Testing</h4>
+                        <div class="type-description" style="color: #14532d;">
+                            اختبار مع تشغيل البرنامج - تنفيذ الكود ومراقبة السلوك
+                        </div>
+                        <div class="type-examples">
+                            <h5 style="color: var(--success-color);">🎮 أمثلة:</h5>
+                            <ul>
+                                <li>• Functional Testing (اختبار وظيفي)</li>
+                                <li>• Performance Testing (اختبار الأداء)</li>
+                                <li>• Security Testing (اختبار الأمان)</li>
+                                <li>• Usability Testing (اختبار سهولة الاستخدام)</li>
+                                <li>• Integration Testing (اختبار التكامل)</li>
+                                <li>• System Testing (اختبار النظام)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison Table in Visual Format -->
+                <div style="background: rgba(255, 255, 255, 0.7); border-radius: 15px; padding: 25px; margin: 25px 0;">
+                    <h4 style="color: var(--cyan); text-align: center; margin-bottom: 20px;">📊 مقارنة تفصيلية:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                        <div style="background: white; border: 2px solid var(--accent-color); border-radius: 15px; padding: 20px;">
+                            <h5 style="color: var(--accent-color); margin-bottom: 10px;">⏰ التوقيت</h5>
+                            <p><strong>Static:</strong> مبكر في التطوير<br><strong>Dynamic:</strong> بعد كتابة الكود</p>
+                        </div>
+                        
+                        <div style="background: white; border: 2px solid var(--success-color); border-radius: 15px; padding: 20px;">
+                            <h5 style="color: var(--success-color); margin-bottom: 10px;">💰 التكلفة</h5>
+                            <p><strong>Static:</strong> أقل تكلفة<br><strong>Dynamic:</strong> أعلى تكلفة</p>
+                        </div>
+                        
+                        <div style="background: white; border: 2px solid var(--purple); border-radius: 15px; padding: 20px;">
+                            <h5 style="color: var(--purple); margin-bottom: 10px;">🎯 الهدف</h5>
+                            <p><strong>Static:</strong> منع العيوب<br><strong>Dynamic:</strong> اكتشاف وإصلاح العيوب</p>
+                        </div>
+                        
+                        <div style="background: white; border: 2px solid var(--cyan); border-radius: 15px; padding: 20px;">
+                            <h5 style="color: var(--cyan); margin-bottom: 10px;">📈 التغطية</h5>
+                            <p><strong>Static:</strong> 100% تغطية البيانات<br><strong>Dynamic:</strong> أقل من 50% تغطية</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1.1.1 Test Objectives -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🎯 1.1.1 Test Objectives</h2>
+            <h3 style="text-align: center; color: var(--emerald); margin-bottom: 30px;">الأهداف النموذجية للاختبار</h3>
+            
+            <div class="english-quote">
+                "The typical test objectives are: <span class="highlight">Evaluating work products</span>, <span class="highlight">Triggering failures and finding defects</span>, <span class="highlight">Ensuring required coverage</span>, <span class="highlight">Reducing the level of risk</span>, <span class="highlight">Verifying requirements fulfillment</span>, <span class="highlight">Verifying compliance</span>, <span class="highlight">Providing information to stakeholders</span>, <span class="highlight">Building confidence</span>, and <span class="highlight">Validating completeness</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                الأهداف النموذجية للاختبار هي: <span class="code-term">تقييم منتجات العمل</span>، <span class="code-term">إثارة الأعطال واكتشاف العيوب</span>، <span class="code-term">ضمان التغطية المطلوبة</span>، <span class="code-term">تقليل مستوى المخاطر</span>، <span class="code-term">التحقق من تحقيق المتطلبات</span>، <span class="code-term">التحقق من الامتثال</span>، <span class="code-term">توفير المعلومات لأصحاب المصلحة</span>، <span class="code-term">بناء الثقة</span>، و<span class="code-term">التحقق من الاكتمال</span>.
+            </div>
+
+            <!-- Test Objectives Grid -->
+            <div class="objectives-grid">
+                <!-- Objective 1: Evaluating Work Products -->
+                <div class="objective-item evaluating">
+                    <div class="objective-icon" style="color: var(--emerald);">📋</div>
+                    <h4 style="color: var(--emerald);">Evaluating Work Products</h4>
+                    <div class="description">تقييم منتجات العمل مثل المتطلبات، قصص المستخدمين، التصاميم، والكود</div>
+                    <div class="objective-examples">
+                        <h5 style="color: var(--emerald);">🔍 أمثلة عملية:</h5>
+                        <ul>
+                            <li>• فحص وثائق المتطلبات للوضوح والاكتمال</li>
+                            <li>• مراجعة User Stories للتأكد من قابليتها للاختبار</li>
+                            <li>• تقييم تصاميم النظام للتناسق والجودة</li>
+                            <li>• مراجعة الكود للتأكد من اتباع المعايير</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Objective 2: Finding Defects -->
+                <div class="objective-item defects">
+                    <div class="objective-icon" style="color: var(--error-color);">🐛</div>
+                    <h4 style="color: var(--error-color);">Triggering Failures & Finding Defects</h4>
+                    <div class="description">إثارة الأعطال واكتشاف العيوب في النظام قبل وصولها للمستخدمين</div>
+                    <div class="objective-examples">
+                        <h5 style="color: var(--error-color);">🎯 أمثلة عملية:</h5>
+                        <ul>
+                            <li>• اختبار الحالات الحدية التي تسبب تعطل النظام</li>
+                            <li>• البحث عن أخطاء منطقية في الكود</li>
+                            <li>• اكتشاف مشاكل الأداء تحت الضغط</li>
+                            <li>• العثور على ثغرات أمنية محتملة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Objective 3: Ensuring Coverage -->
+                <div class="objective-item coverage">
+                    <div class="objective-icon" style="color: var(--indigo);">📊</div>
+                    <h4 style="color: var(--indigo);">Ensuring Required Coverage</h4>
+                    <div class="description">ضمان التغطية المطلوبة لكائن الاختبار</div>
+                    <div class="objective-examples">
+                        <h5 style="color: var(--indigo);">📈 أمثلة عملية:</h5>
+                        <ul>
+                            <li>• تغطية 100% من المتطلبات الحرجة</li>
+                            <li>• اختبار جميع مسارات الكود الأساسية</li>
+                            <li>• فحص كل واجهات المستخدم</li>
+                            <li>• اختبار جميع تكاملات النظام</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Objective 4: Risk Reduction -->
+                <div class="objective-item risk">
+                    <div class="objective-icon" style="color: var(--orange);">⚠️</div>
+                    <h4 style="color: var(--orange);">Reducing Risk Level</h4>
+                    <div class="description">تقليل مستوى مخاطر جودة البرامج غير الكافية</div>
+                    <div class="objective-examples">
+                        <h5 style="color: var(--orange);">🛡️ أمثلة عملية:</h5>
+                        <ul>
+                            <li>• تقليل مخاطر فقدان البيانات</li>
+                            <li>• منع مشاكل الأمان والخصوصية</li>
+                            <li>• تجنب فشل النظام في بيئة الإنتاج</li>
+                            <li>• تقليل مخاطر عدم رضا المستخدمين</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Objective 5: Verifying Requirements -->
+                <div class="objective-item requirements">
+                    <div class="objective-icon" style="color: var(--purple);">✅</div>
+                    <h4 style="color: var(--purple);">Verifying Requirements</h4>
+                    <div class="description">التحقق من أن المتطلبات المحددة قد تم تحقيقها</div>
+                    <div class="objective-examples">
+                        <h5 style="color: var(--purple);">🎯 أمثلة عملية:</h5>
+                        <ul>
+                            <li>• التأكد من تنفيذ جميع الوظائف المطلوبة</li>
+                            <li>• فحص أن النظام يتصرف كما هو مطلوب</li>
+                            <li>• التحقق من معايير الأداء المحددة</li>
+                            <li>• ضمان تحقيق متطلبات سهولة الاستخدام</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Objective 6: Compliance -->
+                <div class="objective-item compliance">
+                    <div class="objective-icon" style="color: var(--yellow);">⚖️</div>
+                    <h4 style="color: var(--yellow);">Verifying Compliance</h4>
+                    <div class="description">التحقق من امتثال كائن الاختبار للمتطلبات التعاقدية والقانونية والتنظيمية</div>
+                    <div class="objective-examples">
+                        <h5 style="color: var(--yellow);">📜 أمثلة عملية:</h5>
+                        <ul>
+                            <li>• الامتثال لقوانين حماية البيانات (GDPR)</li>
+                            <li>• التوافق مع معايير الصناعة (ISO, IEEE)</li>
+                            <li>• الالتزام بالمتطلبات التعاقدية للعميل</li>
+                            <li>• مطابقة اللوائح الحكومية والقطاعية</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Objective 7: Information for Stakeholders -->
+                <div class="objective-item information">
+                    <div class="objective-icon" style="color: var(--cyan);">📢</div>
+                    <h4 style="color: var(--cyan);">Providing Information</h4>
+                    <div class="description">توفير المعلومات لأصحاب المصلحة للسماح لهم باتخاذ قرارات مدروسة</div>
+                    <div class="objective-examples">
+                        <h5 style="color: var(--cyan);">📊 أمثلة عملية:</h5>
+                        <ul>
+                            <li>• تقارير جودة البرنامج للإدارة</li>
+                            <li>• معلومات الجاهزية للإطلاق</li>
+                            <li>• تقييم المخاطر المتبقية</li>
+                            <li>• بيانات الأداء والاستقرار</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Objective 8: Building Confidence -->
+                <div class="objective-item confidence">
+                    <div class="objective-icon" style="color: var(--pink);">💪</div>
+                    <h4 style="color: var(--pink);">Building Confidence</h4>
+                    <div class="description">بناء الثقة في جودة كائن الاختبار</div>
+                    <div class="objective-examples">
+                        <h5 style="color: var(--pink);">🌟 أمثلة عملية:</h5>
+                        <ul>
+                            <li>• إثبات استقرار النظام تحت الضغط</li>
+                            <li>• تأكيد موثوقية الوظائف الحرجة</li>
+                            <li>• إظهار جودة تجربة المستخدم</li>
+                            <li>• التحقق من أمان البيانات والنظام</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Objective 9: Validation -->
+                <div class="objective-item validation">
+                    <div class="objective-icon" style="color: var(--violet);">🎭</div>
+                    <h4 style="color: var(--violet);">Validating Completeness</h4>
+                    <div class="description">التحقق من أن كائن الاختبار مكتمل ويعمل كما هو متوقع من قبل أصحاب المصلحة</div>
+                    <div class="objective-examples">
+                        <h5 style="color: var(--violet);">🎪 أمثلة عملية:</h5>
+                        <ul>
+                            <li>• التأكد من اكتمال جميع الوظائف</li>
+                            <li>• فحص تطابق التوقعات مع الواقع</li>
+                            <li>• التحقق من سهولة الاستخدام للمستخدم النهائي</li>
+                            <li>• ضمان تحقيق أهداف العمل</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Context Dependency -->
+            <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border: 3px solid var(--primary-color); border-radius: 20px; padding: 30px; margin: 30px 0;">
+                <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 20px;">🌍 تأثير السياق على أهداف Testing:</h4>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="background: white; border: 2px solid var(--primary-color); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--primary-color); margin-bottom: 10px;">📄 Work Product Type</h5>
+                        <p>نوع المنتج المختبر يحدد التركيز: تطبيق موبايل vs نظام طبي</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--success-color); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--success-color); margin-bottom: 10px;">🏗️ Test Level</h5>
+                        <p>مستوى الاختبار: Unit vs Integration vs System vs Acceptance</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--orange); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--orange); margin-bottom: 10px;">⚠️ Risks</h5>
+                        <p>مستوى المخاطر: عالي للأنظمة الحرجة، منخفض للتطبيقات البسيطة</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--purple); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--purple); margin-bottom: 10px;">🔄 SDLC Model</h5>
+                        <p>نموذج دورة التطوير: Waterfall vs Agile vs DevOps</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--cyan); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--cyan); margin-bottom: 10px;">🏢 Business Context</h5>
+                        <p>السياق التجاري: الهيكل المؤسسي، المنافسة، وقت الوصول للسوق</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1.1.2 Testing and Debugging -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🔧 1.1.2 Testing and Debugging</h2>
+            <h3 style="text-align: center; color: var(--orange); margin-bottom: 30px;">الفرق بين Testing والـ Debugging</h3>
+            
+            <div class="english-quote">
+                "<span class="highlight">Testing and debugging are separate activities</span>. Testing can trigger failures that are caused by defects in the software (dynamic testing) or can directly find defects in the test object (static testing). When dynamic testing triggers a failure, <span class="highlight">debugging is concerned with finding causes of this failure</span> (defects), analyzing these causes, and eliminating them."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">Testing والـ Debugging أنشطة منفصلة</span>. Testing يمكن أن يثير أعطال ناتجة عن عيوب في البرنامج (dynamic testing) أو يمكن أن يجد العيوب مباشرة في كائن الاختبار (static testing). عندما يثير Dynamic Testing عطل، <span class="code-term">الـ Debugging يهتم بإيجاد أسباب هذا العطل</span> (العيوب)، تحليل هذه الأسباب، والقضاء عليها.
+            </div>
+
+            <!-- Testing vs Debugging Comparison -->
+            <div class="testing-debugging">
+                <h3 style="color: var(--orange); text-align: center; margin-bottom: 25px;">⚔️ مقارنة شاملة: Testing vs Debugging</h3>
+                
+                <div class="debugging-comparison">
+                    <div class="debug-card testing">
+                        <div class="debug-icon" style="color: var(--cyan);">🔍</div>
+                        <h4 style="color: var(--cyan);">Testing</h4>
+                        <div class="focus" style="color: #0e7490;">التركيز: اكتشاف المشاكل</div>
+                        
+                        <div class="debug-steps">
+                            <h5 style="color: var(--cyan);">🎯 الأهداف:</h5>
+                            <ul>
+                                <li>اكتشاف وجود العيوب</li>
+                                <li>التحقق من جودة البرنامج</li>
+                                <li>إثبات أن النظام يعمل أو لا يعمل</li>
+                                <li>تقييم مطابقة المتطلبات</li>
+                            </ul>
+                        </div>
+
+                        <div class="debug-steps">
+                            <h5 style="color: var(--cyan);">⚙️ العملية:</h5>
+                            <ul>
+                                <li>تصميم وتنفيذ Test Cases</li>
+                                <li>مقارنة النتائج الفعلية بالمتوقعة</li>
+                                <li>توثيق العيوب المكتشفة</li>
+                                <li>إنشاء تقارير الجودة</li>
+                            </ul>
+                        </div>
+
+                        <div class="debug-steps">
+                            <h5 style="color: var(--cyan);">👥 المسؤولية:</h5>
+                            <ul>
+                                <li>QA Engineers</li>
+                                <li>Test Analysts</li>
+                                <li>End Users (في UAT)</li>
+                                <li>Automated Test Tools</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="vs-divider">VS</div>
+
+                    <div class="debug-card debugging">
+                        <div class="debug-icon" style="color: var(--accent-color);">🔧</div>
+                        <h4 style="color: var(--accent-color);">Debugging</h4>
+                        <div class="focus" style="color: #92400e;">التركيز: إصلاح المشاكل</div>
+                        
+                        <div class="debug-steps">
+                            <h5 style="color: var(--accent-color);">🎯 الأهداف:</h5>
+                            <ul>
+                                <li>تحديد السبب الجذري للعيب</li>
+                                <li>إصلاح العيوب المكتشفة</li>
+                                <li>منع تكرار نفس المشاكل</li>
+                                <li>تحسين جودة الكود</li>
+                            </ul>
+                        </div>
+
+                        <div class="debug-steps">
+                            <h5 style="color: var(--accent-color);">⚙️ العملية:</h5>
+                            <ul>
+                                <li>إعادة إنتاج العطل</li>
+                                <li>تحليل وتشخيص السبب</li>
+                                <li>إصلاح الكود</li>
+                                <li>اختبار الإصلاح (Confirmation Testing)</li>
+                            </ul>
+                        </div>
+
+                        <div class="debug-steps">
+                            <h5 style="color: var(--accent-color);">👥 المسؤولية:</h5>
+                            <ul>
+                                <li>Software Developers</li>
+                                <li>System Engineers</li>
+                                <li>Technical Leads</li>
+                                <li>Code Authors</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Debugging Process Flow -->
+            <div class="process-flow">
+                <h4 style="color: var(--orange); text-align: center; margin-bottom: 20px;">🔄 عملية Debugging التفصيلية:</h4>
+                
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <strong>1. Reproduction</strong><br>
+                        <small>إعادة إنتاج العطل</small>
+                    </div>
+                    
+                    <div class="flow-arrow">→</div>
+                    
+                    <div class="flow-step">
+                        <strong>2. Diagnosis</strong><br>
+                        <small>تشخيص السبب الجذري</small>
+                    </div>
+                    
+                    <div class="flow-arrow">→</div>
+                    
+                    <div class="flow-step">
+                        <strong>3. Fixing</strong><br>
+                        <small>إصلاح السبب</small>
+                    </div>
+                    
+                    <div class="flow-arrow">→</div>
+                    
+                    <div class="flow-step">
+                        <strong>4. Confirmation</strong><br>
+                        <small>اختبار الإصلاح</small>
+                    </div>
+                    
+                    <div class="flow-arrow">→</div>
+                    
+                    <div class="flow-step">
+                        <strong>5. Regression</strong><br>
+                        <small>اختبار عدم كسر شيء آخر</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practical Examples -->
+            <div style="background: rgba(255, 255, 255, 0.7); border-radius: 15px; padding: 25px; margin: 25px 0;">
+                <h4 style="color: var(--orange); text-align: center; margin-bottom: 20px;">💼 مثال عملي من الواقع:</h4>
+                
+                <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center;">
+                    <div style="background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%); border: 2px solid var(--cyan); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--cyan); margin-bottom: 10px;">🔍 Testing Phase:</h5>
+                        <p style="color: #0e7490;">"المختبر يجرب تسجيل الدخول بكلمة مرور صحيحة، لكن النظام يرفض الدخول ويظهر رسالة خطأ. يقوم بتوثيق هذا العيب مع الخطوات التفصيلية."</p>
+                    </div>
+                    
+                    <div style="font-size: 2rem; color: var(--orange);">→</div>
+                    
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%); border: 2px solid var(--accent-color); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--accent-color); margin-bottom: 10px;">🔧 Debugging Phase:</h5>
+                        <p style="color: #92400e;">"المطور يستخدم الـ debugger لتتبع الكود، يكتشف أن المقارنة case-sensitive بالخطأ. يصلح الكود ويختبر الإصلاح."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Differences Table -->
+            <div style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); border: 3px solid var(--purple); border-radius: 20px; padding: 30px; margin: 30px 0;">
+                <h4 style="color: var(--purple); text-align: center; margin-bottom: 20px;">📊 الفروقات الأساسية:</h4>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                    <div style="background: white; border: 2px solid var(--purple); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--purple); margin-bottom: 10px;">🎯 الغرض</h5>
+                        <p><strong>Testing:</strong> إيجاد المشاكل<br><strong>Debugging:</strong> حل المشاكل</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--purple); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--purple); margin-bottom: 10px;">⏰ التوقيت</h5>
+                        <p><strong>Testing:</strong> بعد كتابة الكود<br><strong>Debugging:</strong> بعد اكتشاف العيوب</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--purple); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--purple); margin-bottom: 10px;">🧠 المعرفة المطلوبة</h5>
+                        <p><strong>Testing:</strong> فهم المتطلبات<br><strong>Debugging:</strong> فهم الكود</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--purple); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--purple); margin-bottom: 10px;">🤖 الأتمتة</h5>
+                        <p><strong>Testing:</strong> يمكن أتمتته<br><strong>Debugging:</strong> دائماً يدوي</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--purple); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--purple); margin-bottom: 10px;">📊 النتيجة</h5>
+                        <p><strong>Testing:</strong> تقرير بالعيوب<br><strong>Debugging:</strong> كود مُصحح</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--purple); border-radius: 15px; padding: 20px;">
+                        <h5 style="color: var(--purple); margin-bottom: 10px;">🏗️ النهج</h5>
+                        <p><strong>Testing:</strong> منهجي ومخطط<br><strong>Debugging:</strong> استقصائي وتحليلي</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="objective-card">
+                <h3>💡 نقاط مهمة للتذكر:</h3>
+                <ul class="objective-list">
+                    <li><strong>أنشطة منفصلة:</strong> Testing يكتشف، Debugging يصلح</li>
+                    <li><strong>أدوار مختلفة:</strong> Testers vs Developers</li>
+                    <li><strong>مهارات مختلفة:</strong> اختبار المتطلبات vs فهم الكود</li>
+                    <li><strong>توقيت مختلف:</strong> Testing مستمر، Debugging عند الحاجة</li>
+                    <li><strong>تكامل ضروري:</strong> الاثنان يحتاجان بعض لضمان الجودة</li>
+                    <li><strong>هدف مشترك:</strong> تحسين جودة البرنامج للمستخدم النهائي</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">📋 ملخص القسم 1.1</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+                <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid var(--success-color); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--success-color); margin-bottom: 10px;">🧪 تعريف Testing</h5>
+                    <p style="color: #14532d; font-size: 0.95rem;">مجموعة أنشطة شاملة لاكتشاف العيوب وتقييم جودة البرامج</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid var(--cyan); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--cyan); margin-bottom: 10px;">⚖️ Static vs Dynamic</h5>
+                    <p style="color: #0e7490; font-size: 0.95rem;">بدون تشغيل الكود vs مع تشغيل الكود</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%); border: 2px solid var(--accent-color); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--accent-color); margin-bottom: 10px;">🎯 9 أهداف أساسية</h5>
+                    <p style="color: #92400e; font-size: 0.95rem;">من تقييم المنتجات إلى بناء الثقة</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fef7ed 0%, #fed7aa 100%); border: 2px solid var(--orange); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--orange); margin-bottom: 10px;">🔧 Testing vs Debugging</h5>
+                    <p style="color: #9a3412; font-size: 0.95rem;">اكتشاف المشاكل vs حل المشاكل</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Objectives Summary -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">✅ تأكيد تحقيق الـ Learning Objectives</h2>
+            
+            <div class="learning-objectives">
+                <h3>تم تغطية جميع الـ Learning Objectives:</h3>
+                <div class="learning-objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-1.1.1 (K1):</strong> تحديد شامل للأهداف النموذجية التسعة للاختبار مع أمثلة عملية مفصلة</span>
+                </div>
+                <div class="learning-objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-1.1.2 (K2):</strong> تفريق واضح ومفصل بين Testing والـ Debugging مع أمثلة عملية ومقارنات</span>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%); border: 2px solid var(--accent-color); border-radius: 20px; padding: 30px; margin: 20px 0;">
+                <h3 style="color: var(--accent-color); text-align: center; margin-bottom: 15px;">🎓 المهارات المكتسبة:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="text-align: center;">
+                        <strong>🧪 فهم Testing</strong><br>
+                        <small>تعريف شامل ومفاهيم صحيحة</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🎯 تحديد الأهداف</strong><br>
+                        <small>9 أهداف نموذجية مع التطبيق</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>⚖️ التمييز بين الأنواع</strong><br>
+                        <small>Static vs Dynamic Testing</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🔧 فهم العمليات</strong><br>
+                        <small>Testing vs Debugging</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🌍 تأثير السياق</strong><br>
+                        <small>كيف يؤثر السياق على الأهداف</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer and Navigation -->
+        <div class="footer">
+            <h3 style="color: var(--success-color); margin-bottom: 20px;">🎉 تمت تغطية جميع جوانب "What is Testing?" بالتفصيل الشامل</h3>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">
+                القسم القادم: <strong>1.2 Why is Testing Necessary?</strong><br>
+                "بنفس المستوى من التفصيل والجودة والتفاعل 💪"
+            </p>
+
+            <!-- Navigation -->
+            <nav class="section-nav">
+                <div class="nav-grid">
+                    <a href="#" class="nav-btn current">القسم 1.1<br>What is Testing?</a>
+                    <a href="#" class="nav-btn">القسم 1.2<br>Why is Testing Necessary?</a>
+                    <a href="#" class="nav-btn">القسم 1.3<br>Testing Principles</a>
+                    <a href="#" class="nav-btn">القسم 1.4<br>Test Activities & Roles</a>
+                    <a href="#" class="nav-btn">القسم 1.5<br>Essential Skills</a>
+                </div>
+                <div style="text-align: center; margin-top: 20px; color: var(--text-light);">
+                    من الفصل الأول<br>
+                    من القسم 1.1<br>
+                    Learning Objectives
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Progress bar
+        function updateProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+
+        // Add bounce effect on hover for important elements
+        document.querySelectorAll('.highlight').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.classList.add('bounce');
+                setTimeout(() => {
+                    this.classList.remove('bounce');
+                }, 600);
+            });
+        });
+
+        // Objective cards hover effect
+        document.querySelectorAll('.objective-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Misconception cards animation
+        document.querySelectorAll('.misconception-card').forEach((card, index) => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.02) rotate(2deg)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+            });
+        });
+
+        // Definition points sequential animation
+        document.querySelectorAll('.definition-point').forEach((point, index) => {
+            point.style.animationDelay = `${index * 0.2}s`;
+            
+            point.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.05)';
+            });
+            
+            point.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Flow steps animation
+        document.querySelectorAll('.flow-step').forEach((step, index) => {
+            step.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.05)';
+                this.style.borderColor = 'var(--orange)';
+            });
+            
+            step.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.borderColor = 'var(--orange)';
+            });
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 20%, 60%, 100% { transform: translateY(0); }
+                40% { transform: translateY(-10px); }
+                80% { transform: translateY(-5px); }
+            }
+            
+            .highlight {
+                cursor: pointer;
+            }
+            
+            .nav-btn:active {
+                transform: scale(0.95);
+            }
+            
+            .section-card {
+                scroll-margin-top: 100px;
+            }
+            
+            .objective-icon {
+                animation: pulse 3s ease-in-out infinite;
+            }
+            
+            .definition-point {
+                animation: fadeInUp 0.6s ease-out forwards;
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            
+            @keyframes fadeInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize tooltips for mobile
+        if (window.innerWidth <= 768) {
+            document.querySelectorAll('[title]').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    const tooltip = document.createElement('div');
+                    tooltip.textContent = this.getAttribute('title');
+                    tooltip.style.cssText = `
+                        position: absolute;
+                        background: rgba(0,0,0,0.8);
+                        color: white;
+                        padding: 5px 10px;
+                        border-radius: 4px;
+                        font-size: 12px;
+                        top: -30px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        z-index: 1000;
+                    `;
+                    this.style.position = 'relative';
+                    this.appendChild(tooltip);
+                    
+                    setTimeout(() => {
+                        if (tooltip.parentNode) {
+                            tooltip.parentNode.removeChild(tooltip);
+                        }
+                    }, 2000);
+                });
+            });
+        }
+
+        console.log('🎉 1.1 What is Testing? - تم تحميل الصفحة بنجاح!');
+        console.log('🧪 جميع جوانب Testing تم شرحها بالتفصيل مع أمثلة عملية شاملة');
+        console.log('🎯 تم تغطية جميع Learning Objectives بنجاح مع التطبيقات العملية');
+    </script>
+</body>
+</html>

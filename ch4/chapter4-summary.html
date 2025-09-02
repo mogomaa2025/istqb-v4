@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4: Test Techniques - Complete Summary</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+        .exam-highlight { background-color: #ffeb3b; font-weight: bold; padding: 2px 4px; }
+        .important-formula { background-color: #e3f2fd; padding: 10px; border-left: 4px solid #2196f3; margin: 10px 0; }
+        .real-example { background-color: #f1f8e9; padding: 10px; border-left: 4px solid #4caf50; margin: 10px 0; }
+        .warning { background-color: #fff3e0; padding: 10px; border-left: 4px solid #ff9800; margin: 10px 0; }
+        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f5f5f5; font-weight: bold; }
+        .section-header { background-color: #1976d2; color: white; padding: 15px; margin: 20px 0 10px 0; }
+        .subsection-header { background-color: #42a5f5; color: white; padding: 10px; margin: 15px 0 10px 0; }
+        .coverage-formula { font-family: monospace; background-color: #f5f5f5; padding: 5px; }
+    </style>
+</head>
+<body>
+
+<h1>Chapter 4: Test Techniques - Complete ISTQB Foundation Level v4.0 Summary</h1>
+
+<div class="section-header">
+<h2>4.1 Overview of Test Techniques</h2>
+</div>
+
+<div class="exam-highlight">
+<strong>Learning Objective FL-4.1.1 (K2):</strong> Distinguish black-box, white-box and experience-based test techniques
+</div>
+
+<h3>What Are Test Techniques?</h3>
+
+<div class="important-formula">
+<strong>Core Philosophy:</strong> "العبرة بالكيف مش بالكم" (Quality over Quantity)<br>
+Create fewer but more effective and impactful tests
+</div>
+
+<table>
+<tr>
+<th>Primary Goals</th>
+<th>Description</th>
+<th>Benefit</th>
+</tr>
+<tr>
+<td><strong>Quality over Quantity</strong></td>
+<td>نعمل اختبارات قليلة بس مفيدة ومؤثرة</td>
+<td>More effective testing with less effort</td>
+</tr>
+<tr>
+<td><strong>Systematic Coverage</strong></td>
+<td>تغطية منهجية شاملة</td>
+<td>Ensure comprehensive testing without redundancy</td>
+</tr>
+</table>
+
+<h3>Three Critical Elements Test Techniques Help Determine</h3>
+
+<table>
+<tr>
+<th>Element</th>
+<th>Arabic Description</th>
+<th>Impact on Testing</th>
+</tr>
+<tr>
+<td><strong>Test Conditions</strong></td>
+<td>الشروط والحالات اللي هنختبرها</td>
+<td>What scenarios to test</td>
+</tr>
+<tr>
+<td><strong>Coverage Items</strong></td>
+<td>العناصر اللي لازم نغطيها في الاختبار</td>
+<td>What components need testing</td>
+</tr>
+<tr>
+<td><strong>Test Data</strong></td>
+<td>البيانات المناسبة واللازمة للاختبار</td>
+<td>What inputs to use</td>
+</tr>
+</table>
+
+<h3>The Three Main Categories</h3>
+
+<table>
+<tr>
+<th>Technique Type</th>
+<th>Arabic Name</th>
+<th>Key Characteristic</th>
+<th>When to Use</th>
+</tr>
+<tr>
+<td><strong>Black-Box</strong></td>
+<td>اختبار من الخارج</td>
+<td>Independent of implementation</td>
+<td>Test functionality without knowing internal structure</td>
+</tr>
+<tr>
+<td><strong>White-Box</strong></td>
+<td>اختبار من الداخل</td>
+<td>Dependent on program design</td>
+<td>Test internal structure and code paths</td>
+</tr>
+<tr>
+<td><strong>Experience-Based</strong></td>
+<td>بناءً على الخبرة</td>
+<td>Based on tester knowledge and intuition</td>
+<td>Complement formal techniques with expertise</td>
+</tr>
+</table>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> Netflix streaming service
+<ul>
+<li><strong>Black-box:</strong> Testing if movies play correctly regardless of how the streaming algorithm works internally</li>
+<li><strong>White-box:</strong> Testing the recommendation algorithm's code paths and decision logic</li>
+<li><strong>Experience-based:</strong> Using knowledge of common user behaviors to test edge cases like binge-watching or network interruptions</li>
+</ul>
+</div>
+
+<div class="exam-highlight">
+<strong>Exam Key Point:</strong> The Complete Testing Equation<br>
+Black-Box + White-Box + Experience-Based = Complete Testing
+</div>
+
+<div class="section-header">
+<h2>4.2 Black-Box Test Techniques</h2>
+</div>
+
+<div class="exam-highlight">
+<strong>Learning Objectives:</strong><br>
+• FL-4.2.1 (K3) Use equivalence partitioning<br>
+• FL-4.2.2 (K3) Use boundary value analysis<br>
+• FL-4.2.3 (K3) Use decision table testing<br>
+• FL-4.2.4 (K3) Use state transition testing
+</div>
+
+<h3>4.2.1 Equivalence Partitioning (EP)</h3>
+
+<div class="important-formula">
+<strong>Core Theory:</strong> If a test case from one partition finds a defect, any other value from the same partition should find the same defect.
+</div>
+
+<table>
+<tr>
+<th>Data Type</th>
+<th>Examples</th>
+<th>Partition Characteristics</th>
+</tr>
+<tr>
+<td><strong>Inputs</strong></td>
+<td>User input fields, parameters</td>
+<td>Valid/Invalid ranges</td>
+</tr>
+<tr>
+<td><strong>Outputs</strong></td>
+<td>System responses, results</td>
+<td>Expected/Error outputs</td>
+</tr>
+<tr>
+<td><strong>Configuration Items</strong></td>
+<td>Settings, preferences</td>
+<td>Supported/Unsupported configs</td>
+</tr>
+<tr>
+<td><strong>Time-related Values</strong></td>
+<td>Dates, timestamps</td>
+<td>Past/Present/Future</td>
+</tr>
+<tr>
+<td><strong>Interface Parameters</strong></td>
+<td>API calls, data formats</td>
+<td>Compatible/Incompatible</td>
+</tr>
+</table>
+
+<div class="coverage-formula">
+EP Coverage = (Number of Partitions Tested ÷ Total Number of Partitions) × 100%
+</div>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> Amazon Prime Video Age Verification
+<ul>
+<li><strong>Partition 1:</strong> Age < 13 (Invalid - Cannot create account)</li>
+<li><strong>Partition 2:</strong> Age 13-17 (Valid - Restricted content)</li>
+<li><strong>Partition 3:</strong> Age 18+ (Valid - Full access)</li>
+</ul>
+Test values: 10, 15, 25 (one from each partition)
+</div>
+
+<h4>Each Choice Coverage</h4>
+
+<table>
+<tr>
+<th>Parameter</th>
+<th>Partition 1</th>
+<th>Partition 2</th>
+<th>Partition 3</th>
+</tr>
+<tr>
+<td><strong>Age</strong></td>
+<td>&lt; 13 (Invalid)</td>
+<td>13-17 (Valid)</td>
+<td>18+ (Valid)</td>
+</tr>
+<tr>
+<td><strong>Country</strong></td>
+<td>Supported</td>
+<td>Restricted</td>
+<td>-</td>
+</tr>
+</table>
+
+<div class="warning">
+<strong>Efficiency Note:</strong> Need to test each partition at least once, not all possible combinations.<br>
+<strong>Test Cases needed:</strong> 3 instead of 6 (3×2) combinations
+</div>
+
+<h3>4.2.2 Boundary Value Analysis (BVA)</h3>
+
+<div class="important-formula">
+<strong>Focus:</strong> Test the boundaries between partitions where defects are most likely to occur.
+</div>
+
+<table>
+<tr>
+<th>BVA Version</th>
+<th>Coverage Items per Boundary</th>
+<th>Example (Boundary = 10)</th>
+<th>Rigor Level</th>
+</tr>
+<tr>
+<td><strong>2-Value BVA</strong></td>
+<td>Boundary + Closest Neighbor</td>
+<td>10, 11</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>3-Value BVA</strong></td>
+<td>Boundary + Both Neighbors</td>
+<td>9, 10, 11</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+</table>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> PayPal Money Transfer Limits
+<ul>
+<li><strong>Boundary:</strong> $10,000 daily limit</li>
+<li><strong>BVA Test Values:</strong> $9,999.99, $10,000.00, $10,000.01</li>
+<li><strong>Expected Results:</strong> Accept, Accept, Reject</li>
+</ul>
+</div>
+
+<h3>4.2.3 Decision Table Testing</h3>
+
+<div class="important-formula">
+<strong>Purpose:</strong> Test how different combinations of conditions lead to different outcomes in business rules.
+</div>
+
+<h4>Decision Table Symbols</h4>
+
+<table>
+<tr>
+<th>Symbol</th>
+<th>For Conditions</th>
+<th>For Actions</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td><strong>T</strong></td>
+<td>True - الشرط متحقق</td>
+<td>-</td>
+<td>Condition is satisfied</td>
+</tr>
+<tr>
+<td><strong>F</strong></td>
+<td>False - الشرط غير متحقق</td>
+<td>-</td>
+<td>Condition is not satisfied</td>
+</tr>
+<tr>
+<td><strong>–</strong></td>
+<td>Irrelevant - غير مهم</td>
+<td>-</td>
+<td>Value doesn't affect outcome</td>
+</tr>
+<tr>
+<td><strong>N/A</strong></td>
+<td>Infeasible - غير ممكن</td>
+<td>-</td>
+<td>Condition is infeasible</td>
+</tr>
+<tr>
+<td><strong>X</strong></td>
+<td>-</td>
+<td>Action occurs - الإجراء يحدث</td>
+<td>Action should occur</td>
+</tr>
+<tr>
+<td><strong>Blank</strong></td>
+<td>-</td>
+<td>No action - لا إجراء</td>
+<td>Action should not occur</td>
+</tr>
+</table>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> Bank Loan Approval System
+<table>
+<tr>
+<th>Conditions/Actions</th>
+<th>Rule 1</th>
+<th>Rule 2</th>
+<th>Rule 3</th>
+<th>Rule 4</th>
+<th>Rule 5</th>
+</tr>
+<tr>
+<td>Credit Score ≥ 700</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>Income ≥ $50,000</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Employment ≥ 2 years</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+</tr>
+<tr>
+<td><strong>Approve Loan</strong></td>
+<td>X</td>
+<td>X</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td><strong>Manual Review</strong></td>
+<td>–</td>
+<td>–</td>
+<td>X</td>
+<td>X</td>
+<td>–</td>
+</tr>
+<tr>
+<td><strong>Reject Loan</strong></td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>X</td>
+</tr>
+</table>
+</div>
+
+<div class="coverage-formula">
+Decision Table Coverage = (Columns Tested ÷ Total Feasible Columns) × 100%
+</div>
+
+<div class="warning">
+<strong>Challenge:</strong> Exponential Growth - Number of rules grows exponentially with conditions<br>
+<strong>Solutions:</strong> Use Minimized Decision Table or Risk-based Approach
+</div>
+
+<h3>4.2.4 State Transition Testing</h3>
+
+<div class="important-formula">
+<strong>Purpose:</strong> Model system behavior by showing possible states and valid transitions between them.
+<strong>Format:</strong> event [guard condition] / action
+</div>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> ATM Machine States
+<table>
+<tr>
+<th>Current State</th>
+<th>Event: insert_card</th>
+<th>Event: enter_pin</th>
+<th>Event: select_option</th>
+</tr>
+<tr>
+<td><strong>Idle</strong></td>
+<td>Card Inserted / show_pin</td>
+<td>❌ Invalid</td>
+<td>❌ Invalid</td>
+</tr>
+<tr>
+<td><strong>Card Inserted</strong></td>
+<td>❌ Invalid</td>
+<td>PIN Verification / check_pin</td>
+<td>❌ Invalid</td>
+</tr>
+<tr>
+<td><strong>Main Menu</strong></td>
+<td>❌ Invalid</td>
+<td>❌ Invalid</td>
+<td>Transaction / start_process</td>
+</tr>
+</table>
+</div>
+
+<h4>State Transition Coverage Levels</h4>
+
+<table>
+<tr>
+<th>Coverage Type</th>
+<th>Description</th>
+<th>Coverage Formula</th>
+<th>Strength</th>
+</tr>
+<tr>
+<td><strong>All States</strong></td>
+<td>الأضعف: زيارة كل الحالات</td>
+<td>(States Visited ÷ Total States) × 100%</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td><strong>Valid Transitions</strong></td>
+<td>الأكثر استخداماً: كل الانتقالات الصالحة</td>
+<td>(Valid Transitions Exercised ÷ Total Valid Transitions) × 100%</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>All Transitions</strong></td>
+<td>الأقوى: كل الانتقالات (صالحة + غير صالحة)</td>
+<td>(All Transitions Tested ÷ Total Transitions) × 100%</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+</table>
+
+<div class="section-header">
+<h2>4.3 White-Box Test Techniques</h2>
+</div>
+
+<div class="exam-highlight">
+<strong>Learning Objectives:</strong><br>
+• FL-4.3.1 (K2) Explain statement testing<br>
+• FL-4.3.2 (K2) Explain branch testing<br>
+• FL-4.3.3 (K2) Explain the value of white-box testing
+</div>
+
+<h3>Focus on Two Main Code-Related Techniques</h3>
+
+<table>
+<tr>
+<th>Technique</th>
+<th>Arabic Name</th>
+<th>Focus</th>
+</tr>
+<tr>
+<td><strong>Statement Testing</strong></td>
+<td>اختبار البيانات/الأوامر في الكود</td>
+<td>Executable statements in code</td>
+</tr>
+<tr>
+<td><strong>Branch Testing</strong></td>
+<td>اختبار التفرعات والمسارات</td>
+<td>Control flow branches</td>
+</tr>
+</table>
+
+<h4>Advanced Techniques (Outside Syllabus Scope)</h4>
+
+<table>
+<tr>
+<th>Environment Type</th>
+<th>Advanced Techniques</th>
+<th>Application Level</th>
+</tr>
+<tr>
+<td><strong>Safety-Critical</strong></td>
+<td>Path Coverage, MCDC</td>
+<td>Medical devices, Aviation</td>
+</tr>
+<tr>
+<td><strong>Mission-Critical</strong></td>
+<td>Condition Coverage, LCSAJ</td>
+<td>Military, Space systems</td>
+</tr>
+<tr>
+<td><strong>High-Integrity</strong></td>
+<td>Modified Condition Coverage</td>
+<td>Financial, Nuclear</td>
+</tr>
+<tr>
+<td><strong>Higher Test Levels</strong></td>
+<td>API Testing</td>
+<td>Integration, System</td>
+</tr>
+<tr>
+<td><strong>Non-Code Coverage</strong></td>
+<td>Neuron Coverage</td>
+<td>Neural Networks, AI</td>
+</tr>
+</table>
+
+<h3>4.3.1 Statement Testing</h3>
+
+<div class="coverage-formula">
+Statement Coverage = (Statements Executed ÷ Total Executable Statements) × 100%
+</div>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> E-commerce Discount Calculator
+<table>
+<tr>
+<th>Test Case</th>
+<th>Input Values</th>
+<th>Statements Executed</th>
+<th>Coverage</th>
+</tr>
+<tr>
+<td><strong>TC1</strong></td>
+<td>age=70, isStudent=true</td>
+<td>1, 2, 3, 4, 5, 6</td>
+<td>100%</td>
+</tr>
+<tr>
+<td><strong>TC2</strong></td>
+<td>age=25, isStudent=false</td>
+<td>1, 2, 4, 6</td>
+<td>67%</td>
+</tr>
+<tr>
+<td><strong>TC3</strong></td>
+<td>age=30, isStudent=true</td>
+<td>1, 2, 4, 5, 6</td>
+<td>83%</td>
+</tr>
+</table>
+</div>
+
+<h3>4.3.2 Branch Testing</h3>
+
+<div class="important-formula">
+<strong>Branch Definition:</strong> Transfer of control between two points in control flow graph
+<ul>
+<li><strong>Straight-line code:</strong> Always executes sequentially</li>
+<li><strong>Decision outcome:</strong> Depends on specific condition</li>
+</ul>
+</div>
+
+<div class="coverage-formula">
+Branch Coverage = (Branches Executed ÷ Total Branches) × 100%
+</div>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> Shopping Cart Discount Logic
+<table>
+<tr>
+<th>Branch ID</th>
+<th>Type</th>
+<th>Path</th>
+<th>Test Required</th>
+</tr>
+<tr>
+<td><strong>B1-T</strong></td>
+<td>Conditional</td>
+<td>quantity &gt; 100 (TRUE)</td>
+<td>quantity = 150</td>
+</tr>
+<tr>
+<td><strong>B1-F</strong></td>
+<td>Conditional</td>
+<td>quantity &gt; 100 (FALSE)</td>
+<td>quantity = 50</td>
+</tr>
+<tr>
+<td><strong>B2-T</strong></td>
+<td>Conditional</td>
+<td>isPremium (TRUE)</td>
+<td>isPremium = true</td>
+</tr>
+<tr>
+<td><strong>B2-F</strong></td>
+<td>Conditional</td>
+<td>isPremium (FALSE)</td>
+<td>isPremium = false</td>
+</tr>
+<tr>
+<td><strong>U1</strong></td>
+<td>Unconditional</td>
+<td>return statement</td>
+<td>Any test case</td>
+</tr>
+</table>
+</div>
+
+<div class="exam-highlight">
+<strong>Critical Exam Relationship:</strong><br>
+• <strong>100% Branch Coverage → 100% Statement Coverage</strong> ✅<br>
+• <strong>100% Statement Coverage ↛ 100% Branch Coverage</strong> ❌
+</div>
+
+<h3>4.3.3 Value of White-Box Testing</h3>
+
+<div class="warning">
+<strong>Key Limitation:</strong> White-Box can test existing code with 100% coverage, but won't detect missing features like encryption, logging attempts, or account locking!
+</div>
+
+<div class="important-formula">
+<strong>Comprehensive Testing Approach:</strong><br>
+Black-Box + White-Box = Complete Testing<br>
+• Use White-Box for measuring coverage<br>
+• Use Black-Box for ensuring user requirements
+</div>
+
+<div class="section-header">
+<h2>4.4 Experience-Based Test Techniques</h2>
+</div>
+
+<div class="exam-highlight">
+<strong>Learning Objectives:</strong><br>
+• FL-4.4.1 (K2) Explain error guessing<br>
+• FL-4.4.2 (K2) Explain exploratory testing<br>
+• FL-4.4.3 (K2) Explain checklist-based testing
+</div>
+
+<h3>Three Main Experience-Based Techniques</h3>
+
+<table>
+<tr>
+<th>Technique</th>
+<th>Arabic Name</th>
+<th>Key Approach</th>
+</tr>
+<tr>
+<td><strong>Error Guessing</strong></td>
+<td>توقع الأخطاء بناءً على الخبرة</td>
+<td>Anticipate likely defects</td>
+</tr>
+<tr>
+<td><strong>Exploratory Testing</strong></td>
+<td>الاستكشاف والاختبار المتزامن</td>
+<td>Design-Execute-Evaluate cycle</td>
+</tr>
+<tr>
+<td><strong>Checklist-based Testing</strong></td>
+<td>الاختبار بناءً على قوائم المراجعة</td>
+<td>Follow predefined checklist</td>
+</tr>
+</table>
+
+<div class="important-formula">
+<strong>Complementary Role:</strong> Experience-based complements gaps in Black-box and White-box techniques, discovering defects that other techniques might miss.
+</div>
+
+<h3>4.4.1 Error Guessing</h3>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> Web Application Security Testing (Fault Attacks)
+<table>
+<tr>
+<th>Fault Category</th>
+<th>Potential Error</th>
+<th>Test Design</th>
+<th>Expected Result</th>
+</tr>
+<tr>
+<td><strong>Input Validation</strong></td>
+<td>SQL Injection</td>
+<td>Username: admin'; DROP TABLE users;--</td>
+<td>Input rejected safely</td>
+</tr>
+<tr>
+<td><strong>Session Management</strong></td>
+<td>Session Hijacking</td>
+<td>Manipulate session tokens</td>
+<td>Unauthorized access prevented</td>
+</tr>
+<tr>
+<td><strong>Password Handling</strong></td>
+<td>Weak Password Policy</td>
+<td>Password: "123"</td>
+<td>Weak password rejected</td>
+</tr>
+<tr>
+<td><strong>Error Messages</strong></td>
+<td>Information Disclosure</td>
+<td>Wrong username vs wrong password</td>
+<td>Generic error messages</td>
+</tr>
+</table>
+</div>
+
+<h3>4.4.2 Exploratory Testing</h3>
+
+<div class="important-formula">
+<strong>Key Characteristic:</strong> Tests are designed, executed, and evaluated simultaneously while the tester learns about the test object.
+</div>
+
+<h4>Exploratory Testing Session Components</h4>
+
+<table>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><strong>Time-boxed Session</strong></td>
+<td>إطار زمني محدد للجلسة</td>
+</tr>
+<tr>
+<td><strong>Charter</strong></td>
+<td>ميثاق يحتوي على أهداف الاختبار</td>
+</tr>
+<tr>
+<td><strong>Documentation</strong></td>
+<td>توثيق الخطوات والاكتشافات</td>
+</tr>
+<tr>
+<td><strong>Debriefing</strong></td>
+<td>مناقشة النتائج مع أصحاب المصلحة</td>
+</tr>
+</table>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> When to Use Exploratory Testing
+<table>
+<tr>
+<th>Situation</th>
+<th>Why Exploratory Testing?</th>
+<th>Example</th>
+</tr>
+<tr>
+<td><strong>Few Specifications</strong></td>
+<td>لا توجد مواصفات كافية</td>
+<td>New beta application</td>
+</tr>
+<tr>
+<td><strong>Inadequate Specs</strong></td>
+<td>المواصفات غير مكتملة</td>
+<td>Legacy or ambiguous specifications</td>
+</tr>
+<tr>
+<td><strong>Time Pressure</strong></td>
+<td>ضغط زمني شديد</td>
+<td>Emergency release or hotfix</td>
+</tr>
+<tr>
+<td><strong>Complement Formal</strong></td>
+<td>تكملة للاختبارات الرسمية</td>
+<td>After executing formal test cases</td>
+</tr>
+</table>
+</div>
+
+<h3>4.4.3 Checklist-based Testing</h3>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> Mobile App Testing Checklists
+<table>
+<tr>
+<th>Checklist Type</th>
+<th>Focus Area</th>
+<th>Example Items</th>
+<th>Usage Context</th>
+</tr>
+<tr>
+<td><strong>Requirements</strong></td>
+<td>تحقق من المتطلبات</td>
+<td>Are all required functions implemented?</td>
+<td>Functional Testing</td>
+</tr>
+<tr>
+<td><strong>GUI Properties</strong></td>
+<td>خصائص واجهة المستخدم</td>
+<td>Are colors consistent? Are texts clear?</td>
+<td>UI/UX Testing</td>
+</tr>
+<tr>
+<td><strong>Usability Heuristics</strong></td>
+<td>سهولة الاستخدام</td>
+<td>Nielsen's 10 Usability Heuristics</td>
+<td>Usability Testing</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>الأمان والحماية</td>
+<td>Is authentication strong? Is data protected?</td>
+<td>Security Testing</td>
+</tr>
+<tr>
+<td><strong>Performance</strong></td>
+<td>الأداء والسرعة</td>
+<td>Is loading time acceptable? Does it handle load?</td>
+<td>Performance Testing</td>
+</tr>
+</table>
+</div>
+
+<div class="section-header">
+<h2>4.5 Collaboration-based Test Approaches</h2>
+</div>
+
+<div class="exam-highlight">
+<strong>Learning Objectives:</strong><br>
+• FL-4.5.1 (K2) Explain collaborative user story writing<br>
+• FL-4.5.2 (K2) Classify acceptance criteria options<br>
+• FL-4.5.3 (K3) Use ATDD to derive test cases
+</div>
+
+<div class="important-formula">
+<strong>Key Difference:</strong><br>
+• Previous techniques (4.2, 4.3, 4.4) focus on <strong>defect detection</strong><br>
+• Collaboration-based approaches focus on <strong>defect prevention</strong>
+</div>
+
+<h3>4.5.1 Collaborative User Story Writing</h3>
+
+<div class="exam-highlight">
+<strong>User Story Definition:</strong> Represents a feature that will be valuable to the user or purchaser of the system.
+</div>
+
+<h4>The 3 C's of User Stories</h4>
+
+<table>
+<tr>
+<th>C</th>
+<th>Component</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><strong>Card</strong></td>
+<td>Physical token</td>
+<td>Written description of the story</td>
+</tr>
+<tr>
+<td><strong>Conversation</strong></td>
+<td>Dialogue</td>
+<td>Discussions about the story</td>
+</tr>
+<tr>
+<td><strong>Confirmation</strong></td>
+<td>Agreement</td>
+<td>Acceptance criteria that confirm the story</td>
+</tr>
+</table>
+
+<div class="warning">
+<strong>Warning Sign:</strong> If stakeholders don't know how to test a user story, it may indicate the story is not ready for implementation.
+</div>
+
+<h3>4.5.2 Acceptance Criteria</h3>
+
+<div class="important-formula">
+<strong>Definition:</strong> Conditions that must be met for user story implementation to be accepted by stakeholders. Can be considered as test conditions that must be tested.
+</div>
+
+<table>
+<tr>
+<th>Usage</th>
+<th>Description</th>
+<th>Benefit</th>
+<th>Example</th>
+</tr>
+<tr>
+<td><strong>Define Scope</strong></td>
+<td>تحديد النطاق</td>
+<td>Clarity in boundaries</td>
+<td>What should and shouldn't be implemented</td>
+</tr>
+<tr>
+<td><strong>Stakeholder Consensus</strong></td>
+<td>إجماع أصحاب المصلحة</td>
+<td>Shared understanding</td>
+<td>Agreement on expectations</td>
+</tr>
+<tr>
+<td><strong>Scenarios</strong></td>
+<td>السيناريوهات الإيجابية والسلبية</td>
+<td>Comprehensive coverage</td>
+<td>Normal and exceptional cases</td>
+</tr>
+<tr>
+<td><strong>Acceptance Testing</strong></td>
+<td>أساس اختبار القبول</td>
+<td>Clear testing criteria</td>
+<td>Convert criteria to test cases</td>
+</tr>
+<tr>
+<td><strong>Planning</strong></td>
+<td>التخطيط والتقدير</td>
+<td>Accurate estimates</td>
+<td>Calculate effort and time required</td>
+</tr>
+</table>
+
+<h3>4.5.3 Acceptance Test-Driven Development (ATDD)</h3>
+
+<div class="important-formula">
+<strong>ATDD Definition:</strong> A test-first approach where test cases are created before implementing the user story by team members from different perspectives.
+</div>
+
+<div class="exam-highlight">
+<strong>Key Concept:</strong> Examples ⟷ Tests<br>
+These terms are used interchangeably in ATDD
+</div>
+
+<h4>ATDD Process Integration</h4>
+
+<table>
+<tr>
+<th>Test Technique Category</th>
+<th>Specific Techniques</th>
+<th>Application in ATDD</th>
+<th>Example</th>
+</tr>
+<tr>
+<td><strong>Black-box (4.2)</strong></td>
+<td>EP, BVA, Decision Tables, State Transition</td>
+<td>Design test cases from acceptance criteria</td>
+<td>BVA for testing financial amount boundaries</td>
+</tr>
+<tr>
+<td><strong>White-box (4.3)</strong></td>
+<td>Statement, Branch Testing</td>
+<td>Ensure required code coverage</td>
+<td>Branch coverage for business logic</td>
+</tr>
+<tr>
+<td><strong>Experience-based (4.4)</strong></td>
+<td>Error Guessing, Exploratory, Checklist</td>
+<td>Add experience-based tests</td>
+<td>Error guessing for exceptional cases</td>
+</tr>
+</table>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> Banking Transfer Feature
+<ul>
+<li><strong>User Story:</strong> "As a bank customer, I want to transfer money..."</li>
+<li><strong>Executable Requirements:</strong> When test cases are captured in format supported by test automation framework</li>
+<li><strong>Collaboration:</strong> Customers + Developers + Testers work together</li>
+</ul>
+</div>
+
+<div class="section-header">
+<h2>Complete Chapter Summary</h2>
+</div>
+
+<table>
+<tr>
+<th>Technique Category</th>
+<th>Key Techniques</th>
+<th>Primary Focus</th>
+<th>Coverage Formula</th>
+<th>Best Used For</th>
+</tr>
+<tr>
+<td><strong>Black-Box</strong></td>
+<td>EP, BVA, Decision Tables, State Transition</td>
+<td>External behavior</td>
+<td>Items Tested ÷ Total Items</td>
+<td>Functional requirements</td>
+</tr>
+<tr>
+<td><strong>White-Box</strong></td>
+<td>Statement, Branch Testing</td>
+<td>Internal structure</td>
+<td>Code Elements Executed ÷ Total Elements</td>
+<td>Code coverage</td>
+</tr>
+<tr>
+<td><strong>Experience-Based</strong></td>
+<td>Error Guessing, Exploratory, Checklist</td>
+<td>Tester knowledge</td>
+<td>Qualitative assessment</td>
+<td>Complementing formal techniques</td>
+</tr>
+<tr>
+<td><strong>Collaboration-Based</strong></td>
+<td>User Stories, Acceptance Criteria, ATDD</td>
+<td>Defect prevention</td>
+<td>Requirements Coverage</td>
+<td>Agile development</td>
+</tr>
+</table>
+
+<div class="exam-highlight">
+<strong>Final Exam Key Points:</strong><br>
+• All techniques are complementary, not competitive<br>
+• 100% Branch Coverage always achieves 100% Statement Coverage<br>
+• Experience-based techniques fill gaps left by formal methods<br>
+• Collaboration-based approaches prevent defects rather than detect them<br>
+• ATDD creates executable requirements through examples<br>
+• The complete testing equation: Black-Box + White-Box + Experience-Based = Comprehensive Testing
+</div>
+
+</body>
+</html>

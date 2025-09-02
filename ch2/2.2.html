@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.2 Test Levels and Test Types - الشرح الكامل والشامل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
+            --highlight-bg: #fef3c7;
+            --highlight-text: #92400e;
+            --purple: #7c3aed;
+            --orange: #ea580c;
+            --pink: #ec4899;
+            --cyan: #06b6d4;
+            --indigo: #6366f1;
+            --green: #059669;
+            --red: #dc2626;
+            --yellow: #d97706;
+            --teal: #0d9488;
+            --lime: #65a30d;
+            --emerald: #059669;
+            --violet: #8b5cf6;
+            --rose: #f43f5e;
+            --slate: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--success-color), var(--pink));
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        .section-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .section-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+            border-radius: 2px;
+        }
+
+        .english-quote {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-left: 5px solid var(--cyan);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #0277bd;
+            font-weight: 600;
+        }
+
+        .arabic-explanation {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border-right: 5px solid var(--purple);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #6b21a8;
+        }
+
+        .highlight {
+            background: var(--highlight-bg);
+            color: var(--highlight-text);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .code-term {
+            background: #1f2937;
+            color: #f59e0b;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 600;
+        }
+
+        .test-levels-pyramid {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 3px solid var(--success-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .pyramid {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .pyramid-level {
+            background: white;
+            border: 3px solid var(--success-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px auto;
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .pyramid-level:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .pyramid-level.level-1 {
+            width: 90%;
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border-color: var(--accent-color);
+        }
+
+        .pyramid-level.level-2 {
+            width: 75%;
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-color: var(--cyan);
+        }
+
+        .pyramid-level.level-3 {
+            width: 60%;
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border-color: var(--purple);
+        }
+
+        .pyramid-level.level-4 {
+            width: 45%;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: var(--error-color);
+        }
+
+        .pyramid-level.level-5 {
+            width: 30%;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-color: var(--success-color);
+        }
+
+        .level-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .level-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .level-subtitle {
+            font-size: 1rem;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .levels-detailed {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .level-card {
+            background: var(--bg-light);
+            border: 3px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .level-card:hover::before {
+            left: 100%;
+        }
+
+        .level-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .level-card.component {
+            border-color: var(--accent-color);
+            background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+        }
+
+        .level-card.component-integration {
+            border-color: var(--cyan);
+            background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+        }
+
+        .level-card.system {
+            border-color: var(--purple);
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+        }
+
+        .level-card.system-integration {
+            border-color: var(--error-color);
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+
+        .level-card.acceptance {
+            border-color: var(--success-color);
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+
+        .level-card-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .level-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .level-attributes {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .level-attributes h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .level-attributes ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .level-attributes li {
+            font-size: 0.9rem;
+            margin: 5px 0;
+            padding: 5px 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .level-attributes li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-3px);
+        }
+
+        .test-types-section {
+            background: linear-gradient(135deg, #fef7ed 0%, #fed7aa 100%);
+            border: 3px solid var(--orange);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .type-card {
+            background: white;
+            border: 3px solid transparent;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .type-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(234, 88, 12, 0.05) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .type-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .type-card.functional {
+            border-color: var(--emerald);
+        }
+
+        .type-card.non-functional {
+            border-color: var(--purple);
+        }
+
+        .type-card.black-box {
+            border-color: var(--slate);
+        }
+
+        .type-card.white-box {
+            border-color: var(--cyan);
+        }
+
+        .type-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .type-card h4 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .type-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .iso-25010 {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border: 3px solid var(--purple);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .iso-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .iso-characteristic {
+            background: white;
+            border: 2px solid var(--purple);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .iso-characteristic:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        .iso-characteristic h5 {
+            font-size: 1.1rem;
+            color: var(--purple);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .iso-characteristic p {
+            font-size: 0.9rem;
+            color: #6b21a8;
+            line-height: 1.4;
+        }
+
+        .confirmation-regression {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 3px solid var(--cyan);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .cr-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 25px;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .vs-divider {
+            background: linear-gradient(135deg, var(--error-color), var(--accent-color));
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            padding: 20px;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .cr-card {
+            background: white;
+            border: 3px solid transparent;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .cr-card.confirmation {
+            border-color: var(--success-color);
+        }
+
+        .cr-card.regression {
+            border-color: var(--error-color);
+        }
+
+        .cr-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .cr-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+
+        .cr-card h4 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .cr-details {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .cr-details h5 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .cr-details ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .cr-details li {
+            font-size: 0.9rem;
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .cr-details li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-3px);
+        }
+
+        .automation-section {
+            background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+            border: 3px solid var(--violet);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .automation-flow {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .flow-steps {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .flow-step {
+            background: linear-gradient(135deg, var(--violet), var(--purple));
+            color: white;
+            border-radius: 15px;
+            padding: 15px 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            transition: all 0.3s ease;
+        }
+
+        .flow-step:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--violet);
+            font-weight: 700;
+        }
+
+        .learning-objectives {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 3px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .learning-objectives h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .objective-item {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .objective-item:hover {
+            border-color: var(--primary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+        }
+
+        .objective-check {
+            color: var(--success-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            min-width: 25px;
+        }
+
+        .objective-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .footer {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-nav {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .nav-btn.current {
+            background: linear-gradient(135deg, var(--accent-color), var(--orange));
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-card {
+                padding: 25px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .levels-detailed {
+                grid-template-columns: 1fr;
+            }
+
+            .types-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cr-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .vs-divider {
+                order: 2;
+                margin: 20px auto;
+            }
+
+            .flow-steps {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+
+            .iso-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 60%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            80% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 2.2 Test Levels and Test Types</h1>
+            <div class="subtitle">مستويات وأنواع الاختبار - الشرح الكامل والشامل</div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🎯 Learning Objectives لهذا القسم:</h2>
+            
+            <div class="learning-objectives">
+                <h3>بعد دراسة هذا القسم هتقدر تـ:</h3>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.2.1 (K2):</strong> تميز بين مستويات الاختبار المختلفة</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.2.2 (K2):</strong> تميز بين أنواع الاختبار المختلفة</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.2.3 (K2):</strong> تميز بين Confirmation Testing وRegression Testing</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Introduction: Test Levels and Test Types -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🌟 مقدمة: Test Levels & Test Types</h2>
+            
+            <div class="english-quote">
+                "<span class="highlight">Test levels are groups of test activities</span> that are organized and managed together. Each test level is an instance of the test process, performed in relation to software at a given stage of development, from individual components to complete systems. <span class="highlight">Test types are groups of test activities related to specific quality characteristics</span> and most of those test activities can be performed at every test level."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">مستويات الاختبار هي مجموعات من أنشطة الاختبار</span> التي يتم تنظيمها وإدارتها معاً. كل مستوى اختبار هو نموذج من عملية الاختبار، يتم تنفيذه بالنسبة للبرامج في مرحلة معينة من التطوير، من المكونات الفردية إلى الأنظمة الكاملة. <span class="code-term">أنواع الاختبار هي مجموعات من أنشطة الاختبار المتعلقة بخصائص جودة محددة</span> ومعظم هذه الأنشطة يمكن تنفيذها في كل مستوى اختبار.
+            </div>
+
+            <!-- Key Differences -->
+            <div style="background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%); border: 3px solid var(--accent-color); border-radius: 20px; padding: 30px; margin: 30px 0; text-align: center;">
+                <h3 style="color: var(--accent-color); margin-bottom: 20px;">🔄 الفرق الأساسي:</h3>
+                <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center;">
+                    <div style="background: white; padding: 20px; border-radius: 15px; border: 2px solid var(--success-color);">
+                        <h4 style="color: var(--success-color); margin-bottom: 10px;">📊 Test Levels</h4>
+                        <p style="color: #14532d;"><strong>WHEN & WHERE</strong><br>متى وأين نختبر؟<br>مراحل التطوير</p>
+                    </div>
+                    <div style="font-size: 2rem; color: var(--accent-color);">↔️</div>
+                    <div style="background: white; padding: 20px; border-radius: 15px; border: 2px solid var(--purple);">
+                        <h4 style="color: var(--purple); margin-bottom: 10px;">🎯 Test Types</h4>
+                        <p style="color: #6b21a8;"><strong>WHAT & HOW</strong><br>ماذا وكيف نختبر؟<br>خصائص الجودة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.2.1 Test Levels -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">📊 2.2.1 Test Levels</h2>
+            <h3 style="text-align: center; color: var(--success-color); margin-bottom: 30px;">مستويات الاختبار الخمسة</h3>
+            
+            <div class="english-quote">
+                "In this syllabus, the following <span class="highlight">five test levels</span> are described: <span class="highlight">Component testing</span> (also known as unit testing), <span class="highlight">Component integration testing</span>, <span class="highlight">System testing</span>, <span class="highlight">System integration testing</span>, and <span class="highlight">Acceptance testing</span>. Test levels are <span class="highlight">distinguished by attributes</span>: Test object, Test objectives, Test basis, Defects and failures, Approach and responsibilities."
+            </div>
+            
+            <div class="arabic-explanation">
+                في هذا المنهج، يتم وصف <span class="code-term">خمسة مستويات اختبار</span> التالية: <span class="code-term">Component testing</span> (يُعرف أيضاً بـ unit testing)، <span class="code-term">Component integration testing</span>، <span class="code-term">System testing</span>، <span class="code-term">System integration testing</span>، و<span class="code-term">Acceptance testing</span>. مستويات الاختبار <span class="code-term">تتميز بالصفات</span>: كائن الاختبار، أهداف الاختبار، أساس الاختبار، العيوب والأعطال، النهج والمسؤوليات.
+            </div>
+
+            <!-- Test Levels Pyramid -->
+            <div class="test-levels-pyramid">
+                <h3 style="color: var(--success-color); margin-bottom: 25px;">🏗️ هرم مستويات الاختبار:</h3>
+                
+                <div class="pyramid">
+                    <div class="pyramid-level level-5">
+                        <div class="level-icon" style="color: var(--success-color);">👥</div>
+                        <div class="level-title" style="color: var(--success-color);">Acceptance Testing</div>
+                        <div class="level-subtitle" style="color: #14532d;">End Users - Business Validation</div>
+                    </div>
+                    
+                    <div class="pyramid-level level-4">
+                        <div class="level-icon" style="color: var(--error-color);">🌐</div>
+                        <div class="level-title" style="color: var(--error-color);">System Integration</div>
+                        <div class="level-subtitle" style="color: #7f1d1d;">External Systems - Interfaces</div>
+                    </div>
+                    
+                    <div class="pyramid-level level-3">
+                        <div class="level-icon" style="color: var(--purple);">🖥️</div>
+                        <div class="level-title" style="color: var(--purple);">System Testing</div>
+                        <div class="level-subtitle" style="color: #6b21a8;">Complete System - End-to-End</div>
+                    </div>
+                    
+                    <div class="pyramid-level level-2">
+                        <div class="level-icon" style="color: var(--cyan);">🔗</div>
+                        <div class="level-title" style="color: var(--cyan);">Component Integration</div>
+                        <div class="level-subtitle" style="color: #0e7490;">Modules Together - Interfaces</div>
+                    </div>
+                    
+                    <div class="pyramid-level level-1">
+                        <div class="level-icon" style="color: var(--accent-color);">🧩</div>
+                        <div class="level-title" style="color: var(--accent-color);">Component Testing</div>
+                        <div class="level-subtitle" style="color: #92400e;">Individual Units - Code Logic</div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.8); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--success-color); text-align: center; margin-bottom: 15px;">📈 خصائص الهرم:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div style="text-align: center;">
+                            <strong style="color: var(--success-color);">⬆️ التعقيد</strong><br>
+                            <small>يزيد كلما صعدنا للأعلى</small>
+                        </div>
+                        <div style="text-align: center;">
+                            <strong style="color: var(--accent-color);">⬇️ السرعة</strong><br>
+                            <small>تقل كلما صعدنا للأعلى</small>
+                        </div>
+                        <div style="text-align: center;">
+                            <strong style="color: var(--purple);">💰 التكلفة</strong><br>
+                            <small>تزيد كلما صعدنا للأعلى</small>
+                        </div>
+                        <div style="text-align: center;">
+                            <strong style="color: var(--cyan);">🎯 التركيز</strong><br>
+                            <small>من تقني إلى تجاري</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Test Levels -->
+            <div style="background: white; border-radius: 15px; padding: 25px; margin: 25px 0;">
+                <h4 style="color: var(--success-color); text-align: center; margin-bottom: 20px;">🔍 تفاصيل مستويات الاختبار:</h4>
+                
+                <div class="levels-detailed">
+                    <!-- Component Testing -->
+                    <div class="level-card component">
+                        <div class="level-card-icon" style="color: var(--accent-color);">🧩</div>
+                        <h4 style="color: var(--accent-color);">Component Testing</h4>
+                        <p style="color: #92400e; font-weight: 500; margin-bottom: 15px;">
+                            اختبار المكونات الفردية بمعزل عن بقية النظام
+                        </p>
+                        
+                        <div class="level-attributes">
+                            <h5 style="color: var(--accent-color);">🎯 Test Object:</h5>
+                            <ul>
+                                <li>Individual components/modules</li>
+                                <li>Classes, functions, methods</li>
+                                <li>Database procedures</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-attributes">
+                            <h5 style="color: var(--accent-color);">📋 Test Objectives:</h5>
+                            <ul>
+                                <li>وظائف Component صحيحة</li>
+                                <li>منطق الكود سليم</li>
+                                <li>Code coverage مناسب</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-attributes">
+                            <h5 style="color: var(--accent-color);">👥 المسؤولية:</h5>
+                            <ul>
+                                <li>Developers في بيئة التطوير</li>
+                                <li>Test harnesses أو frameworks</li>
+                                <li>Automated unit tests</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Component Integration Testing -->
+                    <div class="level-card component-integration">
+                        <div class="level-card-icon" style="color: var(--cyan);">🔗</div>
+                        <h4 style="color: var(--cyan);">Component Integration</h4>
+                        <p style="color: #0e7490; font-weight: 500; margin-bottom: 15px;">
+                            اختبار التفاعل بين المكونات المترابطة
+                        </p>
+                        
+                        <div class="level-attributes">
+                            <h5 style="color: var(--cyan);">🎯 Test Object:</h5>
+                            <ul>
+                                <li>Interfaces between components</li>
+                                <li>Integrated modules</li>
+                                <li>API calls and responses</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-attributes">
+                            <h5 style="color: var(--cyan);">📋 Test Objectives:</h5>
+                            <ul>
+                                <li>Interface صحيح بين Modules</li>
+                                <li>Data flow سليم</li>
+                                <li>Integration strategy فعالة</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-attributes">
+                            <h5 style="color: var(--cyan);">🔧 Integration Strategy:</h5>
+                            <ul>
+                                <li>Bottom-up approach</li>
+                                <li>Top-down approach</li>
+                                <li>Big-bang approach</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- System Testing -->
+                    <div class="level-card system">
+                        <div class="level-card-icon" style="color: var(--purple);">🖥️</div>
+                        <h4 style="color: var(--purple);">System Testing</h4>
+                        <p style="color: #6b21a8; font-weight: 500; margin-bottom: 15px;">
+                            اختبار النظام الكامل والسلوك الشامل
+                        </p>
+                        
+                        <div class="level-attributes">
+                            <h5 style="color: var(--purple);">🎯 Test Object:</h5>
+                            <ul>
+                                <li>Complete integrated system</li>
+                                <li>End-to-end functionality</li>
+                                <li>System configurations</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-attributes">
+                            <h5 style="color: var(--purple);">📋 Test Objectives:</h5>
+                            <ul>
+                                <li>End-to-end tasks تعمل</li>
+                                <li>Non-functional requirements</li>
+                                <li>System behavior شامل</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-attributes">
+                            <h5 style="color: var(--purple);">👥 المسؤولية:</h5>
+                            <ul>
+                                <li>Independent test team</li>
+                                <li>Representative test environment</li>
+                                <li>System specifications</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- System Integration Testing -->
+                    <div class="level-card system-integration">
+                        <div class="level-card-icon" style="color: var(--error-color);">🌐</div>
+                        <h4 style="color: var(--error-color);">System Integration</h4>
+                        <p style="color: #7f1d1d; font-weight: 500; margin-bottom: 15px;">
+                            اختبار التكامل مع الأنظمة والخدمات الخارجية
+                        </p>
+                        
+                        <div class="level-attributes">
+                            <h5 style="color: var(--error-color);">🎯 Test Object:</h5>
+                            <ul>
+                                <li>System interfaces</li>
+                                <li>External systems</li>
+                                <li>Third-party services</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-attributes">
+                            <h5 style="color: var(--error-color);">📋 Test Objectives:</h5>
+                            <ul>
+                                <li>External interfaces تعمل</li>
+                                <li>Data exchange صحيح</li>
+                                <li>System-to-system communication</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-attributes">
+                            <h5 style="color: var(--error-color);">🌍 البيئة:</h5>
+                            <ul>
+                                <li>Production-like environment</li>
+                                <li>Real external systems</li>
+                                <li>Network configurations</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Acceptance Testing -->
+                    <div class="level-card acceptance">
+                        <div class="level-card-icon" style="color: var(--success-color);">👥</div>
+                        <h4 style="color: var(--success-color);">Acceptance Testing</h4>
+                        <p style="color: #14532d; font-weight: 500; margin-bottom: 15px;">
+                            التحقق من جاهزية النظام والتحقق من احتياجات المستخدمين
+                        </p>
+                        
+                        <div class="level-attributes">
+                            <h5 style="color: var(--success-color);">🎯 Test Object:</h5>
+                            <ul>
+                                <li>Complete business system</li>
+                                <li>User workflows</li>
+                                <li>Business processes</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-attributes">
+                            <h5 style="color: var(--success-color);">📋 Test Objectives:</h5>
+                            <ul>
+                                <li>User needs متحققة</li>
+                                <li>Business requirements</li>
+                                <li>System readiness للنشر</li>
+                            </ul>
+                        </div>
+
+                        <div class="level-attributes">
+                            <h5 style="color: var(--success-color);">📝 الأنواع:</h5>
+                            <ul>
+                                <li>User Acceptance Testing (UAT)</li>
+                                <li>Operational Acceptance</li>
+                                <li>Alpha/Beta Testing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Distinguishing Attributes -->
+                <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success-color); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--success-color); text-align: center; margin-bottom: 15px;">🔍 الصفات المميزة للمستويات:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--success-color);">🎯 Test Object</strong><br>
+                            <small>ما الذي نختبره؟</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--purple);">📋 Test Objectives</strong><br>
+                            <small>لماذا نختبر؟</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--cyan);">📚 Test Basis</strong><br>
+                            <small>من أين نستمد الاختبارات؟</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--orange);">🐛 Defects & Failures</strong><br>
+                            <small>ما نوع العيوب المتوقعة؟</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--error-color);">👥 Responsibilities</strong><br>
+                            <small>من المسؤول؟</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.2.2 Test Types -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🎯 2.2.2 Test Types</h2>
+            <h3 style="text-align: center; color: var(--orange); margin-bottom: 30px;">أنواع الاختبار الأربعة</h3>
+            
+            <div class="english-quote">
+                "A lot of test types exist and can be applied in projects. In this syllabus, the following <span class="highlight">four test types</span> are addressed: <span class="highlight">Functional testing</span> evaluates the functions that a component or system should perform. <span class="highlight">Non-functional testing</span> evaluates attributes other than functional characteristics. <span class="highlight">Black-box testing</span> is specification-based. <span class="highlight">White-box testing</span> is structure-based."
+            </div>
+            
+            <div class="arabic-explanation">
+                توجد الكثير من أنواع الاختبار ويمكن تطبيقها في المشاريع. في هذا المنهج، يتم تناول <span class="code-term">أربعة أنواع اختبار</span> التالية: <span class="code-term">Functional testing</span> يقيم الوظائف التي يجب أن ينفذها المكون أو النظام. <span class="code-term">Non-functional testing</span> يقيم الخصائص غير الوظيفية. <span class="code-term">Black-box testing</span> مبني على المواصفات. <span class="code-term">White-box testing</span> مبني على البنية.
+            </div>
+
+            <!-- Test Types Overview -->
+            <div class="test-types-section">
+                <h3 style="color: var(--orange); text-align: center; margin-bottom: 25px;">🎭 الأنواع الأربعة للاختبار:</h3>
+                
+                <div class="types-grid">
+                    <!-- Functional Testing -->
+                    <div class="type-card functional">
+                        <div class="type-icon" style="color: var(--emerald);">⚙️</div>
+                        <h4 style="color: var(--emerald);">Functional Testing</h4>
+                        <div class="type-description" style="color: #14532d;">
+                            <strong>يقيم "ماذا" يجب أن يفعل النظام</strong><br>
+                            اختبار الوظائف والميزات الأساسية
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 15px; margin: 15px 0;">
+                            <h5 style="color: var(--emerald); margin-bottom: 10px;">🎯 الأهداف الرئيسية:</h5>
+                            <ul style="list-style: none; text-align: right;">
+                                <li>• <strong>Functional Completeness:</strong> اكتمال الوظائف</li>
+                                <li>• <strong>Functional Correctness:</strong> صحة الوظائف</li>
+                                <li>• <strong>Functional Appropriateness:</strong> ملاءمة الوظائف</li>
+                            </ul>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 15px; margin: 15px 0;">
+                            <h5 style="color: var(--emerald); margin-bottom: 10px;">📋 أمثلة:</h5>
+                            <ul style="list-style: none; text-align: right; font-size: 0.9rem;">
+                                <li>• اختبار تسجيل الدخول</li>
+                                <li>• اختبار عمليات الشراء</li>
+                                <li>• اختبار البحث والفلترة</li>
+                                <li>• اختبار التقارير</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Non-Functional Testing -->
+                    <div class="type-card non-functional">
+                        <div class="type-icon" style="color: var(--purple);">📊</div>
+                        <h4 style="color: var(--purple);">Non-Functional Testing</h4>
+                        <div class="type-description" style="color: #6b21a8;">
+                            <strong>يقيم "كيف" يتصرف النظام</strong><br>
+                            اختبار خصائص الجودة غير الوظيفية
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 15px; margin: 15px 0;">
+                            <h5 style="color: var(--purple); margin-bottom: 10px;">🎯 الهدف الرئيسي:</h5>
+                            <p style="color: #6b21a8; margin: 0; font-size: 0.95rem;">
+                                فحص خصائص الجودة غير الوظيفية حسب معيار ISO/IEC 25010
+                            </p>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 15px; margin: 15px 0;">
+                            <h5 style="color: var(--purple); margin-bottom: 10px;">📋 أمثلة:</h5>
+                            <ul style="list-style: none; text-align: right; font-size: 0.9rem;">
+                                <li>• Performance Testing</li>
+                                <li>• Security Testing</li>
+                                <li>• Usability Testing</li>
+                                <li>• Load Testing</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Black-box Testing -->
+                    <div class="type-card black-box">
+                        <div class="type-icon" style="color: var(--slate);">⚫</div>
+                        <h4 style="color: var(--slate);">Black-box Testing</h4>
+                        <div class="type-description" style="color: #475569;">
+                            <strong>Specification-based Testing</strong><br>
+                            اختبار بناءً على المواصفات الخارجية
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 15px; margin: 15px 0;">
+                            <h5 style="color: var(--slate); margin-bottom: 10px;">🎯 الهدف الرئيسي:</h5>
+                            <p style="color: #475569; margin: 0; font-size: 0.95rem;">
+                                فحص سلوك النظام مقابل مواصفاته دون معرفة البنية الداخلية
+                            </p>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 15px; margin: 15px 0;">
+                            <h5 style="color: var(--slate); margin-bottom: 10px;">📚 المصادر:</h5>
+                            <ul style="list-style: none; text-align: right; font-size: 0.9rem;">
+                                <li>• Requirements documents</li>
+                                <li>• User stories</li>
+                                <li>• System specifications</li>
+                                <li>• Use cases</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- White-box Testing -->
+                    <div class="type-card white-box">
+                        <div class="type-icon" style="color: var(--cyan);">⚪</div>
+                        <h4 style="color: var(--cyan);">White-box Testing</h4>
+                        <div class="type-description" style="color: #0e7490;">
+                            <strong>Structure-based Testing</strong><br>
+                            اختبار بناءً على البنية الداخلية
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 15px; margin: 15px 0;">
+                            <h5 style="color: var(--cyan); margin-bottom: 10px;">🎯 الهدف الرئيسي:</h5>
+                            <p style="color: #0e7490; margin: 0; font-size: 0.95rem;">
+                                تغطية البنية الأساسية بالاختبارات لمستوى مقبول
+                            </p>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 15px; margin: 15px 0;">
+                            <h5 style="color: var(--cyan); margin-bottom: 10px;">🧰 المصادر:</h5>
+                            <ul style="list-style: none; text-align: right; font-size: 0.9rem;">
+                                <li>• Source code</li>
+                                <li>• Architecture diagrams</li>
+                                <li>• Work flows</li>
+                                <li>• Data flows</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Important Notes -->
+                <div style="background: rgba(255, 255, 255, 0.8); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--orange); text-align: center; margin-bottom: 15px;">💡 نقاط مهمة:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                        <div style="background: white; border: 1px solid var(--orange); border-radius: 10px; padding: 15px; text-align: center;">
+                            <h5 style="color: var(--orange); margin-bottom: 8px;">🔄 تطبيق شامل</h5>
+                            <p style="color: #9a3412; font-size: 0.9rem;">جميع الأنواع الأربعة يمكن تطبيقها في جميع مستويات الاختبار</p>
+                        </div>
+                        <div style="background: white; border: 1px solid var(--purple); border-radius: 10px; padding: 15px; text-align: center;">
+                            <h5 style="color: var(--purple); margin-bottom: 8px;">🎯 تركيز مختلف</h5>
+                            <p style="color: #6b21a8; font-size: 0.9rem;">التركيز يختلف في كل مستوى حسب الهدف والسياق</p>
+                        </div>
+                        <div style="background: white; border: 1px solid var(--emerald); border-radius: 10px; padding: 15px; text-align: center;">
+                            <h5 style="color: var(--emerald); margin-bottom: 8px;">🛠️ تقنيات متنوعة</h5>
+                            <p style="color: #14532d; font-size: 0.9rem;">تقنيات اختبار مختلفة لاشتقاق شروط وحالات الاختبار</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ISO 25010 Non-Functional Characteristics -->
+            <div class="iso-25010">
+                <h3 style="color: var(--purple); text-align: center; margin-bottom: 25px;">📊 ISO/IEC 25010 - خصائص الجودة غير الوظيفية:</h3>
+                
+                <div style="background: white; border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center;">
+                    <p style="color: var(--purple); font-size: 1.1rem; font-weight: 500;">
+                        معيار ISO/IEC 25010 يوفر تصنيفاً شاملاً لـ <strong>7 خصائص أساسية</strong> للجودة غير الوظيفية
+                    </p>
+                </div>
+
+                <div class="iso-grid">
+                    <div class="iso-characteristic">
+                        <h5>⚡ Performance Efficiency</h5>
+                        <p>قدرة النظام على الأداء الفعال مع استغلال الموارد المناسب</p>
+                    </div>
+                    
+                    <div class="iso-characteristic">
+                        <h5>🔗 Compatibility</h5>
+                        <p>قدرة النظام على التوافق مع منتجات أو أنظمة أخرى</p>
+                    </div>
+                    
+                    <div class="iso-characteristic">
+                        <h5>👥 Usability</h5>
+                        <p>قدرة النظام على الاستخدام بفعالية وكفاءة من قبل المستخدمين</p>
+                    </div>
+                    
+                    <div class="iso-characteristic">
+                        <h5>🛡️ Reliability</h5>
+                        <p>قدرة النظام على أداء وظائفه تحت ظروف محددة لفترة معينة</p>
+                    </div>
+                    
+                    <div class="iso-characteristic">
+                        <h5>🔒 Security</h5>
+                        <p>قدرة النظام على حماية المعلومات والبيانات من الوصول غير المصرح</p>
+                    </div>
+                    
+                    <div class="iso-characteristic">
+                        <h5>🔧 Maintainability</h5>
+                        <p>سهولة تعديل وتصحيح وتحسين النظام</p>
+                    </div>
+                    
+                    <div class="iso-characteristic">
+                        <h5>📦 Portability</h5>
+                        <p>قدرة النظام على النقل من بيئة إلى أخرى</p>
+                    </div>
+                </div>
+
+                <!-- Non-Functional Testing Details -->
+                <div style="background: white; border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--purple); text-align: center; margin-bottom: 15px;">⚠️ اعتبارات مهمة للـ Non-Functional Testing:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--purple); margin-bottom: 8px;">⏰ التوقيت المبكر</h6>
+                            <p style="color: #6b21a8; font-size: 0.9rem;">أحياناً من المناسب البدء مبكراً في دورة الحياة (مراجعات، component testing)</p>
+                        </div>
+                        
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--purple); margin-bottom: 8px;">🔗 اشتقاق من Functional</h6>
+                            <p style="color: #6b21a8; font-size: 0.9rem;">العديد من Non-functional tests مشتقة من functional tests</p>
+                        </div>
+                        
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--purple); margin-bottom: 8px;">⚠️ اكتشاف متأخر خطير</h6>
+                            <p style="color: #6b21a8; font-size: 0.9rem;">الاكتشاف المتأخر للعيوب غير الوظيفية تهديد جدي لنجاح المشروع</p>
+                        </div>
+                        
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--purple); margin-bottom: 8px;">🧪 بيئة خاصة</h6>
+                            <p style="color: #6b21a8; font-size: 0.9rem;">أحياناً يحتاج بيئة اختبار خاصة (مثل usability lab)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.2.3 Confirmation Testing and Regression Testing -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🔄 2.2.3 Confirmation & Regression Testing</h2>
+            <h3 style="text-align: center; color: var(--cyan); margin-bottom: 30px;">اختبار التأكيد واختبار الانحدار</h3>
+            
+            <div class="english-quote">
+                "<span class="highlight">Confirmation testing confirms that an original defect has been successfully fixed</span>. <span class="highlight">Regression testing confirms that no adverse consequences have been caused by a change</span>, including a fix that has already been confirmation tested. <span class="highlight">Regression test suites are run many times</span> and generally the number of regression test cases will increase with each iteration or release, so <span class="highlight">regression testing is a strong candidate for automation</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">اختبار التأكيد يؤكد أن العيب الأصلي تم إصلاحه بنجاح</span>. <span class="code-term">اختبار الانحدار يؤكد أن لا توجد عواقب سلبية نتجت عن التغيير</span>، بما في ذلك الإصلاح الذي تم اختبار تأكيده بالفعل. <span class="code-term">مجموعات اختبار الانحدار تُشغل مرات كثيرة</span> وعموماً عدد حالات اختبار الانحدار سيزيد مع كل تكرار أو إطلاق، لذلك <span class="code-term">اختبار الانحدار مرشح قوي للأتمتة</span>.
+            </div>
+
+            <!-- Confirmation vs Regression Comparison -->
+            <div class="confirmation-regression">
+                <h3 style="color: var(--cyan); text-align: center; margin-bottom: 25px;">🔍 مقارنة شاملة: Confirmation vs Regression Testing</h3>
+                
+                <div class="cr-comparison">
+                    <!-- Confirmation Testing -->
+                    <div class="cr-card confirmation">
+                        <div class="cr-icon" style="color: var(--success-color);">✅</div>
+                        <h4 style="color: var(--success-color);">Confirmation Testing</h4>
+                        <p style="color: #14532d; font-weight: 600; font-size: 1.1rem; margin-bottom: 15px;">
+                            يؤكد إصلاح العيب الأصلي
+                        </p>
+
+                        <div class="cr-details">
+                            <h5 style="color: var(--success-color);">🎯 الهدف:</h5>
+                            <ul>
+                                <li>التأكد من إصلاح Defect معين</li>
+                                <li>إعادة تشغيل Test cases الفاشلة</li>
+                                <li>التحقق من عمل الإصلاح</li>
+                            </ul>
+                        </div>
+
+                        <div class="cr-details">
+                            <h5 style="color: var(--success-color);">🛠️ الطرق:</h5>
+                            <ul>
+                                <li>تشغيل Test cases التي فشلت بسبب العيب</li>
+                                <li>إضافة اختبارات جديدة لتغطية الإصلاحات</li>
+                                <li>عندما الوقت/المال محدود: اختبار خطوات الإعادة فقط</li>
+                            </ul>
+                        </div>
+
+                        <div class="cr-details">
+                            <h5 style="color: var(--success-color);">⏰ التوقيت:</h5>
+                            <ul>
+                                <li>بعد إصلاح Developer للعيب</li>
+                                <li>قبل Regression Testing</li>
+                                <li>في نفس Test level للعيب</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="vs-divider">VS</div>
+
+                    <!-- Regression Testing -->
+                    <div class="cr-card regression">
+                        <div class="cr-icon" style="color: var(--error-color);">🔄</div>
+                        <h4 style="color: var(--error-color);">Regression Testing</h4>
+                        <p style="color: #7f1d1d; font-weight: 600; font-size: 1.1rem; margin-bottom: 15px;">
+                            يؤكد عدم وجود عواقب سلبية
+                        </p>
+
+                        <div class="cr-details">
+                            <h5 style="color: var(--error-color);">🎯 الهدف:</h5>
+                            <ul>
+                                <li>ضمان عدم تأثير التغييرات سلبياً</li>
+                                <li>فحص نفس Component والمرتبطة</li>
+                                <li>فحص الأنظمة المتصلة</li>
+                            </ul>
+                        </div>
+
+                        <div class="cr-details">
+                            <h5 style="color: var(--error-color);">🛠️ الطرق:</h5>
+                            <ul>
+                                <li>Impact Analysis لتحديد النطاق</li>
+                                <li>تشغيل مجموعة اختبارات واسعة</li>
+                                <li>فحص البيئة أيضاً، ليس فقط Test object</li>
+                            </ul>
+                        </div>
+
+                        <div class="cr-details">
+                            <h5 style="color: var(--error-color);">🤖 الأتمتة:</h5>
+                            <ul>
+                                <li>مرشح قوي للأتمتة</li>
+                                <li>Test suites تزيد مع كل Release</li>
+                                <li>CI/CD integration مهم</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impact Analysis Process -->
+                <div style="background: white; border-radius: 15px; padding: 25px; margin: 25px 0;">
+                    <h4 style="color: var(--cyan); text-align: center; margin-bottom: 20px;">📊 Impact Analysis Process:</h4>
+                    
+                    <div style="background: rgba(6, 182, 212, 0.1); border: 2px solid var(--cyan); border-radius: 15px; padding: 20px; margin: 15px 0;">
+                        <h5 style="color: var(--cyan); margin-bottom: 15px;">🔍 لماذا Impact Analysis؟</h5>
+                        <p style="color: #0e7490; font-size: 1.1rem; font-weight: 500;">
+                            "من المستحسن أولاً إجراء <strong>تحليل التأثير</strong> لتحسين نطاق اختبار الانحدار. 
+                            تحليل التأثير يُظهر أي أجزاء من البرنامج يمكن أن تتأثر."
+                        </p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid var(--cyan); border-radius: 10px; padding: 15px; text-align: center;">
+                            <h6 style="color: var(--cyan); margin-bottom: 8px;">🎯 تحديد النطاق</h6>
+                            <p style="color: #0e7490; font-size: 0.9rem;">أي أجزاء ستتأثر بالتغيير؟</p>
+                        </div>
+                        
+                        <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid var(--cyan); border-radius: 10px; padding: 15px; text-align: center;">
+                            <h6 style="color: var(--cyan); margin-bottom: 8px;">⚖️ تقييم المخاطر</h6>
+                            <p style="color: #0e7490; font-size: 0.9rem;">ما مستوى المخاطر لكل جزء؟</p>
+                        </div>
+                        
+                        <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid var(--cyan); border-radius: 10px; padding: 15px; text-align: center;">
+                            <h6 style="color: var(--cyan); margin-bottom: 8px;">📋 تحديد الاختبارات</h6>
+                            <p style="color: #0e7490; font-size: 0.9rem;">أي اختبارات يجب إعادة تشغيلها؟</p>
+                        </div>
+                        
+                        <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid var(--cyan); border-radius: 10px; padding: 15px; text-align: center;">
+                            <h6 style="color: var(--cyan); margin-bottom: 8px;">🚀 تحسين الكفاءة</h6>
+                            <p style="color: #0e7490; font-size: 0.9rem;">تشغيل الأهم أولاً وتوفير الوقت</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Automation Strategy -->
+            <div class="automation-section">
+                <h3 style="color: var(--violet); text-align: center; margin-bottom: 25px;">🤖 استراتيجية أتمتة Regression Testing:</h3>
+                
+                <div class="automation-flow">
+                    <h4 style="color: var(--violet); text-align: center; margin-bottom: 20px;">🔄 تطور Regression Test Suite:</h4>
+                    
+                    <div class="flow-steps">
+                        <div class="flow-step">
+                            <strong>Iteration 1</strong><br>
+                            <small>50 Test Cases</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <strong>Iteration 2</strong><br>
+                            <small>100 Test Cases</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <strong>Iteration 3</strong><br>
+                            <small>200 Test Cases</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <strong>Release</strong><br>
+                            <small>500+ Test Cases</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Automation Benefits -->
+                <div style="background: white; border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--violet); text-align: center; margin-bottom: 15px;">✨ فوائد أتمتة Regression Testing:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--violet); margin-bottom: 8px;">⏱️ توفير الوقت</h6>
+                            <p style="color: #6b21a8; font-size: 0.9rem;">تشغيل مئات الاختبارات في دقائق بدلاً من أيام</p>
+                        </div>
+                        
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--violet); margin-bottom: 8px;">🎯 دقة عالية</h6>
+                            <p style="color: #6b21a8; font-size: 0.9rem;">تجنب الأخطاء البشرية في الاختبارات المتكررة</p>
+                        </div>
+                        
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--violet); margin-bottom: 8px;">🔄 تشغيل متكرر</h6>
+                            <p style="color: #6b21a8; font-size: 0.9rem;">إمكانية التشغيل المستمر مع كل build جديد</p>
+                        </div>
+                        
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--violet); margin-bottom: 8px;">📊 تغطية أوسع</h6>
+                            <p style="color: #6b21a8; font-size: 0.9rem;">إمكانية اختبار سيناريوهات أكثر وأعمق</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CI/CD Integration -->
+                <div style="background: white; border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--violet); text-align: center; margin-bottom: 15px;">🔗 تكامل مع CI/CD:</h4>
+                    
+                    <div style="background: rgba(139, 92, 246, 0.1); border: 2px solid var(--violet); border-radius: 15px; padding: 20px; margin: 15px 0;">
+                        <p style="color: #6b21a8; font-size: 1.1rem; font-weight: 500; text-align: center;">
+                            "عند استخدام CI (كما في DevOps)، من الممارسات الجيدة تضمين <strong>automated regression tests</strong>. 
+                            حسب الحالة، قد يشمل هذا regression tests في مستويات مختلفة."
+                        </p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+                        <div style="background: rgba(139, 92, 246, 0.1); padding: 15px; border-radius: 10px; text-align: center;">
+                            <strong style="color: var(--violet);">Unit Level</strong><br>
+                            <small style="color: #6b21a8;">مع كل commit</small>
+                        </div>
+                        <div style="background: rgba(139, 92, 246, 0.1); padding: 15px; border-radius: 10px; text-align: center;">
+                            <strong style="color: var(--violet);">Integration Level</strong><br>
+                            <small style="color: #6b21a8;">مع كل build</small>
+                        </div>
+                        <div style="background: rgba(139, 92, 246, 0.1); padding: 15px; border-radius: 10px; text-align: center;">
+                            <strong style="color: var(--violet);">System Level</strong><br>
+                            <small style="color: #6b21a8;">Daily builds</small>
+                        </div>
+                        <div style="background: rgba(139, 92, 246, 0.1); padding: 15px; border-radius: 10px; text-align: center;">
+                            <strong style="color: var(--violet);">Acceptance Level</strong><br>
+                            <small style="color: #6b21a8;">قبل Release</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Implementation Guidelines -->
+                <div style="background: rgba(245, 158, 11, 0.1); border: 2px solid var(--accent-color); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--accent-color); text-align: center; margin-bottom: 15px;">🛠️ إرشادات التطبيق:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div style="text-align: center;">
+                            <strong style="color: var(--accent-color);">⏰ البدء المبكر</strong><br>
+                            <small style="color: #92400e;">بدء الأتمتة مبكراً في المشروع</small>
+                        </div>
+                        <div style="text-align: center;">
+                            <strong style="color: var(--accent-color);">📊 جميع المستويات</strong><br>
+                            <small style="color: #92400e;">تطبيق في جميع test levels</small>
+                        </div>
+                        <div style="text-alignment: center;">
+                            <strong style="color: var(--accent-color);">🔄 تحديث مستمر</strong><br>
+                            <small style="color: #92400e;">تحديث مع كل تغيير في النظام</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">📋 ملخص القسم 2.2</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+                <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid var(--success-color); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--success-color); margin-bottom: 10px;">📊 5 Test Levels</h5>
+                    <p style="color: #14532d; font-size: 0.95rem;">من Component إلى Acceptance - هرم شامل مع 5 صفات مميزة</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fef7ed 0%, #fed7aa 100%); border: 2px solid var(--orange); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--orange); margin-bottom: 10px;">🎯 4 Test Types</h5>
+                    <p style="color: #9a3412; font-size: 0.95rem;">Functional, Non-functional, Black-box, White-box</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); border: 2px solid var(--purple); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--purple); margin-bottom: 10px;">📊 ISO 25010</h5>
+                    <p style="color: #6b21a8; font-size: 0.95rem;">7 خصائص جودة غير وظيفية معيارية</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid var(--cyan); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--cyan); margin-bottom: 10px;">🔄 Confirmation & Regression</h5>
+                    <p style="color: #0e7490; font-size: 0.95rem;">إصلاح العيوب + ضمان عدم التأثير السلبي</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Objectives Summary -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">✅ تأكيد تحقيق الـ Learning Objectives</h2>
+            
+            <div class="learning-objectives">
+                <h3>تم تغطية جميع الـ Learning Objectives بنجاح:</h3>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.2.1 (K2):</strong> تمييز شامل بين 5 مستويات اختبار مع الهرم والصفات المميزة</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.2.2 (K2):</strong> تمييز مفصل بين 4 أنواع اختبار مع ISO 25010 وأمثلة عملية</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.2.3 (K2):</strong> تمييز واضح بين Confirmation وRegression مع الأتمتة والـ CI/CD</span>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%); border: 2px solid var(--accent-color); border-radius: 20px; padding: 30px; margin: 20px 0;">
+                <h3 style="color: var(--accent-color); text-align: center; margin-bottom: 15px;">🎓 الخبرات العملية المكتسبة:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="text-align: center;">
+                        <strong>📊 فهم الهيكل</strong><br>
+                        <small>هرم مستويات الاختبار الخمسة</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🎯 تصنيف الأنواع</strong><br>
+                        <small>4 أنواع اختبار أساسية</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>📊 معايير الجودة</strong><br>
+                        <small>ISO 25010 للخصائص غير الوظيفية</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🔄 إدارة التغيير</strong><br>
+                        <small>Confirmation وRegression بفعالية</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🤖 استراتيجية الأتمتة</strong><br>
+                        <small>أتمتة Regression مع CI/CD</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer and Navigation -->
+        <div class="footer">
+            <h3 style="color: var(--success-color); margin-bottom: 20px;">🎉 تمت تغطية جميع "Test Levels & Types" بالتفصيل الشامل</h3>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">
+                القسم القادم: <strong>2.3 Maintenance Testing</strong><br>
+                "بنفس المستوى من التفصيل والجودة والتفاعل 💪"
+            </p>
+
+            <!-- Navigation -->
+            <nav class="section-nav">
+                <div class="nav-grid">
+                    <a href="#" class="nav-btn">القسم 2.1<br>SDLC Context</a>
+                    <a href="#" class="nav-btn current">القسم 2.2<br>Test Levels & Types</a>
+                    <a href="#" class="nav-btn">القسم 2.3<br>Maintenance Testing</a>
+                    <a href="#" class="nav-btn">الفصل الثاني<br>Chapter Summary</a>
+                </div>
+                <div style="text-align: center; margin-top: 20px; color: var(--text-light);">
+                    من الفصل الثاني<br>
+                    من القسم 2.2<br>
+                    Learning Objectives
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Progress bar
+        function updateProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+
+        // Add bounce effect on hover for important elements
+        document.querySelectorAll('.highlight').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.classList.add('bounce');
+                setTimeout(() => {
+                    this.classList.remove('bounce');
+                }, 600);
+            });
+        });
+
+        // Pyramid levels hover effect
+        document.querySelectorAll('.pyramid-level').forEach(level => {
+            level.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            level.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Level cards animation
+        document.querySelectorAll('.level-card').forEach((card, index) => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Type cards hover effect
+        document.querySelectorAll('.type-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // ISO characteristics animation
+        document.querySelectorAll('.iso-characteristic').forEach((char, index) => {
+            char.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.05)';
+            });
+            
+            char.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // CR cards hover effect
+        document.querySelectorAll('.cr-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Flow steps animation
+        document.querySelectorAll('.flow-step').forEach((step, index) => {
+            step.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.05)';
+            });
+            
+            step.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 20%, 60%, 100% { transform: translateY(0); }
+                40% { transform: translateY(-10px); }
+                80% { transform: translateY(-5px); }
+            }
+            
+            .highlight {
+                cursor: pointer;
+            }
+            
+            .nav-btn:active {
+                transform: scale(0.95);
+            }
+            
+            .section-card {
+                scroll-margin-top: 100px;
+            }
+            
+            .level-card-icon,
+            .type-icon,
+            .cr-icon {
+                animation: pulse 3s ease-in-out infinite;
+            }
+            
+            @keyframes fadeInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Pyramid level click to scroll to detailed section
+        document.querySelectorAll('.pyramid-level').forEach((level, index) => {
+            level.addEventListener('click', function() {
+                const detailedCards = document.querySelectorAll('.level-card');
+                if (detailedCards[index]) {
+                    detailedCards[index].scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    // Highlight the corresponding card
+                    detailedCards[index].style.boxShadow = '0 30px 60px rgba(16, 185, 129, 0.3)';
+                    setTimeout(() => {
+                        detailedCards[index].style.boxShadow = '';
+                    }, 2000);
+                }
+            });
+        });
+
+        // Initialize tooltips for mobile
+        if (window.innerWidth <= 768) {
+            document.querySelectorAll('[title]').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    const tooltip = document.createElement('div');
+                    tooltip.textContent = this.getAttribute('title');
+                    tooltip.style.cssText = `
+                        position: absolute;
+                        background: rgba(0,0,0,0.8);
+                        color: white;
+                        padding: 5px 10px;
+                        border-radius: 4px;
+                        font-size: 12px;
+                        top: -30px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        z-index: 1000;
+                    `;
+                    this.style.position = 'relative';
+                    this.appendChild(tooltip);
+                    
+                    setTimeout(() => {
+                        if (tooltip.parentNode) {
+                            tooltip.parentNode.removeChild(tooltip);
+                        }
+                    }, 2000);
+                });
+            });
+        }
+
+        console.log('🎉 2.2 Test Levels & Test Types - تم تحميل الصفحة بنجاح!');
+        console.log('📊 جميع جوانب Test Levels والـ Test Types تم شرحها بالتفصيل');
+        console.log('🎯 تم تغطية جميع Learning Objectives بنجاح مع التطبيقات العملية');
+    </script>
+</body>
+</html>

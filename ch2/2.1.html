@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.1 Testing in the Context of SDLC - الشرح الكامل والشامل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
+            --highlight-bg: #fef3c7;
+            --highlight-text: #92400e;
+            --purple: #7c3aed;
+            --orange: #ea580c;
+            --pink: #ec4899;
+            --cyan: #06b6d4;
+            --indigo: #6366f1;
+            --green: #059669;
+            --red: #dc2626;
+            --yellow: #d97706;
+            --teal: #0d9488;
+            --lime: #65a30d;
+            --emerald: #059669;
+            --violet: #8b5cf6;
+            --rose: #f43f5e;
+            --slate: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--success-color), var(--pink));
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        .section-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .section-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+            border-radius: 2px;
+        }
+
+        .english-quote {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-left: 5px solid var(--cyan);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #0277bd;
+            font-weight: 600;
+        }
+
+        .arabic-explanation {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border-right: 5px solid var(--purple);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #6b21a8;
+        }
+
+        .highlight {
+            background: var(--highlight-bg);
+            color: var(--highlight-text);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .code-term {
+            background: #1f2937;
+            color: #f59e0b;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 600;
+        }
+
+        .sdlc-models {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 3px solid var(--success-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .model-card {
+            background: white;
+            border: 3px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .model-card:hover::before {
+            left: 100%;
+        }
+
+        .model-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .model-card.sequential {
+            border-color: var(--indigo);
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+        }
+
+        .model-card.iterative {
+            border-color: var(--emerald);
+            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+        }
+
+        .model-card.agile {
+            border-color: var(--orange);
+            background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+        }
+
+        .model-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .model-card h4 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .model-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .model-examples {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .model-examples h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .model-examples ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .model-examples li {
+            font-size: 0.9rem;
+            margin: 5px 0;
+            padding: 5px 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .model-examples li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-3px);
+        }
+
+        .impact-factors {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border: 3px solid var(--accent-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .factor-card {
+            background: white;
+            border: 2px solid var(--accent-color);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .factor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.2);
+        }
+
+        .factor-card h5 {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .factor-card p {
+            font-size: 1rem;
+            color: #92400e;
+            line-height: 1.5;
+        }
+
+        .tdd-comparison {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 3px solid var(--cyan);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .tdd-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .tdd-card {
+            background: white;
+            border: 3px solid transparent;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tdd-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tdd-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .tdd-card.tdd-style {
+            border-color: var(--emerald);
+        }
+
+        .tdd-card.atdd-style {
+            border-color: var(--purple);
+        }
+
+        .tdd-card.bdd-style {
+            border-color: var(--orange);
+        }
+
+        .tdd-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tdd-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tdd-focus {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tdd-focus h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .tdd-process {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tdd-process ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .tdd-process li {
+            font-size: 0.9rem;
+            margin: 5px 0;
+            padding: 5px 8px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .tdd-process li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-3px);
+        }
+
+        .devops-section {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border: 3px solid var(--purple);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .devops-pipeline {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .pipeline-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 800px;
+            gap: 15px;
+        }
+
+        .pipeline-step {
+            background: linear-gradient(135deg, var(--purple), var(--violet));
+            color: white;
+            border-radius: 15px;
+            padding: 15px 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pipeline-step:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(124, 58, 237, 0.3);
+        }
+
+        .pipeline-arrow {
+            font-size: 1.8rem;
+            color: var(--purple);
+            font-weight: 700;
+        }
+
+        .benefits-drawbacks {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 25px;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .vs-divider {
+            background: linear-gradient(135deg, var(--error-color), var(--accent-color));
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            padding: 20px;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .benefits-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 3px solid var(--success-color);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .drawbacks-card {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 3px solid var(--error-color);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .benefits-card:hover,
+        .drawbacks-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .benefits-card h4 {
+            color: var(--success-color);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .drawbacks-card h4 {
+            color: var(--error-color);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .benefits-list {
+            list-style: none;
+            text-align: right;
+        }
+
+        .benefits-list li {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .benefits-card .benefits-list li {
+            color: #14532d;
+        }
+
+        .drawbacks-card .benefits-list li {
+            color: #7f1d1d;
+        }
+
+        .benefits-list li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-3px);
+        }
+
+        .shift-left-section {
+            background: linear-gradient(135deg, #fef7ed 0%, #fed7aa 100%);
+            border: 3px solid var(--orange);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .timeline {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline-line {
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(180deg, var(--orange), var(--accent-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -25px;
+            background: var(--orange);
+            border: 4px solid white;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            position: relative;
+            border-radius: 15px;
+            margin-right: 50px;
+            border: 2px solid var(--orange);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateX(-10px);
+            box-shadow: 0 10px 25px rgba(234, 88, 12, 0.2);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: 0;
+            margin-left: 50px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -25px;
+            right: auto;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content:hover {
+            transform: translateX(10px);
+        }
+
+        .shift-practices {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .practice-card {
+            background: white;
+            border: 2px solid var(--orange);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .practice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(234, 88, 12, 0.2);
+        }
+
+        .practice-card h5 {
+            font-size: 1.1rem;
+            color: var(--orange);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .practice-card p {
+            font-size: 0.95rem;
+            color: #9a3412;
+            line-height: 1.5;
+        }
+
+        .retrospectives-section {
+            background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+            border: 3px solid var(--violet);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .retro-flow {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .retro-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .retro-step {
+            background: linear-gradient(135deg, var(--violet), var(--purple));
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .retro-step:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .retro-step h5 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .retro-step p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .learning-objectives {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 3px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .learning-objectives h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .objective-item {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .objective-item:hover {
+            border-color: var(--primary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+        }
+
+        .objective-check {
+            color: var(--success-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            min-width: 25px;
+        }
+
+        .objective-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .footer {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-nav {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .nav-btn.current {
+            background: linear-gradient(135deg, var(--accent-color), var(--orange));
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-card {
+                padding: 25px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .models-grid,
+            .tdd-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-drawbacks {
+                grid-template-columns: 1fr;
+            }
+
+            .vs-divider {
+                order: 2;
+                margin: 20px auto;
+            }
+
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-item::after {
+                left: 11px;
+                right: auto;
+            }
+
+            .timeline-content {
+                margin-right: 0;
+                margin-left: 50px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 50px;
+                margin-right: 0;
+            }
+
+            .pipeline-flow {
+                flex-direction: column;
+                min-width: auto;
+            }
+
+            .pipeline-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 60%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            80% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🔄 2.1 Testing in the Context of SDLC</h1>
+            <div class="subtitle">Testing في سياق دورة تطوير البرامج - الشرح الكامل والشامل</div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🎯 Learning Objectives لهذا القسم:</h2>
+            
+            <div class="learning-objectives">
+                <h3>بعد دراسة هذا القسم هتقدر تـ:</h3>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.1 (K2):</strong> تشرح تأثير دورة تطوير البرامج المختارة على Testing</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.2 (K1):</strong> تتذكر ممارسات Testing الجيدة لجميع دورات التطوير</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.3 (K1):</strong> تتذكر أمثلة نُهج Test-First في التطوير</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.4 (K2):</strong> تلخص كيف يمكن أن يؤثر DevOps على Testing</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.5 (K2):</strong> تشرح نهج Shift-Left Approach</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.6 (K2):</strong> تشرح كيف تُستخدم Retrospectives لتحسين العملية</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Introduction: SDLC and Testing -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🌟 مقدمة: SDLC وعلاقته بـ Testing</h2>
+            
+            <div class="english-quote">
+                "A <span class="highlight">software development lifecycle (SDLC) model</span> is an abstract, high-level representation of the software development process. A SDLC model defines how different development phases and types of activities performed within this process relate to each other, both logically and chronologically. Examples of SDLC models include: <span class="highlight">sequential development models</span> (e.g., waterfall model, V-model), <span class="highlight">iterative development models</span> (e.g., spiral model, prototyping), and <span class="highlight">incremental development models</span> (e.g., Unified Process)."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">نموذج دورة تطوير البرامج (SDLC)</span> هو تمثيل مجرد عالي المستوى لعملية تطوير البرامج. نموذج SDLC يحدد كيف ترتبط مراحل التطوير المختلفة وأنواع الأنشطة المختلفة ببعضها البعض منطقياً وزمنياً. أمثلة على نماذج SDLC تشمل: <span class="code-term">النماذج التسلسلية</span> (مثل Waterfall، V-model)، <span class="code-term">النماذج التكرارية</span> (مثل Spiral، Prototyping)، و<span class="code-term">النماذج التدريجية</span> (مثل Unified Process).
+            </div>
+
+            <!-- SDLC Models Overview -->
+            <div style="background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%); border: 3px solid var(--accent-color); border-radius: 20px; padding: 30px; margin: 30px 0; text-align: center;">
+                <h3 style="color: var(--accent-color); margin-bottom: 20px;">🔄 أنواع SDLC Models الرئيسية:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: white; padding: 15px; border-radius: 10px;">
+                        <strong>📏 Sequential Models</strong><br>
+                        <small>Waterfall, V-Model</small>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 10px;">
+                        <strong>🔄 Iterative Models</strong><br>
+                        <small>Spiral, Prototyping</small>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 10px;">
+                        <strong>📈 Incremental Models</strong><br>
+                        <small>Unified Process, RUP</small>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 10px;">
+                        <strong>🚀 Agile Models</strong><br>
+                        <small>Scrum, XP, Kanban</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.1.1 Impact of SDLC on Testing -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">💥 2.1.1 Impact of SDLC on Testing</h2>
+            <h3 style="text-align: center; color: var(--success-color); margin-bottom: 30px;">تأثير دورة تطوير البرامج على الاختبار</h3>
+            
+            <div class="english-quote">
+                "<span class="highlight">Testing must be adapted to the SDLC to succeed</span>. The choice of the SDLC impacts on the: Scope and timing of test activities, Level of detail of test documentation, Choice of test techniques and test approach, Extent of test automation, Role and responsibilities of a tester."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">يجب تكييف Testing مع SDLC لتحقيق النجاح</span>. اختيار SDLC يؤثر على: نطاق وتوقيت أنشطة الاختبار، مستوى تفاصيل وثائق الاختبار، اختيار تقنيات ونُهج الاختبار، مدى أتمتة الاختبار، دور ومسؤوليات المختبر.
+            </div>
+
+            <!-- Impact Factors -->
+            <div class="impact-factors">
+                <h3 style="color: var(--accent-color); text-align: center; margin-bottom: 25px;">⚡ عوامل تأثير SDLC على Testing:</h3>
+                
+                <div class="factors-grid">
+                    <div class="factor-card">
+                        <h5>⏰ Scope & Timing</h5>
+                        <p>نطاق وتوقيت أنشطة الاختبار - متى نبدأ؟ ماذا نختبر؟</p>
+                    </div>
+                    
+                    <div class="factor-card">
+                        <h5>📄 Documentation Level</h5>
+                        <p>مستوى تفاصيل وثائق الاختبار - من بسيط إلى شامل</p>
+                    </div>
+                    
+                    <div class="factor-card">
+                        <h5>🛠️ Test Techniques</h5>
+                        <p>اختيار تقنيات ونُهج الاختبار المناسبة للنموذج</p>
+                    </div>
+                    
+                    <div class="factor-card">
+                        <h5>🤖 Test Automation</h5>
+                        <p>مدى أتمتة الاختبار - من يدوي إلى آلي بالكامل</p>
+                    </div>
+                    
+                    <div class="factor-card">
+                        <h5>👥 Roles & Responsibilities</h5>
+                        <p>دور ومسؤوليات المختبر في كل مرحلة</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SDLC Models Comparison -->
+            <div class="sdlc-models">
+                <h3 style="color: var(--success-color); text-align: center; margin-bottom: 25px;">🔄 مقارنة نماذج SDLC وتأثيرها على Testing:</h3>
+                
+                <div class="models-grid">
+                    <!-- Sequential Models -->
+                    <div class="model-card sequential">
+                        <div class="model-icon" style="color: var(--indigo);">📏</div>
+                        <h4 style="color: var(--indigo);">Sequential Models</h4>
+                        <div class="model-description" style="color: #3730a3;">
+                            النماذج التسلسلية - كل مرحلة تكتمل قبل الانتقال للتالية
+                        </div>
+                        <div class="model-examples">
+                            <h5 style="color: var(--indigo);">📋 خصائص Testing:</h5>
+                            <ul>
+                                <li>• Testing في المراحل المتأخرة</li>
+                                <li>• وثائق مفصلة وشاملة</li>
+                                <li>• Dynamic Testing متأخر في الدورة</li>
+                                <li>• التركيز على Static Testing مبكراً</li>
+                                <li>• مشاركة Testers في مراجعة المتطلبات</li>
+                            </ul>
+                        </div>
+                        <div class="model-examples">
+                            <h5 style="color: var(--indigo);">🏗️ الأمثلة:</h5>
+                            <ul>
+                                <li>• Waterfall Model</li>
+                                <li>• V-Model</li>
+                                <li>• Linear Sequential Model</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Iterative Models -->
+                    <div class="model-card iterative">
+                        <div class="model-icon" style="color: var(--emerald);">🔄</div>
+                        <h4 style="color: var(--emerald);">Iterative & Incremental</h4>
+                        <div class="model-description" style="color: #14532d;">
+                            النماذج التكرارية والتدريجية - تطوير متكرر مع تحسين مستمر
+                        </div>
+                        <div class="model-examples">
+                            <h5 style="color: var(--emerald);">🔄 خصائص Testing:</h5>
+                            <ul>
+                                <li>• Static & Dynamic Testing في كل تكرار</li>
+                                <li>• تغذية راجعة سريعة مطلوبة</li>
+                                <li>• Regression Testing واسع</li>
+                                <li>• Testing على جميع المستويات</li>
+                                <li>• تطوير Working Prototype كل تكرار</li>
+                            </ul>
+                        </div>
+                        <div class="model-examples">
+                            <h5 style="color: var(--emerald);">🌀 الأمثلة:</h5>
+                            <ul>
+                                <li>• Spiral Model</li>
+                                <li>• Prototyping Model</li>
+                                <li>• Unified Process (RUP)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Agile Models -->
+                    <div class="model-card agile">
+                        <div class="model-icon" style="color: var(--orange);">🚀</div>
+                        <h4 style="color: var(--orange);">Agile Models</h4>
+                        <div class="model-description" style="color: #9a3412;">
+                            النماذج المرنة - تطوير سريع مع تكيف مع التغيير
+                        </div>
+                        <div class="model-examples">
+                            <h5 style="color: var(--orange);">🚀 خصائص Testing:</h5>
+                            <ul>
+                                <li>• وثائق خفيفة الوزن</li>
+                                <li>• Test Automation واسعة</li>
+                                <li>• Experience-based Testing</li>
+                                <li>• تغيير مستمر متوقع</li>
+                                <li>• Regression Testing سهل بالأتمتة</li>
+                            </ul>
+                        </div>
+                        <div class="model-examples">
+                            <h5 style="color: var(--orange);">⚡ الأمثلة:</h5>
+                            <ul>
+                                <li>• Scrum</li>
+                                <li>• Extreme Programming (XP)</li>
+                                <li>• Kanban</li>
+                                <li>• Lean Development</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.1.2 Good Testing Practices -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">✨ 2.1.2 Good Testing Practices</h2>
+            <h3 style="text-align: center; color: var(--cyan); margin-bottom: 30px;">ممارسات Testing الجيدة العامة</h3>
+            
+            <div class="english-quote">
+                "<span class="highlight">Good testing practices, independent of the chosen SDLC model</span>, include the following: For every software development activity, there is a corresponding test activity, Different test levels have specific and different test objectives, Test analysis and design for a given test level begins during the corresponding development phase, Testers are involved in reviewing work products as soon as drafts are available."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">ممارسات Testing الجيدة، بغض النظر عن نموذج SDLC المختار</span>، تشمل التالي: لكل نشاط تطوير برامج، يوجد نشاط اختبار مقابل، مستويات الاختبار المختلفة لها أهداف محددة ومختلفة، تحليل وتصميم الاختبار يبدأ خلال مرحلة التطوير المقابلة، المختبرون يشاركون في مراجعة منتجات العمل بمجرد توفر المسودات.
+            </div>
+
+            <!-- Universal Best Practices -->
+            <div style="background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%); border: 3px solid var(--cyan); border-radius: 20px; padding: 30px; margin: 30px 0;">
+                <h3 style="color: var(--cyan); text-align: center; margin-bottom: 25px;">🌍 أفضل الممارسات العامة - مطبقة في جميع SDLC:</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div style="background: white; border: 2px solid var(--cyan); border-radius: 15px; padding: 20px; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h4 style="color: var(--cyan); margin-bottom: 10px;">🔄 Corresponding Activities</h4>
+                        <p style="color: #0e7490;">لكل نشاط تطوير، يوجد نشاط testing مقابل - Quality Control شامل</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--cyan); border-radius: 15px; padding: 20px; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h4 style="color: var(--cyan); margin-bottom: 10px;">🎯 Specific Objectives</h4>
+                        <p style="color: #0e7490;">مستويات Testing مختلفة لها أهداف محددة - تجنب التكرار</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--cyan); border-radius: 15px; padding: 20px; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h4 style="color: var(--cyan); margin-bottom: 10px;">⏰ Early Test Design</h4>
+                        <p style="color: #0e7490;">Test Analysis والـ Design يبدآن مع مرحلة التطوير المقابلة</p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid var(--cyan); border-radius: 15px; padding: 20px; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h4 style="color: var(--cyan); margin-bottom: 10px;">👥 Early Involvement</h4>
+                        <p style="color: #0e7490;">Testers يشاركون في مراجعة المستندات فور توفرها</p>
+                    </div>
+                </div>
+
+                <!-- Detailed Explanation -->
+                <div style="background: rgba(255, 255, 255, 0.8); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--cyan); text-align: center; margin-bottom: 15px;">📋 شرح تفصيلي للممارسات:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+                        <div>
+                            <h5 style="color: var(--cyan); margin-bottom: 8px;">🔄 المبدأ الأول:</h5>
+                            <p style="color: #0e7490; font-size: 0.95rem;">
+                                <strong>Development Activity → Test Activity</strong><br>
+                                • Requirements → Test Analysis<br>
+                                • Design → Test Design<br>
+                                • Coding → Test Implementation<br>
+                                • Deployment → Test Execution
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h5 style="color: var(--cyan); margin-bottom: 8px;">🎯 المبدأ الثاني:</h5>
+                            <p style="color: #0e7490; font-size: 0.95rem;">
+                                <strong>Test Levels لها أهداف مختلفة</strong><br>
+                                • Unit Testing → Code Logic<br>
+                                • Integration → Interface Issues<br>
+                                • System → End-to-end<br>
+                                • Acceptance → User Needs
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.1.3 Test-First Approaches -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🥇 2.1.3 Test-First Approaches</h2>
+            <h3 style="text-align: center; color: var(--purple); margin-bottom: 30px;">نُهج Test-First في التطوير</h3>
+            
+            <div class="english-quote">
+                "<span class="highlight">TDD, ATDD and BDD are similar development approaches</span>, where tests are defined as a means of directing development. Each of these approaches implements the principle of early testing and follows a shift-left approach, since <span class="highlight">the tests are defined before the code is written</span>. They support an iterative development model."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">TDD، ATDD، وBDD هي نُهج تطوير متشابهة</span>، حيث تُعرَّف الاختبارات كوسيلة لتوجيه التطوير. كل من هذه النُهج تطبق مبدأ الاختبار المبكر وتتبع نهج shift-left، حيث <span class="code-term">تُعرَّف الاختبارات قبل كتابة الكود</span>. تدعم هذه النُهج نموذج التطوير التكراري.
+            </div>
+
+            <!-- TDD, ATDD, BDD Comparison -->
+            <div class="tdd-comparison">
+                <h3 style="color: var(--cyan); text-align: center; margin-bottom: 25px;">🔄 مقارنة شاملة: TDD vs ATDD vs BDD</h3>
+                
+                <div class="tdd-grid">
+                    <!-- TDD -->
+                    <div class="tdd-card tdd-style">
+                        <div class="tdd-icon" style="color: var(--emerald);">⚗️</div>
+                        <h4 style="color: var(--emerald);">Test-Driven Development (TDD)</h4>
+                        
+                        <div class="tdd-focus">
+                            <h5 style="color: var(--emerald);">🎯 التركيز:</h5>
+                            <p style="color: #14532d;">توجيه الـ Coding من خلال Test Cases بدلاً من التصميم المكثف</p>
+                        </div>
+
+                        <div class="tdd-process">
+                            <h5 style="color: var(--emerald);">🔄 العملية:</h5>
+                            <ul>
+                                <li>كتابة Test أولاً</li>
+                                <li>كتابة الـ Code لتمرير الـ Test</li>
+                                <li>Refactoring للكود والـ Tests</li>
+                                <li>تكرار الدورة: Red-Green-Refactor</li>
+                            </ul>
+                        </div>
+
+                        <div class="tdd-focus">
+                            <h5 style="color: var(--emerald);">👥 المسؤولية:</h5>
+                            <p style="color: #14532d;"><strong>المطورون</strong> - تركيز على Unit Testing والكود</p>
+                        </div>
+                    </div>
+
+                    <!-- ATDD -->
+                    <div class="tdd-card atdd-style">
+                        <div class="tdd-icon" style="color: var(--purple);">✅</div>
+                        <h4 style="color: var(--purple);">Acceptance Test-Driven Development (ATDD)</h4>
+                        
+                        <div class="tdd-focus">
+                            <h5 style="color: var(--purple);">🎯 التركيز:</h5>
+                            <p style="color: #5b21b6;">اشتقاق Tests من Acceptance Criteria كجزء من عملية تصميم النظام</p>
+                        </div>
+
+                        <div class="tdd-process">
+                            <h5 style="color: var(--purple);">🔄 العملية:</h5>
+                            <ul>
+                                <li>تحديد Acceptance Criteria</li>
+                                <li>كتابة Acceptance Tests</li>
+                                <li>تطوير التطبيق لتمرير Tests</li>
+                                <li>التحقق من تلبية المتطلبات</li>
+                            </ul>
+                        </div>
+
+                        <div class="tdd-focus">
+                            <h5 style="color: var(--purple);">👥 المسؤولية:</h5>
+                            <p style="color: #5b21b6;"><strong>Business Analysts + Testers</strong> - تركيز على User Requirements</p>
+                        </div>
+                    </div>
+
+                    <!-- BDD -->
+                    <div class="tdd-card bdd-style">
+                        <div class="tdd-icon" style="color: var(--orange);">🎭</div>
+                        <h4 style="color: var(--orange);">Behavior-Driven Development (BDD)</h4>
+                        
+                        <div class="tdd-focus">
+                            <h5 style="color: var(--orange);">🎯 التركيز:</h5>
+                            <p style="color: #9a3412;">التعبير عن السلوك المطلوب بـ Test Cases بلغة طبيعية مفهومة للجميع</p>
+                        </div>
+
+                        <div class="tdd-process">
+                            <h5 style="color: var(--orange);">🔄 العملية:</h5>
+                            <ul>
+                                <li>كتابة Scenarios بـ Given/When/Then</li>
+                                <li>ترجمة تلقائية إلى Executable Tests</li>
+                                <li>تطوير الكود لتمرير السيناريوهات</li>
+                                <li>تحقيق السلوك المطلوب</li>
+                            </ul>
+                        </div>
+
+                        <div class="tdd-focus">
+                            <h5 style="color: var(--orange);">👥 المسؤولية:</h5>
+                            <p style="color: #9a3412;"><strong>All Stakeholders</strong> - لغة مفهومة للجميع</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BDD Example -->
+                <div style="background: white; border-radius: 15px; padding: 25px; margin: 25px 0;">
+                    <h4 style="color: var(--cyan); text-align: center; margin-bottom: 20px;">📝 مثال BDD Scenario:</h4>
+                    
+                    <div style="background: #1f2937; color: #f59e0b; padding: 20px; border-radius: 10px; font-family: 'Source Code Pro', monospace;">
+                        <strong>Feature:</strong> User Login<br><br>
+                        <strong>Scenario:</strong> Successful login with valid credentials<br>
+                        &nbsp;&nbsp;<span style="color: #10b981;">Given</span> the user is on the login page<br>
+                        &nbsp;&nbsp;<span style="color: #06b6d4;">When</span> the user enters valid username and password<br>
+                        &nbsp;&nbsp;<span style="color: #ec4899;">Then</span> the user should be redirected to the dashboard<br>
+                        &nbsp;&nbsp;<span style="color: #ec4899;">And</span> a welcome message should be displayed
+                    </div>
+                    
+                    <p style="color: var(--text-dark); text-align: center; margin-top: 15px;">
+                        هذا السيناريو مفهوم لجميع أصحاب المصلحة ويمكن ترجمته تلقائياً إلى اختبارات قابلة للتنفيذ
+                    </p>
+                </div>
+
+                <!-- Common Benefits -->
+                <div style="background: rgba(255, 255, 255, 0.8); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--cyan); text-align: center; margin-bottom: 15px;">🌟 الفوائد المشتركة للثلاث نُهج:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--success-color);">⏰ Early Testing</strong><br>
+                            <small>اختبار مبكر في دورة التطوير</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--purple);">🔄 Shift-Left</strong><br>
+                            <small>نقل Testing إلى بداية العملية</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--orange);">🔁 Iterative</strong><br>
+                            <small>دعم نماذج التطوير التكرارية</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--cyan);">🤖 Automation</strong><br>
+                            <small>اختبارات آلية لضمان الجودة</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.1.4 DevOps and Testing -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🚀 2.1.4 DevOps and Testing</h2>
+            <h3 style="text-align: center; color: var(--purple); margin-bottom: 30px;">DevOps وتأثيره على Testing</h3>
+            
+            <div class="english-quote">
+                "<span class="highlight">DevOps is an organizational approach</span> aiming to create synergy by getting development (including testing) and operations to work together to achieve a set of common goals. DevOps requires a cultural shift within an organization to bridge the gaps between development and operations while treating their functions with equal value. DevOps promotes <span class="highlight">team autonomy, fast feedback, integrated toolchains, and technical practices like continuous integration (CI) and continuous delivery (CD)</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">DevOps هو نهج تنظيمي</span> يهدف إلى خلق تآزر من خلال جعل التطوير (بما يشمل الاختبار) والعمليات يعملان معاً لتحقيق مجموعة من الأهداف المشتركة. DevOps يتطلب تحولاً ثقافياً داخل المنظمة لسد الفجوات بين التطوير والعمليات مع معاملة وظائفهما بقيمة متساوية. DevOps يعزز <span class="code-term">استقلالية الفريق، التغذية الراجعة السريعة، سلاسل الأدوات المتكاملة، والممارسات التقنية مثل CI وCD</span>.
+            </div>
+
+            <!-- DevOps Pipeline Visualization -->
+            <div class="devops-section">
+                <h3 style="color: var(--purple); text-align: center; margin-bottom: 25px;">🔄 DevOps Delivery Pipeline:</h3>
+                
+                <div class="devops-pipeline">
+                    <div class="pipeline-flow">
+                        <div class="pipeline-step">
+                            <strong>💻 Code</strong><br>
+                            <small>Development</small>
+                        </div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step">
+                            <strong>🔗 Commit</strong><br>
+                            <small>Version Control</small>
+                        </div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step">
+                            <strong>🏗️ Build</strong><br>
+                            <small>Compilation</small>
+                        </div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step">
+                            <strong>🧪 Test</strong><br>
+                            <small>Automated Testing</small>
+                        </div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step">
+                            <strong>🚀 Deploy</strong><br>
+                            <small>Release</small>
+                        </div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step">
+                            <strong>📊 Monitor</strong><br>
+                            <small>Operations</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DevOps Testing Benefits vs Challenges -->
+                <div class="benefits-drawbacks">
+                    <div class="benefits-card">
+                        <h4>✅ فوائد DevOps للـ Testing</h4>
+                        <ul class="benefits-list">
+                            <li><strong>Fast Feedback:</strong> تغذية راجعة سريعة على جودة الكود والتغييرات</li>
+                            <li><strong>Shift-Left Approach:</strong> CI يعزز نهج shift-left في الاختبار</li>
+                            <li><strong>Automated Processes:</strong> أتمتة CI/CD تسهل بيئات اختبار مستقرة</li>
+                            <li><strong>Non-Functional Focus:</strong> زيادة التركيز على خصائص الجودة غير الوظيفية</li>
+                            <li><strong>Reduced Manual Testing:</strong> الأتمتة تقلل الحاجة للاختبار اليدوي المتكرر</li>
+                            <li><strong>Regression Risk:</strong> تقليل مخاطر Regression بالاختبارات الآلية الواسعة</li>
+                        </ul>
+                    </div>
+
+                    <div class="vs-divider">VS</div>
+
+                    <div class="drawbacks-card">
+                        <h4>⚠️ تحديات DevOps</h4>
+                        <ul class="benefits-list">
+                            <li><strong>Pipeline Definition:</strong> يجب تعريف وإنشاء DevOps delivery pipeline</li>
+                            <li><strong>Tool Management:</strong> أدوات CI/CD تحتاج إدخال وصيانة</li>
+                            <li><strong>Automation Resources:</strong> أتمتة الاختبار تحتاج موارد إضافية</li>
+                            <li><strong>Maintenance Complexity:</strong> صعوبة إنشاء وصيانة الأتمتة</li>
+                            <li><strong>Initial Investment:</strong> استثمار كبير في البداية للأدوات والتدريب</li>
+                            <li><strong>Cultural Shift:</strong> تحول ثقافي مطلوب في المنظمة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CI/CD Testing Integration -->
+                <div style="background: white; border-radius: 15px; padding: 25px; margin: 25px 0;">
+                    <h4 style="color: var(--purple); text-align: center; margin-bottom: 20px;">🔧 تكامل Testing في CI/CD:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px; text-align: center;">
+                            <h5 style="color: var(--purple); margin-bottom: 8px;">🧪 Unit Tests</h5>
+                            <p style="color: #5b21b6; font-size: 0.9rem;">تشغل مع كل commit - فحص سريع للوظائف الأساسية</p>
+                        </div>
+                        
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px; text-align: center;">
+                            <h5 style="color: var(--purple); margin-bottom: 8px;">🔗 Integration Tests</h5>
+                            <p style="color: #5b21b6; font-size: 0.9rem;">في مرحلة Build - التحقق من تكامل المكونات</p>
+                        </div>
+                        
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px; text-align: center;">
+                            <h5 style="color: var(--purple); margin-bottom: 8px;">🌐 System Tests</h5>
+                            <p style="color: #5b21b6; font-size: 0.9rem;">في بيئة Staging - اختبار النظام الكامل</p>
+                        </div>
+                        
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px; text-align: center;">
+                            <h5 style="color: var(--purple); margin-bottom: 8px;">📊 Performance Tests</h5>
+                            <p style="color: #5b21b6; font-size: 0.9rem;">في Pipeline - مراقبة الأداء والاستقرار</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Important Note -->
+                <div style="background: rgba(255, 255, 255, 0.8); border: 2px solid var(--accent-color); border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center;">
+                    <h4 style="color: var(--accent-color); margin-bottom: 10px;">⚠️ ملاحظة مهمة:</h4>
+                    <p style="color: #92400e; font-size: 1.1rem; font-weight: 500;">
+                        رغم المستوى العالي من الأتمتة في DevOps، <strong>Manual Testing - خاصة من منظور المستخدم - سيظل مطلوباً</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.1.5 Shift-Left Approach -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">⬅️ 2.1.5 Shift-Left Approach</h2>
+            <h3 style="text-align: center; color: var(--orange); margin-bottom: 30px;">نهج Shift-Left في الاختبار</h3>
+            
+            <div class="english-quote">
+                "The principle of <span class="highlight">early testing</span> is sometimes referred to as <span class="highlight">shift-left</span> because it is an approach where testing is performed earlier in the SDLC. <span class="highlight">Shift-left normally suggests that testing should be done earlier</span> (e.g., not waiting for code to be implemented or for components to be integrated), but it does not mean that testing later in the SDLC should be neglected."
+            </div>
+            
+            <div class="arabic-explanation">
+                مبدأ <span class="code-term">الاختبار المبكر</span> يُشار إليه أحياناً بـ <span class="code-term">shift-left</span> لأنه نهج حيث يتم تنفيذ الاختبار مبكراً في SDLC. <span class="code-term">Shift-left عادة يقترح أن الاختبار يجب أن يتم مبكراً</span> (مثلاً، عدم انتظار تنفيذ الكود أو تكامل المكونات)، لكنه لا يعني أن الاختبار المتأخر في SDLC يجب إهماله.
+            </div>
+
+            <!-- Shift-Left Timeline -->
+            <div class="shift-left-section">
+                <h3 style="color: var(--orange); text-align: center; margin-bottom: 25px;">📊 تطور Shift-Left عبر SDLC:</h3>
+                
+                <div class="timeline">
+                    <div class="timeline-container">
+                        <div class="timeline-line"></div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h4 style="color: var(--orange);">📋 Requirements Phase</h4>
+                                <p><strong>Traditional:</strong> مراجعة المتطلبات<br>
+                                <strong>Shift-Left:</strong> مراجعة المواصفات من منظور Testing + البحث عن الغموض والتناقضات</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h4 style="color: var(--orange);">🎨 Design Phase</h4>
+                                <p><strong>Traditional:</strong> مراجعة التصميم<br>
+                                <strong>Shift-Left:</strong> كتابة Test Cases قبل الكود + تشغيل في Test Harness أثناء التنفيذ</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h4 style="color: var(--orange);">💻 Development Phase</h4>
+                                <p><strong>Traditional:</strong> كتابة الكود<br>
+                                <strong>Shift-Left:</strong> استخدام CI/CD + تغذية راجعة سريعة + Component Tests مع كل commit</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h4 style="color: var(--orange);">🔍 Before Dynamic Testing</h4>
+                                <p><strong>Traditional:</strong> بداية Testing<br>
+                                <strong>Shift-Left:</strong> Static Analysis للكود + Non-functional Testing على مستوى Component</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h4 style="color: var(--orange);">🧪 Testing Phase</h4>
+                                <p><strong>Traditional:</strong> اختبار شامل متأخر<br>
+                                <strong>Shift-Left:</strong> اختبار مستمر + عمليات آلية + بيئات اختبار مستقرة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shift-Left Practices -->
+                <div style="background: white; border-radius: 15px; padding: 25px; margin: 25px 0;">
+                    <h4 style="color: var(--orange); text-align: center; margin-bottom: 20px;">🛠️ ممارسات Shift-Left الأساسية:</h4>
+                    
+                    <div class="shift-practices">
+                        <div class="practice-card">
+                            <h5>📋 Specification Review</h5>
+                            <p>مراجعة المواصفات من منظور Testing للعثور على الغموض والنقص والتناقضات</p>
+                        </div>
+                        
+                        <div class="practice-card">
+                            <h5>✍️ Test-First Writing</h5>
+                            <p>كتابة Test Cases قبل الكود وتشغيلها في Test Harness أثناء التنفيذ</p>
+                        </div>
+                        
+                        <div class="practice-card">
+                            <h5>🔗 CI/CD Integration</h5>
+                            <p>استخدام CI وCD للحصول على تغذية راجعة سريعة مع Component Tests آلية</p>
+                        </div>
+                        
+                        <div class="practice-card">
+                            <h5>🔍 Static Analysis</h5>
+                            <p>إجراء Static Analysis للكود قبل Dynamic Testing أو كجزء من عملية آلية</p>
+                        </div>
+                        
+                        <div class="practice-card">
+                            <h5>⚡ Early Non-Functional</h5>
+                            <p>تنفيذ Non-functional Testing من مستوى Component بدلاً من انتظار النظام الكامل</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cost-Benefit Analysis -->
+                <div style="background: rgba(255, 255, 255, 0.8); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--orange); text-align: center; margin-bottom: 15px;">💰 تحليل التكلفة والعائد:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center;">
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid var(--error-color); border-radius: 15px; padding: 15px; text-align: center;">
+                            <h5 style="color: var(--error-color); margin-bottom: 8px;">📈 تكاليف إضافية مبكراً</h5>
+                            <ul style="list-style: none; color: #7f1d1d; text-align: right;">
+                                <li>• تدريب الفريق</li>
+                                <li>• جهد إضافي في البداية</li>
+                                <li>• استثمار في الأدوات</li>
+                                <li>• تغيير في العمليات</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="font-size: 2rem; color: var(--orange); font-weight: 700;">→</div>
+                        
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success-color); border-radius: 15px; padding: 15px; text-align: center;">
+                            <h5 style="color: var(--success-color); margin-bottom: 8px;">💎 توفيرات لاحقاً</h5>
+                            <ul style="list-style: none; color: #14532d; text-align: right;">
+                                <li>• تقليل تكلفة إصلاح العيوب</li>
+                                <li>• توفير جهد ووقت</li>
+                                <li>• جودة أعلى للمنتج النهائي</li>
+                                <li>• رضا أكبر للعملاء</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stakeholder Buy-in -->
+                <div style="background: rgba(245, 158, 11, 0.1); border: 2px solid var(--accent-color); border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center;">
+                    <h4 style="color: var(--accent-color); margin-bottom: 10px;">🤝 أهمية إقناع أصحاب المصلحة:</h4>
+                    <p style="color: #92400e; font-size: 1.1rem;">
+                        <strong>للنجاح في نهج Shift-Left، من المهم أن يكون أصحاب المصلحة مقتنعين ومؤيدين لهذا المفهوم</strong><br>
+                        <small>يحتاج تغيير في الثقافة والعقلية والاستثمار في التدريب والأدوات</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.1.6 Retrospectives and Process Improvement -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🔄 2.1.6 Retrospectives and Process Improvement</h2>
+            <h3 style="text-align: center; color: var(--violet); margin-bottom: 30px;">Retrospectives وتحسين العمليات</h3>
+            
+            <div class="english-quote">
+                "<span class="highlight">Retrospectives</span> (also known as 'post-project meetings' and project retrospectives) are often held at the end of a project or an iteration, at a release milestone, or can be held when needed. In these meetings the participants discuss: <span class="highlight">What was successful, and should be retained? What was not successful and could be improved? How to incorporate the improvements and retain the successes in the future?</span>"
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">Retrospectives</span> (تُعرف أيضاً بـ 'اجتماعات ما بعد المشروع' ومراجعات المشروع) تُعقد غالباً في نهاية مشروع أو تكرار، في معلم إطلاق، أو يمكن عقدها عند الحاجة. في هذه الاجتماعات يناقش المشاركون: <span class="code-term">ما كان ناجحاً، ويجب الاحتفاظ به؟ ما لم يكن ناجحاً ويمكن تحسينه؟ كيف ندمج التحسينات ونحتفظ بالنجاحات في المستقبل؟</span>
+            </div>
+
+            <!-- Retrospectives Process -->
+            <div class="retrospectives-section">
+                <h3 style="color: var(--violet); text-align: center; margin-bottom: 25px;">🔄 عملية Retrospectives:</h3>
+                
+                <div class="retro-flow">
+                    <h4 style="color: var(--violet); text-align: center; margin-bottom: 20px;">❓ الأسئلة الثلاثة الأساسية:</h4>
+                    
+                    <div class="retro-steps">
+                        <div class="retro-step">
+                            <h5>✅ What was successful?</h5>
+                            <p>ما الذي كان ناجحاً ويجب الاحتفاظ به؟</p>
+                        </div>
+                        
+                        <div class="retro-step">
+                            <h5>❌ What needs improvement?</h5>
+                            <p>ما الذي لم يكن ناجحاً ويمكن تحسينه؟</p>
+                        </div>
+                        
+                        <div class="retro-step">
+                            <h5>🚀 How to improve?</h5>
+                            <p>كيف ندمج التحسينات ونحتفظ بالنجاحات؟</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Participants -->
+                <div style="background: white; border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--violet); text-align: center; margin-bottom: 15px;">👥 المشاركون في Retrospectives:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 8px; padding: 10px; text-align: center;">
+                            <strong style="color: var(--violet);">🧪 Testers</strong>
+                        </div>
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 8px; padding: 10px; text-align: center;">
+                            <strong style="color: var(--violet);">💻 Developers</strong>
+                        </div>
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 8px; padding: 10px; text-align: center;">
+                            <strong style="color: var(--violet);">🏗️ Architects</strong>
+                        </div>
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 8px; padding: 10px; text-align: center;">
+                            <strong style="color: var(--violet);">👔 Product Owner</strong>
+                        </div>
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 8px; padding: 10px; text-align: center;">
+                            <strong style="color: var(--violet);">📊 Business Analysts</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timing and Documentation -->
+                <div style="background: white; border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--violet); text-align: center; margin-bottom: 15px;">⏰ توقيت وتوثيق Retrospectives:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h5 style="color: var(--violet); margin-bottom: 8px;">📅 التوقيت:</h5>
+                            <ul style="list-style: none; color: #5b21b6; text-align: right;">
+                                <li>• نهاية المشروع</li>
+                                <li>• نهاية التكرار (Iteration)</li>
+                                <li>• معالم الإطلاق (Release Milestones)</li>
+                                <li>• عند الحاجة (Ad-hoc)</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h5 style="color: var(--violet); margin-bottom: 8px;">📝 التوثيق:</h5>
+                            <ul style="list-style: none; color: #5b21b6; text-align: right;">
+                                <li>• تسجيل النتائج</li>
+                                <li>• جزء من Test Completion Report</li>
+                                <li>• خطط التحسين</li>
+                                <li>• متابعة التطبيق</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benefits for Testing -->
+                <div style="background: white; border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--violet); text-align: center; margin-bottom: 15px;">🌟 الفوائد النموذجية للـ Testing:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--violet); margin-bottom: 8px;">📈 زيادة فعالية/كفاءة الاختبار</h6>
+                            <p style="color: #5b21b6; font-size: 0.9rem;">تطبيق اقتراحات تحسين العمليات</p>
+                        </div>
+                        
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--violet); margin-bottom: 8px;">🔧 تحسين جودة Testware</h6>
+                            <p style="color: #5b21b6; font-size: 0.9rem;">مراجعة مشتركة لعمليات الاختبار</p>
+                        </div>
+                        
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--violet); margin-bottom: 8px;">🤝 ترابط وتعلم الفريق</h6>
+                            <p style="color: #5b21b6; font-size: 0.9rem;">فرصة لإثارة المشاكل واقتراح التحسينات</p>
+                        </div>
+                        
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--violet); margin-bottom: 8px;">📋 تحسين جودة Test Basis</h6>
+                            <p style="color: #5b21b6; font-size: 0.9rem;">معالجة أوجه القصور في المتطلبات</p>
+                        </div>
+                        
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--violet); border-radius: 10px; padding: 15px;">
+                            <h6 style="color: var(--violet); margin-bottom: 8px;">🔗 تحسين التعاون</h6>
+                            <p style="color: #5b21b6; font-size: 0.9rem;">بين التطوير والاختبار بانتظام</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Critical Success Factor -->
+                <div style="background: rgba(245, 158, 11, 0.1); border: 2px solid var(--accent-color); border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center;">
+                    <h4 style="color: var(--accent-color); margin-bottom: 10px;">🔑 عامل النجاح الحاسم:</h4>
+                    <p style="color: #92400e; font-size: 1.1rem; font-weight: 600;">
+                        <strong>Retrospectives حاسمة للتنفيذ الناجح للتحسين المستمر</strong><br>
+                        <strong>من المهم متابعة أي تحسينات موصى بها</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">📋 ملخص القسم 2.1</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+                <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid var(--success-color); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--success-color); margin-bottom: 10px;">🔄 تأثير SDLC</h5>
+                    <p style="color: #14532d; font-size: 0.95rem;">5 عوامل رئيسية تتأثر بنموذج دورة التطوير</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%); border: 2px solid var(--cyan); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--cyan); margin-bottom: 10px;">✨ ممارسات عامة</h5>
+                    <p style="color: #0e7490; font-size: 0.95rem;">4 ممارسات testing أساسية لجميع SDLC</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid var(--purple); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--purple); margin-bottom: 10px;">🥇 Test-First</h5>
+                    <p style="color: #5b21b6; font-size: 0.95rem;">TDD, ATDD, BDD - 3 نُهج متقدمة</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); border: 2px solid var(--violet); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--violet); margin-bottom: 10px;">🚀 DevOps</h5>
+                    <p style="color: #6b21a8; font-size: 0.95rem;">6 فوائد و6 تحديات للـ Testing</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fef7ed 0%, #fed7aa 100%); border: 2px solid var(--orange); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--orange); margin-bottom: 10px;">⬅️ Shift-Left</h5>
+                    <p style="color: #9a3412; font-size: 0.95rem;">5 ممارسات أساسية للاختبار المبكر</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%); border: 2px solid var(--violet); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--violet); margin-bottom: 10px;">🔄 Retrospectives</h5>
+                    <p style="color: #5b21b6; font-size: 0.95rem;">3 أسئلة أساسية و5 فوائد للتحسين</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Objectives Summary -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">✅ تأكيد تحقيق الـ Learning Objectives</h2>
+            
+            <div class="learning-objectives">
+                <h3>تم تغطية جميع الـ Learning Objectives بنجاح:</h3>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.1 (K2):</strong> شرح شامل لتأثير SDLC على 5 جوانب من Testing مع أمثلة مفصلة</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.2 (K1):</strong> تذكر 4 ممارسات testing جيدة عامة مع شرح مفصل</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.3 (K1):</strong> تذكر أمثلة TDD, ATDD, BDD مع مقارنات وأمثلة عملية</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.4 (K2):</strong> تلخيص تأثير DevOps مع pipeline و6 فوائد و6 تحديات</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.5 (K2):</strong> شرح Shift-Left مع timeline و5 ممارسات وتحليل التكلفة</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-2.1.6 (K2):</strong> شرح Retrospectives مع 3 أسئلة و5 فوائد وعوامل النجاح</span>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%); border: 2px solid var(--accent-color); border-radius: 20px; padding: 30px; margin: 20px 0;">
+                <h3 style="color: var(--accent-color); text-align: center; margin-bottom: 15px;">🎓 المهارات المتقدمة المكتسبة:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="text-align: center;">
+                        <strong>🔄 فهم SDLC</strong><br>
+                        <small>تأثير النماذج المختلفة على Testing</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>✨ ممارسات عامة</strong><br>
+                        <small>أفضل الممارسات لجميع النماذج</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🥇 Test-First</strong><br>
+                        <small>TDD, ATDD, BDD ونُهجها</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🚀 DevOps Integration</strong><br>
+                        <small>CI/CD وتأثيرها على Testing</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>⬅️ Shift-Left Strategy</strong><br>
+                        <small>الاختبار المبكر والفوائد</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🔄 Continuous Improvement</strong><br>
+                        <small>Retrospectives وتحسين العمليات</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer and Navigation -->
+        <div class="footer">
+            <h3 style="color: var(--success-color); margin-bottom: 20px;">🎉 تمت تغطية جميع "Testing in SDLC Context" بالتفصيل الشامل</h3>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">
+                القسم القادم: <strong>2.2 Test Levels and Test Types</strong><br>
+                "بنفس المستوى من التفصيل والجودة والتفاعل 💪"
+            </p>
+
+            <!-- Navigation -->
+            <nav class="section-nav">
+                <div class="nav-grid">
+                    <a href="#" class="nav-btn current">القسم 2.1<br>SDLC Context</a>
+                    <a href="#" class="nav-btn">القسم 2.2<br>Test Levels & Types</a>
+                    <a href="#" class="nav-btn">القسم 2.3<br>Maintenance Testing</a>
+                    <a href="#" class="nav-btn">الفصل الثاني<br>Chapter Summary</a>
+                </div>
+                <div style="text-align: center; margin-top: 20px; color: var(--text-light);">
+                    من الفصل الثاني<br>
+                    من القسم 2.1<br>
+                    Learning Objectives
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Progress bar
+        function updateProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+
+        // Add bounce effect on hover for important elements
+        document.querySelectorAll('.highlight').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.classList.add('bounce');
+                setTimeout(() => {
+                    this.classList.remove('bounce');
+                }, 600);
+            });
+        });
+
+        // Model cards hover effect
+        document.querySelectorAll('.model-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // TDD cards animation
+        document.querySelectorAll('.tdd-card').forEach((card, index) => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Pipeline steps interactive hover
+        document.querySelectorAll('.pipeline-step').forEach(step => {
+            step.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.05)';
+            });
+            
+            step.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Timeline items animation
+        document.querySelectorAll('.timeline-content').forEach((item, index) => {
+            item.addEventListener('mouseenter', function() {
+                if (index % 2 === 0) {
+                    this.style.transform = 'translateX(-15px)';
+                } else {
+                    this.style.transform = 'translateX(15px)';
+                }
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Retrospective steps animation
+        document.querySelectorAll('.retro-step').forEach((step, index) => {
+            step.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.05)';
+            });
+            
+            step.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 20%, 60%, 100% { transform: translateY(0); }
+                40% { transform: translateY(-10px); }
+                80% { transform: translateY(-5px); }
+            }
+            
+            .highlight {
+                cursor: pointer;
+            }
+            
+            .nav-btn:active {
+                transform: scale(0.95);
+            }
+            
+            .section-card {
+                scroll-margin-top: 100px;
+            }
+            
+            .model-icon,
+            .tdd-icon {
+                animation: pulse 3s ease-in-out infinite;
+            }
+            
+            @keyframes fadeInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize tooltips for mobile
+        if (window.innerWidth <= 768) {
+            document.querySelectorAll('[title]').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    const tooltip = document.createElement('div');
+                    tooltip.textContent = this.getAttribute('title');
+                    tooltip.style.cssText = `
+                        position: absolute;
+                        background: rgba(0,0,0,0.8);
+                        color: white;
+                        padding: 5px 10px;
+                        border-radius: 4px;
+                        font-size: 12px;
+                        top: -30px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        z-index: 1000;
+                    `;
+                    this.style.position = 'relative';
+                    this.appendChild(tooltip);
+                    
+                    setTimeout(() => {
+                        if (tooltip.parentNode) {
+                            tooltip.parentNode.removeChild(tooltip);
+                        }
+                    }, 2000);
+                });
+            });
+        }
+
+        console.log('🎉 2.1 Testing in SDLC Context - تم تحميل الصفحة بنجاح!');
+        console.log('🔄 جميع جوانب SDLC وتأثيرها على Testing تم شرحها بالتفصيل');
+        console.log('🚀 تم تغطية جميع Learning Objectives بنجاح مع التطبيقات العملية');
+    </script>
+</body>
+</html>

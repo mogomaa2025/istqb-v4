@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 5.4 Configuration Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f59e0b; /* Amber */ --secondary: #14b8a6; /* Teal */ --accent: #3b82f6; /* Blue */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af; --warning: #facc15;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.9; margin: 0; padding: 0; direction: rtl; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 20px; background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%); }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(20, 184, 166, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; }
+        .english-item { font-family: 'Source Code Pro', monospace; font-weight: bold; }
+        .section-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-top: 5px solid; border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.2rem; margin-bottom: 20px; display: flex; align-items: center; }
+        .section-title svg { width: 35px; height: 35px; margin-left: 15px; }
+        .english-quote { background-color: rgba(255, 255, 255, 0.03); border-right: 4px solid; padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem; }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        
+        .cm-diagram { background-color: #2a3a4a; padding: 30px; border-radius: 10px; margin-top: 30px; text-align: center; }
+        .cm-diagram-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: center; }
+        .cm-box { background-color: var(--card-bg); padding: 20px; border-radius: 8px; border-bottom: 3px solid var(--primary); }
+        .cm-box svg { width: 40px; height: 40px; color: var(--primary); margin-bottom: 10px; }
+        .cm-arrow { font-size: 2.5rem; color: var(--text-muted); }
+
+        .visual-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 25px; }
+        .visual-table td { background-color: #2a3a4a; padding: 20px; border: 1px solid var(--border-color); }
+        .visual-table td:first-child { border-right: 4px solid var(--primary); font-weight: bold; width: 30%; }
+        
+        .real-life-box { border-top-color: var(--secondary) !important; }
+        .real-life-box .section-title { color: var(--secondary); }
+        .real-life-box pre { background-color: var(--dark-bg); color: var(--text-light); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); direction: ltr; font-family: 'Source Code Pro', monospace; white-space: pre-wrap; word-wrap: break-word; }
+        .real-life-box .comment { color: #6a9955; }
+        
+        @media (max-width: 768px) { .cm-diagram-grid { grid-template-columns: 1fr; } .cm-arrow { transform: rotate(90deg); margin: 15px 0; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>5.4 Configuration Management</h1>
+            <p class="subtitle">إدارة التكوين - ISTQB Foundation Level v4.0</p>
+            <p>هدف التعلم: <span class="code-term">FL-5.4.1 (K2) Summarize how configuration management supports testing</span></p>
+        </header>
+
+        <!-- Block 1: What is Configuration Management? -->
+        <section class="section-card" style="border-top-color: var(--primary);">
+            <h2 class="section-title" style="color:var(--primary);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" /></svg>ما هي إدارة التكوين (CM)؟</h2>
+            <div class="english-quote" style="border-right-color:var(--primary);">
+                "In testing, configuration management (CM) provides a discipline for identifying, controlling, and tracking work products... as configuration items."
+            </div>
+            <div class="arabic-explanation">
+                <p>إدارة التكوين (CM) هي "نظام التحكم" الذي يضمن أننا نعرف دائمًا وبشكل دقيق ما الذي نختبره، وما هي الأدوات التي نستخدمها، وما هي إصدارات كل شيء.</p>
+                <p>تخيل أنك تختبر تطبيقًا. الأسئلة التي تجيب عليها CM هي:</p>
+                <ul>
+                    <li>ما هو إصدار التطبيق الذي أختبره الآن؟ (<span class="code-term">v1.2.1</span> أم <span class="code-term">v1.2.2</span>؟)</li>
+                    <li>ما هو إصدار نظام التشغيل؟ (Windows 11 Build X أم Build Y؟)</li>
+                    <li>ما هي نسخة قاعدة البيانات المستخدمة؟</li>
+                    <li>ما هو إصدار حالات الاختبار التي أنفذها؟</li>
+                </ul>
+                <p>بدون CM، تصبح بيئة الاختبار فوضوية، وتصبح نتائج الاختبار غير موثوقة وغير قابلة للتكرار.</p>
+            </div>
+        </section>
+
+        <!-- Block 2: CM in Action Diagram -->
+        <section class="section-card" style="border-top-color: var(--primary);">
+            <h2 class="section-title" style="color:var(--primary);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M17.834 16.334l-1.591-1.591M12 18.75V21m-5.834-.166l1.591-1.591M3.75 10.5H6m1.966-5.834l1.591 1.591" /></svg>مكونات إدارة التكوين</h2>
+            <div class="arabic-explanation"><p>تتضمن CM ثلاثة أنشطة رئيسية تعمل معًا لدعم الاختبار:</p></div>
+            <div class="cm-diagram">
+                <div class="cm-diagram-grid">
+                    <div class="cm-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+                        <h4>Identifying (تحديد)</h4>
+                        <p>تحديد وتسمية كل عنصر بشكل فريد.</p>
+                    </div>
+                    <div class="cm-arrow">→</div>
+                    <div class="cm-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15V7.5m-4.5 3H12m0 0h4.5m-4.5 0L6 12m6 0l6-3m-6 3V15" /></svg>
+                        <h4>Controlling (تحكم)</h4>
+                        <p>إدارة التغييرات على هذه العناصر.</p>
+                    </div>
+                    <div class="cm-arrow">→</div>
+                    <div class="cm-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>
+                        <h4>Tracking (تتبع)</h4>
+                        <p>تسجيل حالة وهوية كل عنصر بمرور الوقت.</p>
+                    </div>
+                </div>
+            </div>
+             <p class="arabic-explanation" style="margin-top:20px;"><strong>العناصر التي تتم إدارتها (<span class="english-item">Configuration Items</span>):</strong> تشمل كل منتجات العمل (<span class="english-item">work products</span>) مثل <span class="mcq-highlight">test plans, test strategies, test conditions, test cases, test scripts, test results, test logs, and test reports</span>.</p>
+        </section>
+        
+        <!-- Block 3: How CM Supports Testing -->
+        <section class="section-card" style="border-top-color: var(--accent);">
+            <h2 class="section-title" style="color:var(--accent);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>كيف تدعم إدارة التكوين الاختبار؟</h2>
+            <div class="english-quote" style="border-right-color:var(--accent);">
+                "To properly support testing, CM ensures the following:"
+            </div>
+            <table class="visual-table">
+                <tbody>
+                    <tr>
+                        <td><strong>التتبع والتتبع (<span class="english-item">Traceability</span>)</strong></td>
+                        <td><span class="mcq-highlight">"All configuration items... are uniquely identified, version controlled, tracked for changes, and related to other configuration items so that traceability can be maintained throughout the test process."</span><br>تضمن أن كل شيء له هوية فريدة وإصدار، مما يسمح لنا بتتبع العلاقات (مثل: أي حالة اختبار تغطي أي متطلب في أي إصدار من التطبيق).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>الوضوح (<span class="english-item">Unambiguity</span>)</strong></td>
+                        <td><span class="mcq-highlight">"All identified documentation and software items are referenced unambiguously in test documentation."</span><br>تضمن عدم وجود أي غموض. عندما يذكر تقرير عيب "فشل في الإصدار 2.1"، نعرف بالضبط ما هو "الإصدار 2.1".</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Block 4: Baselines and Modern CM -->
+        <section class="section-card" style="border-top-color: var(--secondary);">
+            <h2 class="section-title" style="color:var(--secondary);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75z" /></svg>الخطوط الأساسية (Baselines) و DevOps</h2>
+             <div class="english-quote" style="border-right-color:var(--secondary);">
+                "If the configuration item is approved for testing, it becomes a <span class="mcq-highlight">baseline</span> and can only be changed through a formal change control process. Configuration management keeps a record of changed configuration items when a new baseline is created. It is possible to revert to a previous baseline to reproduce previous test results."
+            </div>
+             <div class="arabic-explanation">
+                <p>الخط الأساسي (<span class="english-item">Baseline</span>) هو "لقطة" متفق عليها ومعتمدة من مجموعة من العناصر في وقت معين. على سبيل المثال، "إصدار 1.0" هو خط أساسي. أي تغيير عليه يجب أن يمر بعملية تحكم رسمية، وهذا ينتج خطًا أساسيًا جديدًا (مثل "إصدار 1.1"). القدرة على العودة إلى خط أساسي قديم أمر بالغ الأهمية لإعادة إنتاج الأخطاء القديمة والتحقق منها.</p>
+                <p>في الممارسات الحديثة:</p>
+            </div>
+            <div class="english-quote" style="border-right-color:var(--secondary);">
+                "Continuous integration, continuous delivery, continuous deployment and the associated testing are typically implemented as part of an automated <span class="mcq-highlight">DevOps pipeline</span>..., in which automated CM is normally included."
+            </div>
+        </section>
+
+        <!-- Block 5: Real-World Example -->
+        <section class="section-card real-life-box">
+            <h2 class="section-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>دراسة حالة: استخدام Git و Jenkins لإدارة التكوين</h2>
+            <p>تعتبر أنظمة التحكم في الإصدارات مثل <strong>Git</strong> وأدوات CI/CD مثل <strong>Jenkins</strong> هي العمود الفقري لإدارة التكوين الحديثة.</p>
+            <p><strong>السيناريو:</strong> مختبر يكتشف عيبًا حرجًا في بيئة الإنتاج.</p>
+            <pre><code class="language-bash"><span class="comment"># 1. المطور يحدد المشكلة</span>
+git checkout -b fix/bug-123 v2.5.1
+<span class="comment"># يقوم بإنشاء فرع جديد من الإصدار v2.5.1 بالضبط (Baseline)</span>
+<span class="comment"># ... يكتب الكود لإصلاح الخلل ...</span>
+git commit -m "Fix critical bug #123 in payment module"
+
+<span class="comment"># 2. Jenkins (أداة CI/CD) يتولى الأمر</span>
+<span class="comment"># Jenkins يكتشف التغيير، يقوم بسحب الكود، ويبني إصدارًا جديدًا للاختبار (e.g., v2.5.2-beta)</span>
+<span class="comment"># يقوم بتشغيل جميع الاختبارات الآلية على هذا الإصدار المحدد.</span>
+
+<span class="comment"># 3. المختبر يقوم بالتحقق</span>
+<span class="comment"># المختبر يتلقى إشعارًا بأن الإصدار v2.5.2-beta جاهز للاختبار.</span>
+<span class="comment"># هو يعرف بالضبط ما هو الإصدار الذي يختبره (unambiguous)</span>
+<span class="comment"># ويعرف بالضبط ما هو التغيير الذي يحتويه (traceability).</span>
+
+<span class="comment"># إذا فشلت الاختبارات، يمكن دائمًا العودة إلى الإصدار v2.5.1 (revert to baseline).</span>
+</code></pre>
+            <p>هذا يوضح كيف تضمن أدوات CM الحديثة أن عملية الاختبار منظمة وموثوقة وقابلة للتكرار.</p>
+        </section>
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>

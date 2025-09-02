@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 5.3 Monitoring, Control & Completion (Corrected)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0ea5e9; /* Sky Blue */ --secondary: #10b981; /* Emerald */ --accent: #f97316; /* Orange */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af; --warning: #facc15;
+            --monitor-color: #3b82f6; --control-color: #8b5cf6; --completion-color: #10b981;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.9; margin: 0; padding: 0; direction: rtl; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 20px; background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%); }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(16, 185, 129, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; }
+        .english-item { font-family: 'Source Code Pro', monospace; font-weight: bold; }
+        .section-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-top: 5px solid; border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.2rem; margin-bottom: 20px; display: flex; align-items: center; }
+        .section-title svg { width: 35px; height: 35px; margin-left: 15px; }
+        .english-quote { background-color: rgba(255, 255, 255, 0.03); border-right: 4px solid; padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem; }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        
+        .process-flow-diagram { display: flex; justify-content: space-around; align-items: center; text-align: center; margin: 40px 0; padding: 20px; background-color: #2a3a4a; border-radius: 10px; }
+        .flow-step { flex: 1; }
+        .flow-step svg { width: 60px; height: 60px; margin-bottom: 10px; }
+        .flow-arrow { font-size: 3rem; color: var(--text-muted); padding: 0 20px; }
+        
+        .visual-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 25px; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
+        .visual-table th, .visual-table td { padding: 18px; text-align: right; border-bottom: 1px solid var(--border-color); }
+        .visual-table thead th { background-color: #2a3a4a; font-size: 1.2rem; }
+        .visual-table tbody td { background-color: var(--card-bg); }
+        .visual-table tbody tr:last-child td { border-bottom: none; }
+        .visual-table ul { padding-right: 20px; margin: 0; }
+        .visual-table .category-cell { font-weight: bold; display: flex; align-items: center; }
+        .category-dot { width: 12px; height: 12px; border-radius: 50%; margin-left: 10px; flex-shrink: 0; }
+
+        .real-life-box { border-top-color: var(--accent) !important; }
+        .real-life-box .section-title { color: var(--accent); }
+        .dashboard-img { width: 100%; max-width: 800px; border-radius: 8px; margin-top: 20px; border: 2px solid var(--border-color); display: block; margin-left: auto; margin-right: auto; }
+
+        @media (max-width: 768px) { .process-flow-diagram { flex-direction: column; } .flow-arrow { transform: rotate(90deg); margin: 20px 0; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>5.3 Test Monitoring, Test Control and Test Completion</h1>
+            <p class="subtitle">مراقبة الاختبار والتحكم فيه وإكماله - ISTQB Foundation Level v4.0</p>
+            <p>هدف التعلم: <span class="code-term">FL-5.3.1 (K1) Recall metrics used for testing</span></p>
+        </header>
+
+        <!-- Block 1: The Core Process Loop -->
+        <section class="section-card" style="border-top-color: var(--primary);">
+            <h2 class="section-title" style="color:var(--primary);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001a4.992 4.992 0 01-4.992 4.992v-4.992zm-4.008 0H12v-4.992a4.992 4.992 0 00-4.992 4.992v.001h4.992zM12 14.016v4.992a4.992 4.992 0 01-4.992-4.992v-.001h4.992zm4.008 0H12v4.992a4.992 4.992 0 004.992-4.992v-.001h-4.992zM9.348 9.348H4.356v4.992a4.992 4.992 0 004.992-4.992v-.001z" /></svg>حلقة التغذية الراجعة في إدارة الاختبار</h2>
+            <div class="arabic-explanation">
+                <p>إدارة الاختبار ليست عملية خطية، بل هي حلقة مستمرة من جمع المعلومات، اتخاذ القرارات بناءً عليها، ثم في النهاية توثيق الدروس المستفادة. هذه الأنشطة الثلاثة - المراقبة، التحكم، والإكمال - تعمل معًا لضمان بقاء عملية الاختبار على المسار الصحيح وتحقيق أهدافها.</p>
+            </div>
+            <div class="process-flow-diagram">
+                <div class="flow-step">
+                    <svg style="color:var(--monitor-color);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM4.502 15.596a.75.75 0 10-1.06 1.061.75.75 0 001.06-1.061zM6.404 17.596a.75.75 0 11-1.06-1.06.75.75 0 011.06 1.06zM8.402 19.596a.75.75 0 10-1.06 1.061.75.75 0 001.06-1.061zM12.75 21a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM15.598 19.596a.75.75 0 101.06 1.061.75.75 0 00-1.06-1.061zM17.596 17.596a.75.75 0 111.06-1.06.75.75 0 011.06 1.06zM19.598 15.596a.75.75 0 101.06 1.061.75.75 0 00-1.06-1.061zM21.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM19.598 8.404a.75.75 0 10-1.06-1.06.75.75 0 001.06 1.06zM17.596 6.404a.75.75 0 11-1.06 1.06.75.75 0 011.06-1.06zM15.598 4.404a.75.75 0 10-1.06-1.06.75.75 0 001.06 1.06zM11.25 3a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM8.402 4.404a.75.75 0 101.06-1.06.75.75 0 00-1.06 1.06zM6.404 6.404a.75.75 0 111.06 1.06.75.75 0 01-1.06-1.06zM4.502 8.404a.75.75 0 101.06-1.06.75.75 0 00-1.06 1.06z" /></svg>
+                    <h4>Test Monitoring</h4><p>(جمع المعلومات)</p>
+                </div>
+                <div class="flow-arrow">➜</div>
+                <div class="flow-step">
+                    <svg style="color:var(--control-color);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>
+                    <h4>Test Control</h4><p>(اتخاذ الإجراءات)</p>
+                </div>
+                <div class="flow-arrow">➜</div>
+                <div class="flow-step">
+                    <svg style="color:var(--completion-color);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>
+                    <h4>Test Completion</h4><p>(توثيق النتائج)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Block 2: Monitoring, Control, Completion Definitions -->
+        <section class="section-card" style="border-top-color: var(--primary);">
+            <div class="english-quote" style="border-right-color: var(--monitor-color);">
+                "<strong>Test monitoring</strong> is concerned with gathering information about testing. This information is used to assess test progress and to measure whether the test exit criteria... are satisfied..."
+            </div>
+            <div class="english-quote" style="border-right-color: var(--control-color);">
+                "<strong>Test control</strong> uses the information from test monitoring to provide, in a form of the control directives, guidance and the necessary corrective actions to achieve the most effective and efficient testing."
+                <br>Examples of control directives include: Reprioritizing tests..., Re-evaluating... entry criteria..., Adjusting the test schedule..., Adding new resources...
+            </div>
+            <div class="english-quote" style="border-right-color: var(--completion-color);">
+                "<strong>Test completion</strong> collects data from completed test activities to consolidate experience, testware, and any other relevant information. Test completion activities occur at project milestones such as when a test level is completed, an agile iteration is finished, a test project is completed (or cancelled), a software system is released, or a maintenance release is completed."
+            </div>
+        </section>
+
+            <!-- Block 3: Metrics Used in Testing -->
+        <section class="section-card" style="border-top-color: var(--secondary);">
+            <h2 class="section-title" style="color:var(--secondary);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>5.3.1 المقاييس المستخدمة في الاختبار (Metrics)</h2>
+            <div class="english-quote" style="border-right-color:var(--secondary);">
+                "Test metrics are gathered to show <span class="mcq-highlight">progress against the planned schedule and budget</span>, the <span class="mcq-highlight">current quality of the test object</span>, and the <span class="mcq-highlight">effectiveness of the test activities</span>..."
+            </div>
+            <p class="arabic-explanation">المقاييس هي بيانات كمية نجمعها (في مرحلة المراقبة) لفهم الوضع الحالي. إليك أمثلة شائعة للمقاييس مصنفة حسب الغرض منها:</p>
+            <div class="visual-table">
+                <thead>
+                    <tr>
+                        <th>فئة المقياس (Category)</th>
+                        <th>الغرض (Purpose)</th>
+                        <th>أمثلة من المنهج (<span class="english-item">Common test metrics include</span>)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="category-cell"><div class="category-dot" style="background-color: #8b5cf6;"></div>تقدم المشروع (Project Progress)</td>
+                        <td>قياس تقدم المشروع ككل مقابل الخطة.</td>
+                        <td><ul><li><span class="english-item">task completion, resource usage, test effort</span></li></ul></td>
+                    </tr>
+                    <tr>
+                        <td class="category-cell"><div class="category-dot" style="background-color: #3b82f6;"></div>تقدم الاختبار (Test Progress)</td>
+                        <td>قياس تقدم أنشطة الاختبار المحددة.</td>
+                        <td><ul><li><span class="english-item">test case implementation progress, ...number of test cases run/not run, passed/failed, test execution time</span></li></ul></td>
+                    </tr>
+                    <tr>
+                        <td class="category-cell"><div class="category-dot" style="background-color: #10b981;"></div>جودة المنتج (Product Quality)</td>
+                        <td>قياس جودة واستقرار المنتج الحالي.</td>
+                        <td><ul><li><span class="english-item">availability, response time, mean time to failure</span></li></ul></td>
+                    </tr>
+                    <tr>
+                        <td class="category-cell"><div class="category-dot" style="background-color: #ef4444;"></div>العيوب (Defect)</td>
+                        <td>قياس عدد ونوعية العيوب المكتشفة.</td>
+                        <td><ul><li><span class="english-item">number and priorities of defects found/fixed, defect density, defect detection percentage</span></li></ul></td>
+                    </tr>
+                    <tr>
+                        <td class="category-cell"><div class="category-dot" style="background-color: #f59e0b;"></div>المخاطر (Risk)</td>
+                        <td>قياس المخاطر المتبقية في المنتج.</td>
+                        <td><ul><li><span class="english-item">residual risk level</span></li></ul></td>
+                    </tr>
+                    <tr>
+                        <td class="category-cell"><div class="category-dot" style="background-color: #ec4899;"></div>التغطية (Coverage)</td>
+                        <td>قياس مدى شمولية الاختبارات.</td>
+                        <td><ul><li><span class="english-item">requirements coverage, code coverage</span></li></ul></td>
+                    </tr>
+                    <tr>
+                        <td class="category-cell"><div class="category-dot" style="background-color: #facc15;"></div>التكلفة (Cost)</td>
+                        <td>قياس التكاليف المرتبطة بالجودة والاختبار.</td>
+                        <td><ul><li><span class="english-item">cost of testing, organizational cost of quality</span></li></ul></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Block 4: Real-World Example -->
+        <section class="section-card real-life-box">
+            <h2 class="section-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>دراسة حالة: لوحة معلومات CI/CD في GitLab</h2>
+            <p>تستخدم الفرق الهندسية الحديثة أدوات مثل GitLab CI/CD لتطبيق دورة المراقبة والتحكم بشكل آلي وفوري.</p>
+            <img src="https://newrelic.com/sites/default/files/styles/1200w/public/quickstarts/images/dashboard_preview_images/gitlab--gitlab_dashboard.jpg?itok=fpZH-I0y" alt="A sample CI/CD dashboard from GitLab showing various test metrics" class="dashboard-img">
+            <p><strong>كيف يتم تطبيق الدورة الكاملة؟</strong></p>
+            <ul>
+                <li><strong>Test Monitoring:</strong> لوحة المعلومات تقوم بـ"مراقبة" الوضع بشكل مستمر. فهي تعرض مقاييس (<span class="code-term">metrics</span>) حية مثل:
+                    <ul>
+                        <li><strong>نسبة نجاح الاختبارات:</strong> (مقياس تقدم الاختبار - <span class="english-item">test cases passed/failed</span>).</li>
+                        <li><strong>تغطية الكود:</strong> (مقياس التغطية - <span class="english-item">code coverage</span>).</li>
+                        <li><strong>عدد العيوب المفتوحة:</strong> (مقياس العيوب - <span class="english-item">defects found</span>).</li>
+                    </ul>
+                </li>
+                <li style="margin-top:15px;"><strong>Test Control:</strong> عندما تظهر مشكلة على لوحة المعلومات (مثلاً، انخفاض مفاجئ في نسبة نجاح الاختبارات إلى 70%)، يتم اتخاذ إجراء "تحكم" (<span class="code-term">control directive</span>). يمكن أن يكون هذا الإجراء آليًا، مثل إيقاف النشر التلقائي إلى بيئة الإنتاج، أو يدويًا، حيث يقوم قائد الفريق بـ"إعادة ترتيب أولويات" (<span class="english-item">reprioritizing</span>) مهام الفريق للتحقيق في الفشل.</li>
+                <li style="margin-top:15px;"><strong>Test Completion:</strong> في نهاية الـ <span class="english-item">sprint</span> (أحد "المعالم الرئيسية" أو <span class="english-item">milestones</span>)، يتم أخذ لقطة من هذه البيانات واستخدامها في تقرير إكمال الاختبار (<span class="code-term">Test Completion Report</span>) لتلخيص جودة المنتج والدروس المستفادة.</li>
+            </ul>
+        </section>
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>

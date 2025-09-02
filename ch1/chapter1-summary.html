@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1 - Keywords, Summary & Mindmap | ISTQB Foundation Level</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
+            --highlight-bg: #fef3c7;
+            --highlight-text: #92400e;
+            --purple: #7c3aed;
+            --orange: #ea580c;
+            --pink: #ec4899;
+            --cyan: #06b6d4;
+            --indigo: #6366f1;
+            --green: #059669;
+            --red: #dc2626;
+            --yellow: #d97706;
+            --teal: #0d9488;
+            --lime: #65a30d;
+            --emerald: #059669;
+            --violet: #8b5cf6;
+            --rose: #f43f5e;
+            --slate: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--success-color), var(--pink));
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        .section-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .section-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+            border-radius: 2px;
+        }
+
+        .keywords-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .keyword-card {
+            background: var(--bg-light);
+            border: 3px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .keyword-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .keyword-card:hover::before {
+            left: 100%;
+        }
+
+        .keyword-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: var(--primary-color);
+        }
+
+        .keyword-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            position: relative;
+            z-index: 1;
+        }
+
+        .keyword-definition {
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .keyword-synonyms {
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .keyword-abbreviation {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success-color);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            color: var(--success-color);
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 3px solid var(--success-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+        }
+
+        .chapter-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .section-summary {
+            background: white;
+            border: 2px solid var(--success-color);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .section-summary:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .section-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-summary h4 {
+            font-size: 1.3rem;
+            color: var(--success-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-summary p {
+            font-size: 1rem;
+            color: #14532d;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mindmap-container {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 3px solid var(--slate);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .mindmap {
+            width: 100%;
+            height: 600px;
+            background: white;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .central-node {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+            z-index: 10;
+        }
+
+        .branch-node {
+            position: absolute;
+            background: white;
+            border: 3px solid;
+            border-radius: 15px;
+            padding: 15px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            min-width: 140px;
+        }
+
+        .branch-node:hover {
+            transform: scale(1.1);
+            z-index: 5;
+        }
+
+        .branch-line {
+            position: absolute;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        /* Branch positioning and colors */
+        .branch-1 { top: 15%; left: 15%; border-color: var(--emerald); color: var(--emerald); }
+        .branch-2 { top: 5%; left: 45%; border-color: var(--cyan); color: var(--cyan); }
+        .branch-3 { top: 15%; right: 15%; border-color: var(--purple); color: var(--purple); }
+        .branch-4 { top: 45%; right: 5%; border-color: var(--orange); color: var(--orange); }
+        .branch-5 { bottom: 15%; right: 15%; border-color: var(--pink); color: var(--pink); }
+        .branch-6 { bottom: 5%; left: 45%; border-color: var(--yellow); color: var(--yellow); }
+        .branch-7 { bottom: 15%; left: 15%; border-color: var(--indigo); color: var(--indigo); }
+        .branch-8 { top: 45%; left: 5%; border-color: var(--red); color: var(--red); }
+
+        .sub-branches {
+            position: absolute;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .key-concepts {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border: 3px solid var(--accent-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .concept-card {
+            background: white;
+            border: 2px solid var(--accent-color);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.2);
+        }
+
+        .concept-card h5 {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .concept-card p {
+            font-size: 1rem;
+            color: #92400e;
+            line-height: 1.5;
+        }
+
+        .learning-outcomes {
+            background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+            border: 3px solid var(--purple);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .outcomes-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .outcomes-list li {
+            background: white;
+            border: 1px solid var(--purple);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 1rem;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .outcomes-list li:hover {
+            background: rgba(124, 58, 237, 0.05);
+            transform: translateX(5px);
+            border-color: var(--purple);
+        }
+
+        .outcomes-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--success-color);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .footer {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+
+        .completion-badge {
+            background: linear-gradient(135deg, var(--success-color), var(--emerald));
+            color: white;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-card {
+                padding: 25px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .keywords-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mindmap {
+                height: 400px;
+            }
+
+            .central-node {
+                width: 80px;
+                height: 80px;
+                font-size: 0.8rem;
+            }
+
+            .branch-node {
+                font-size: 0.8rem;
+                padding: 10px 15px;
+                min-width: 100px;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 60%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            80% { transform: translateY(-5px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📚 Chapter 1: Fundamentals of Testing</h1>
+            <div class="subtitle">Keywords, Summary & Mindmap - Complete Overview</div>
+            <div class="completion-badge">
+                🎓 ISTQB Foundation Level Certified
+            </div>
+        </div>
+
+        <!-- Keywords Section -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🔤 Keywords & Definitions</h2>
+            
+            <div style="background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%); border: 3px solid var(--cyan); border-radius: 15px; padding: 25px; margin: 25px 0; text-align: center;">
+                <h3 style="color: var(--cyan); margin-bottom: 15px;">📖 Essential Testing Vocabulary</h3>
+                <p style="color: #0e7490; font-size: 1.1rem; font-weight: 500;">
+                    Master these 25 key terms to build a solid foundation in software testing
+                </p>
+            </div>
+
+            <div class="keywords-grid">
+                <!-- Coverage -->
+                <div class="keyword-card">
+                    <div class="keyword-title">coverage</div>
+                    <div class="keyword-definition">
+                        The degree to which specified coverage items are exercised by a test suite, expressed as a percentage.
+                    </div>
+                    <div class="keyword-synonyms">Synonyms: test coverage</div>
+                </div>
+
+                <!-- Debugging -->
+                <div class="keyword-card">
+                    <div class="keyword-title">debugging</div>
+                    <div class="keyword-definition">
+                        The process of finding, analyzing and removing the causes of failures in a component or system.
+                    </div>
+                </div>
+
+                <!-- Defect -->
+                <div class="keyword-card">
+                    <div class="keyword-title">defect</div>
+                    <div class="keyword-definition">
+                        An imperfection or deficiency in a work product where it does not meet its requirements or specifications or impairs its intended use.
+                    </div>
+                    <div class="keyword-synonyms">Synonyms: bug, fault</div>
+                </div>
+
+                <!-- Error -->
+                <div class="keyword-card">
+                    <div class="keyword-title">error</div>
+                    <div class="keyword-definition">
+                        A human action that results in a defect.
+                    </div>
+                    <div class="keyword-synonyms">Synonyms: mistake</div>
+                </div>
+
+                <!-- Failure -->
+                <div class="keyword-card">
+                    <div class="keyword-title">failure</div>
+                    <div class="keyword-definition">
+                        An event in which a component or system does not meet its requirements within specified limits during its execution.
+                    </div>
+                </div>
+
+                <!-- Quality -->
+                <div class="keyword-card">
+                    <div class="keyword-title">quality</div>
+                    <div class="keyword-definition">
+                        The degree to which a work product satisfies stated and implied requirements.
+                    </div>
+                </div>
+
+                <!-- Quality Assurance -->
+                <div class="keyword-card">
+                    <div class="keyword-title">quality assurance</div>
+                    <div class="keyword-definition">
+                        Activities focused on providing confidence that quality requirements will be fulfilled.
+                    </div>
+                    <div class="keyword-abbreviation">Abbreviation: QA</div>
+                </div>
+
+                <!-- Root Cause -->
+                <div class="keyword-card">
+                    <div class="keyword-title">root cause</div>
+                    <div class="keyword-definition">
+                        A source of a defect such that if it is removed, the occurrence of the defect type is decreased or removed.
+                    </div>
+                </div>
+
+                <!-- Test Analysis -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test analysis</div>
+                    <div class="keyword-definition">
+                        The activity that identifies test conditions by analyzing the test basis.
+                    </div>
+                </div>
+
+                <!-- Test Basis -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test basis</div>
+                    <div class="keyword-definition">
+                        The body of knowledge used as the basis for test analysis and test design.
+                    </div>
+                </div>
+
+                <!-- Test Case -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test case</div>
+                    <div class="keyword-definition">
+                        A set of preconditions, inputs, actions (where applicable), expected results and postconditions, developed based on test conditions.
+                    </div>
+                </div>
+
+                <!-- Test Completion -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test completion</div>
+                    <div class="keyword-definition">
+                        The activity that makes testware available for later use, leaves test environments in a satisfactory condition and communicates the results of testing to relevant stakeholders.
+                    </div>
+                </div>
+
+                <!-- Test Condition -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test condition</div>
+                    <div class="keyword-definition">
+                        A testable aspect of a component or system that is intended to be tested.
+                    </div>
+                    <div class="keyword-synonyms">Synonyms: test situation, test requirement</div>
+                </div>
+
+                <!-- Test Control -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test control</div>
+                    <div class="keyword-definition">
+                        The activity that develops and applies corrective actions to get a test project on track when it deviates from what was planned.
+                    </div>
+                </div>
+
+                <!-- Test Data -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test data</div>
+                    <div class="keyword-definition">
+                        Data needed for test execution.
+                    </div>
+                </div>
+
+                <!-- Test Design -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test design</div>
+                    <div class="keyword-definition">
+                        The activity that derives and specifies test cases from test conditions.
+                    </div>
+                </div>
+
+                <!-- Test Execution -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test execution</div>
+                    <div class="keyword-definition">
+                        The activity that runs a test on a component or system producing actual results.
+                    </div>
+                </div>
+
+                <!-- Test Implementation -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test implementation</div>
+                    <div class="keyword-definition">
+                        The activity that prepares the testware needed for test execution.
+                    </div>
+                </div>
+
+                <!-- Test Monitoring -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test monitoring</div>
+                    <div class="keyword-definition">
+                        The activity that checks the status of testing activities, identifies any variances from planned or expected, and reports status to stakeholders.
+                    </div>
+                </div>
+
+                <!-- Test Object -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test object</div>
+                    <div class="keyword-definition">
+                        The work product to be tested.
+                    </div>
+                </div>
+
+                <!-- Test Objective -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test objective</div>
+                    <div class="keyword-definition">
+                        The purpose for testing.
+                    </div>
+                    <div class="keyword-synonyms">Synonyms: test goal</div>
+                </div>
+
+                <!-- Test Procedure -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test procedure</div>
+                    <div class="keyword-definition">
+                        A sequence of test cases in execution order and any associated actions that may be required to set up the initial preconditions and any wrap-up activities after execution.
+                    </div>
+                </div>
+
+                <!-- Test Result -->
+                <div class="keyword-card">
+                    <div class="keyword-title">test result</div>
+                    <div class="keyword-definition">
+                        The consequence/outcome of the execution of a test.
+                    </div>
+                    <div class="keyword-synonyms">Synonyms: outcome, test outcome, result</div>
+                </div>
+
+                <!-- Testing -->
+                <div class="keyword-card">
+                    <div class="keyword-title">testing</div>
+                    <div class="keyword-definition">
+                        The process within the software development lifecycle that evaluates the quality of a component or system and related work products.
+                    </div>
+                </div>
+
+                <!-- Validation -->
+                <div class="keyword-card">
+                    <div class="keyword-title">validation</div>
+                    <div class="keyword-definition">
+                        Confirmation by examination that a work product matches a stakeholder's needs.
+                    </div>
+                </div>
+
+                <!-- Verification -->
+                <div class="keyword-card">
+                    <div class="keyword-title">verification</div>
+                    <div class="keyword-definition">
+                        The process of confirming that a work product fulfills its specification.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter Summary -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">📊 Chapter 1 Summary</h2>
+            
+            <div class="summary-section">
+                <h3 style="color: var(--success-color); text-align: center; margin-bottom: 25px; font-size: 1.8rem;">
+                    🎯 Fundamentals of Testing - Complete Overview
+                </h3>
+                
+                <div style="background: white; border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <p style="font-size: 1.1rem; color: var(--text-dark); text-align: center; line-height: 1.7;">
+                        Chapter 1 provides the <strong>essential foundation</strong> for software testing, covering definition, necessity, principles, activities, and skills. This comprehensive introduction establishes the core concepts needed for professional testing practice.
+                    </p>
+                </div>
+
+                <div class="chapter-overview">
+                    <!-- Section 1.1 -->
+                    <div class="section-summary">
+                        <div class="section-icon" style="color: var(--cyan);">🧪</div>
+                        <h4>1.1 What is Testing?</h4>
+                        <p>
+                            <strong>Definition & Objectives:</strong> Software testing as a comprehensive set of activities to assess quality and reduce risks. 
+                            <br><br>
+                            <strong>Key Concepts:</strong> 9 test objectives, testing vs debugging, static vs dynamic testing, verification vs validation.
+                        </p>
+                    </div>
+
+                    <!-- Section 1.2 -->
+                    <div class="section-summary">
+                        <div class="section-icon" style="color: var(--orange);">❓</div>
+                        <h4>1.2 Why Testing Necessary?</h4>
+                        <p>
+                            <strong>Success Contributions:</strong> Cost-effective defect detection, quality evaluation, user representation, compliance requirements.
+                            <br><br>
+                            <strong>Key Concepts:</strong> QA vs QC, error-defect-failure chain, root cause analysis.
+                        </p>
+                    </div>
+
+                    <!-- Section 1.3 -->
+                    <div class="section-summary">
+                        <div class="section-icon" style="color: var(--purple);">⚖️</div>
+                        <h4>1.3 Testing Principles</h4>
+                        <p>
+                            <strong>Seven Principles:</strong> Presence not absence, exhaustive impossible, early saves money, defects cluster, tests wear out, context dependent, absence-of-defects fallacy.
+                            <br><br>
+                            <strong>Practical Guidance:</strong> Universal guidelines for effective testing across all contexts.
+                        </p>
+                    </div>
+
+                    <!-- Section 1.4 -->
+                    <div class="section-summary">
+                        <div class="section-icon" style="color: var(--emerald);">⚙️</div>
+                        <h4>1.4 Activities & Roles</h4>
+                        <p>
+                            <strong>Test Process:</strong> Planning, monitoring, analysis, design, implementation, execution, completion.
+                            <br><br>
+                            <strong>Key Concepts:</strong> Context factors, testware, traceability, test management vs testing roles.
+                        </p>
+                    </div>
+
+                    <!-- Section 1.5 -->
+                    <div class="section-summary">
+                        <div class="section-icon" style="color: var(--pink);">🧠</div>
+                        <h4>1.5 Skills & Practices</h4>
+                        <p>
+                            <strong>Essential Skills:</strong> Testing knowledge, thoroughness, communication, analytical thinking, technical and domain knowledge.
+                            <br><br>
+                            <strong>Approaches:</strong> Whole team approach, independence levels, communication challenges.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Concepts -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">💡 Key Concepts Mastered</h2>
+            
+            <div class="key-concepts">
+                <h3 style="color: var(--accent-color); text-align: center; margin-bottom: 25px;">🎓 Core Understanding Achieved</h3>
+                
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h5>Testing Foundation</h5>
+                        <p>Clear understanding of what testing is, why it's necessary, and how it contributes to software quality and project success.</p>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <h5>Universal Principles</h5>
+                        <p>Seven fundamental principles that guide testing practice across all contexts, technologies, and methodologies.</p>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <h5>Process Structure</h5>
+                        <p>Systematic approach to testing with defined activities, roles, and responsibilities for effective test implementation.</p>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <h5>Professional Skills</h5>
+                        <p>Essential competencies for testers including technical knowledge, communication skills, and analytical thinking.</p>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <h5>Quality Assurance</h5>
+                        <p>Understanding the relationship between testing, quality assurance, and overall software development lifecycle.</p>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <h5>Risk Management</h5>
+                        <p>How testing contributes to risk reduction and provides information for informed decision-making.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mindmap -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🗺️ Chapter 1 Mindmap</h2>
+            
+            <div class="mindmap-container">
+                <h3 style="color: var(--slate); margin-bottom: 25px;">🧠 Visual Knowledge Structure</h3>
+                
+                <div class="mindmap">
+                    <!-- Central Node -->
+                    <div class="central-node">
+                        Chapter 1<br>
+                        Fundamentals<br>
+                        of Testing
+                    </div>
+
+                    <!-- Branch Lines (connecting lines) -->
+                    <div class="branch-line" style="top: 25%; left: 25%; width: 150px; transform: rotate(-25deg);"></div>
+                    <div class="branch-line" style="top: 15%; left: 47%; width: 100px; transform: rotate(0deg);"></div>
+                    <div class="branch-line" style="top: 25%; right: 25%; width: 150px; transform: rotate(25deg);"></div>
+                    <div class="branch-line" style="top: 47%; right: 15%; width: 100px; transform: rotate(90deg);"></div>
+                    <div class="branch-line" style="bottom: 25%; right: 25%; width: 150px; transform: rotate(-25deg);"></div>
+                    <div class="branch-line" style="bottom: 15%; left: 47%; width: 100px; transform: rotate(0deg);"></div>
+                    <div class="branch-line" style="bottom: 25%; left: 25%; width: 150px; transform: rotate(25deg);"></div>
+                    <div class="branch-line" style="top: 47%; left: 15%; width: 100px; transform: rotate(90deg);"></div>
+
+                    <!-- Branch Nodes -->
+                    <div class="branch-node branch-1">
+                        <strong>1.1 What is Testing?</strong>
+                        <div class="sub-branches" style="top: 100%; left: 0; margin-top: 5px;">
+                            • Definition & Objectives<br>
+                            • Testing vs Debugging<br>
+                            • Static vs Dynamic
+                        </div>
+                    </div>
+
+                    <div class="branch-node branch-2">
+                        <strong>Keywords</strong>
+                        <div class="sub-branches" style="top: 100%; left: 0; margin-top: 5px;">
+                            • 25 Essential Terms<br>
+                            • Definitions<br>
+                            • Synonyms
+                        </div>
+                    </div>
+
+                    <div class="branch-node branch-3">
+                        <strong>1.2 Why Necessary?</strong>
+                        <div class="sub-branches" style="top: 100%; right: 0; margin-top: 5px;">
+                            • Success Contributions<br>
+                            • QA vs QC<br>
+                            • Error-Defect-Failure
+                        </div>
+                    </div>
+
+                    <div class="branch-node branch-4">
+                        <strong>Learning Objectives</strong>
+                        <div class="sub-branches" style="left: -100%; top: 0; margin-left: -5px;">
+                            • K1 Level<br>
+                            • K2 Level<br>
+                            • Practical Application
+                        </div>
+                    </div>
+
+                    <div class="branch-node branch-5">
+                        <strong>1.3 Principles</strong>
+                        <div class="sub-branches" style="bottom: 100%; right: 0; margin-bottom: 5px;">
+                            • Seven Universal Rules<br>
+                            • Practical Guidelines<br>
+                            • Context Application
+                        </div>
+                    </div>
+
+                    <div class="branch-node branch-6">
+                        <strong>Test Process</strong>
+                        <div class="sub-branches" style="bottom: 100%; left: 0; margin-bottom: 5px;">
+                            • 7 Main Activities<br>
+                            • Testware<br>
+                            • Traceability
+                        </div>
+                    </div>
+
+                    <div class="branch-node branch-7">
+                        <strong>1.4 Activities & Roles</strong>
+                        <div class="sub-branches" style="bottom: 100%; left: 0; margin-bottom: 5px;">
+                            • Test Activities<br>
+                            • Context Factors<br>
+                            • Management vs Testing
+                        </div>
+                    </div>
+
+                    <div class="branch-node branch-8">
+                        <strong>1.5 Skills & Practices</strong>
+                        <div class="sub-branches" style="left: 120%; top: -100%; margin-left: -5px;">
+                            • 6 Essential Skills<br>
+                            • Team Approach<br>
+                            • Independence Levels
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Outcomes -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🎓 Learning Outcomes Achieved</h2>
+            
+            <div class="learning-outcomes">
+                <h3 style="color: var(--purple); text-align: center; margin-bottom: 25px;">✅ Competencies Developed</h3>
+                
+                <div style="background: white; border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <p style="font-size: 1.1rem; color: var(--text-dark); text-align: center; line-height: 1.7; margin-bottom: 20px;">
+                        Upon completing Chapter 1, you have developed comprehensive understanding and practical skills in software testing fundamentals.
+                    </p>
+                </div>
+
+                <ul class="outcomes-list">
+                    <li><strong>Testing Definition:</strong> Clear understanding of software testing as a comprehensive set of activities for quality assessment and risk reduction</li>
+                    
+                    <li><strong>Test Objectives:</strong> Ability to identify and explain the nine typical objectives of testing with practical examples</li>
+                    
+                    <li><strong>Testing vs Debugging:</strong> Clear differentiation between testing (finding problems) and debugging (fixing problems)</li>
+                    
+                    <li><strong>Testing Necessity:</strong> Understanding why testing is essential for project success, quality assurance, and risk management</li>
+                    
+                    <li><strong>Universal Principles:</strong> Mastery of the seven fundamental testing principles that guide professional practice</li>
+                    
+                    <li><strong>Test Process:</strong> Knowledge of the seven main testing activities and their roles in the overall test process</li>
+                    
+                    <li><strong>Context Awareness:</strong> Understanding how context factors influence testing approach and decision-making</li>
+                    
+                    <li><strong>Professional Skills:</strong> Awareness of essential skills needed for effective testing including technical and soft skills</li>
+                    
+                    <li><strong>Quality Concepts:</strong> Understanding the relationship between testing, quality assurance, and quality control</li>
+                    
+                    <li><strong>Terminology Mastery:</strong> Fluency in 25 essential testing terms and their precise definitions</li>
+                    
+                    <li><strong>Practical Application:</strong> Ability to apply learned concepts in real-world testing scenarios and contexts</li>
+                    
+                    <li><strong>Foundation Readiness:</strong> Solid preparation for advanced testing topics and ISTQB Foundation Level certification</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="completion-badge">
+                🏆 Chapter 1 Complete - Fundamentals Mastered!
+            </div>
+            
+            <h3 style="color: var(--success-color); margin: 20px 0;">
+                🎉 Congratulations on Completing Chapter 1!
+            </h3>
+            
+            <p style="font-size: 1.2rem; color: var(--text-dark); margin-bottom: 30px;">
+                You have successfully mastered the <strong>Fundamentals of Testing</strong> and are ready to advance to more specialized testing topics. This solid foundation will support your entire testing career.
+            </p>
+            
+            <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid var(--success-color); border-radius: 15px; padding: 25px; margin: 25px 0;">
+                <h4 style="color: var(--success-color); margin-bottom: 15px;">📈 Next Steps:</h4>
+                <ul style="list-style: none; color: #14532d; text-align: left;">
+                    <li>✓ Review keywords and practice with examples</li>
+                    <li>✓ Apply principles in real testing scenarios</li>
+                    <li>✓ Practice identifying test objectives in projects</li>
+                    <li>✓ Prepare for Chapter 2: Testing in Software Development Lifecycle</li>
+                </ul>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px; color: var(--text-light);">
+                <p>ISTQB Foundation Level v4.0 | Chapter 1 Summary</p>
+                <p>Professional Software Testing Certification Path</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Progress bar
+        function updateProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+
+        // Keyword cards hover effect
+        document.querySelectorAll('.keyword-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.02)';
+                this.style.borderColor = 'var(--primary-color)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.borderColor = 'var(--border-color)';
+            });
+        });
+
+        // Section summary cards animation
+        document.querySelectorAll('.section-summary').forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.2}s`;
+            
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Mindmap branch nodes interactive hover
+        document.querySelectorAll('.branch-node').forEach(node => {
+            node.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.15)';
+                this.style.zIndex = '15';
+                this.style.boxShadow = '0 15px 35px rgba(0,0,0,0.2)';
+            });
+            
+            node.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.zIndex = '5';
+                this.style.boxShadow = '0 8px 20px rgba(0,0,0,0.1)';
+            });
+        });
+
+        // Concept cards sequential animation
+        document.querySelectorAll('.concept-card').forEach((card, index) => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Learning outcomes list animation
+        document.querySelectorAll('.outcomes-list li').forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+            
+            item.addEventListener('mouseenter', function() {
+                this.style.background = 'rgba(124, 58, 237, 0.1)';
+                this.style.transform = 'translateX(10px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.background = 'white';
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            .keyword-card {
+                animation: fadeInUp 0.6s ease-out forwards;
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            
+            .keyword-card:nth-child(odd) {
+                animation-delay: 0.1s;
+            }
+            
+            .keyword-card:nth-child(even) {
+                animation-delay: 0.2s;
+            }
+            
+            @keyframes fadeInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .section-summary {
+                animation: slideInUp 0.8s ease-out forwards;
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            
+            .outcomes-list li {
+                animation: slideInRight 0.6s ease-out forwards;
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            
+            @keyframes slideInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes slideInRight {
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize page
+        console.log('🎉 Chapter 1 Summary & Keywords loaded successfully!');
+        console.log('📚 25 Keywords mastered');
+        console.log('🗺️ Mindmap visualization ready');
+        console.log('🎓 Learning outcomes achieved');
+        console.log('✅ Ready for ISTQB Foundation Level certification');
+    </script>
+</body>
+</html>

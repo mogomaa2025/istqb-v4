@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.2 Feedback and Review Process - الشرح الكامل والشامل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
+            --highlight-bg: #fef3c7;
+            --highlight-text: #92400e;
+            --purple: #7c3aed;
+            --orange: #ea580c;
+            --pink: #ec4899;
+            --cyan: #06b6d4;
+            --indigo: #6366f1;
+            --green: #059669;
+            --red: #dc2626;
+            --yellow: #d97706;
+            --teal: #0d9488;
+            --lime: #65a30d;
+            --emerald: #059669;
+            --violet: #8b5cf6;
+            --rose: #f43f5e;
+            --slate: #64748b;
+            --brown: #92400e;
+            --warm-gray: #78716c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--success-color), var(--pink));
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        .section-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .section-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+            border-radius: 2px;
+        }
+
+        .english-quote {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-left: 5px solid var(--cyan);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #0277bd;
+            font-weight: 600;
+        }
+
+        .arabic-explanation {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border-right: 5px solid var(--purple);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #6b21a8;
+        }
+
+        .highlight {
+            background: var(--highlight-bg);
+            color: var(--highlight-text);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .code-term {
+            background: #1f2937;
+            color: #f59e0b;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 600;
+        }
+
+        .feedback-benefits {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 3px solid var(--success-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .benefits-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 25px;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .vs-divider {
+            background: linear-gradient(135deg, var(--error-color), var(--orange));
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .scenario-card {
+            background: white;
+            border: 3px solid transparent;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .scenario-card.negative {
+            border-color: var(--error-color);
+        }
+
+        .scenario-card.positive {
+            border-color: var(--success-color);
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .scenario-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .scenario-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .scenario-description {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scenario-outcomes {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .scenario-outcomes ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .scenario-outcomes li {
+            font-size: 0.9rem;
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-outcomes li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-3px);
+        }
+
+        .review-process {
+            background: linear-gradient(135deg, #fef7ed 0%, #fed7aa 100%);
+            border: 3px solid var(--orange);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .process-flow {
+            position: relative;
+            margin: 40px 0;
+            padding: 20px 0;
+        }
+
+        .flow-line {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--orange), var(--accent-color), var(--success-color), var(--cyan), var(--purple));
+            border-radius: 2px;
+            transform: translateY(-50%);
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .flow-step {
+            background: white;
+            border: 3px solid var(--orange);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .flow-step:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(234, 88, 12, 0.3);
+            border-color: var(--success-color);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, var(--orange), var(--accent-color));
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0 auto 15px;
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--orange);
+            margin-bottom: 10px;
+        }
+
+        .step-description {
+            font-size: 0.9rem;
+            color: #9a3412;
+            line-height: 1.5;
+        }
+
+        .roles-section {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border: 3px solid var(--purple);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .role-card {
+            background: white;
+            border: 3px solid var(--purple);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .role-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .role-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--purple);
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .role-card h4 {
+            font-size: 1.4rem;
+            color: var(--purple);
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .role-responsibilities {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .role-responsibilities ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .role-responsibilities li {
+            font-size: 0.9rem;
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border-left: 3px solid var(--purple);
+        }
+
+        .role-responsibilities li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-3px);
+            border-left-color: var(--orange);
+        }
+
+        .review-types {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 3px solid var(--cyan);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .types-spectrum {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .spectrum-line {
+            position: relative;
+            height: 6px;
+            background: linear-gradient(90deg, var(--success-color), var(--accent-color), var(--orange), var(--error-color));
+            border-radius: 3px;
+            margin: 30px 0 50px;
+        }
+
+        .spectrum-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .spectrum-label {
+            background: white;
+            border: 2px solid var(--cyan);
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--cyan);
+        }
+
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .type-card {
+            background: white;
+            border: 3px solid var(--cyan);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .type-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .type-card:hover::before {
+            left: 100%;
+        }
+
+        .type-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .type-card.informal {
+            border-color: var(--success-color);
+        }
+
+        .type-card.walkthrough {
+            border-color: var(--accent-color);
+        }
+
+        .type-card.technical {
+            border-color: var(--orange);
+        }
+
+        .type-card.inspection {
+            border-color: var(--error-color);
+        }
+
+        .type-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .type-card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .type-characteristics {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .type-characteristics h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .type-characteristics ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .type-characteristics li {
+            font-size: 0.9rem;
+            margin: 5px 0;
+            padding: 5px 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .type-characteristics li:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(-3px);
+        }
+
+        .success-factors {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 3px solid var(--error-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .factor-card {
+            background: white;
+            border: 2px solid var(--error-color);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .factor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(239, 68, 68, 0.2);
+        }
+
+        .factor-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--error-color);
+        }
+
+        .factor-card h5 {
+            font-size: 1.2rem;
+            color: var(--error-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .factor-card p {
+            font-size: 1rem;
+            color: #7f1d1d;
+            line-height: 1.5;
+        }
+
+        .iso-reference {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border: 2px solid var(--slate);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .iso-reference h4 {
+            color: var(--slate);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .iso-reference p {
+            color: var(--warm-gray);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .learning-objectives {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 3px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .learning-objectives h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .objective-item {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .objective-item:hover {
+            border-color: var(--primary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+        }
+
+        .objective-check {
+            color: var(--success-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            min-width: 25px;
+        }
+
+        .objective-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .footer {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-nav {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .nav-btn.current {
+            background: linear-gradient(135deg, var(--accent-color), var(--orange));
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-card {
+                padding: 25px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .benefits-comparison {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .vs-divider {
+                order: 2;
+                margin: 20px auto;
+            }
+
+            .flow-steps {
+                flex-direction: column;
+            }
+
+            .flow-line {
+                width: 4px;
+                height: 80%;
+                left: 50%;
+                top: 10%;
+                transform: translateX(-50%);
+                background: linear-gradient(180deg, var(--orange), var(--accent-color), var(--success-color), var(--cyan), var(--purple));
+            }
+
+            .roles-grid,
+            .types-grid,
+            .factors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 60%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            80% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🔄 3.2 Feedback and Review Process</h1>
+            <div class="subtitle">عملية التغذية الراجعة والمراجعة - الشرح الكامل والشامل</div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🎯 Learning Objectives لهذا القسم:</h2>
+            
+            <div class="learning-objectives">
+                <h3>بعد دراسة هذا القسم هتقدر تـ:</h3>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-3.2.1 (K1):</strong> تحدد فوائد التغذية الراجعة المبكرة والمتكررة من stakeholders</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-3.2.2 (K2):</strong> تلخص أنشطة عملية المراجعة</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-3.2.3 (K1):</strong> تتذكر المسؤوليات المعينة للأدوار الرئيسية في المراجعات</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-3.2.4 (K2):</strong> تقارن وتقابل بين أنواع المراجعة المختلفة</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-3.2.5 (K1):</strong> تتذكر العوامل التي تساهم في نجاح المراجعة</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.2.1 Benefits of Early and Frequent Stakeholder Feedback -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">⚡ 3.2.1 Benefits of Early and Frequent Stakeholder Feedback</h2>
+            <h3 style="text-align: center; color: var(--success-color); margin-bottom: 30px;">فوائد التغذية الراجعة المبكرة والمتكررة</h3>
+            
+            <div class="english-quote">
+                "<span class="highlight">Early and frequent feedback allows for the early communication of potential quality problems</span>. If there is little stakeholder involvement during the SDLC, the product being developed might not meet the stakeholder's original or current vision. <span class="highlight">A failure to deliver what the stakeholder wants can result in costly rework, missed deadlines, blame games, and might even lead to complete project failure</span>. <span class="highlight">Frequent stakeholder feedback throughout the SDLC can prevent misunderstandings about requirements</span> and ensure that changes to requirements are understood and implemented earlier."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">التغذية الراجعة المبكرة والمتكررة تسمح بالتواصل المبكر لمشاكل الجودة المحتملة</span>. إذا كان هناك مشاركة قليلة من stakeholders أثناء SDLC، المنتج قيد التطوير قد لا يلبي رؤية stakeholder الأصلية أو الحالية. <span class="code-term">الفشل في تسليم ما يريده stakeholder يمكن أن يؤدي إلى إعادة عمل مكلفة، مواعيد نهائية مفوتة، ألعاب اللوم، وقد يؤدي حتى إلى فشل المشروع الكامل</span>. <span class="code-term">التغذية الراجعة المتكررة من stakeholders طوال SDLC يمكنها منع سوء الفهم حول المتطلبات</span> وضمان أن تغييرات المتطلبات مفهومة ومنفذة مبكراً.
+            </div>
+
+            <!-- Scenarios Comparison -->
+            <div class="feedback-benefits">
+                <h3 style="color: var(--success-color); text-align: center; margin-bottom: 25px;">📊 مقارنة السيناريوهات:</h3>
+                
+                <div class="benefits-comparison">
+                    <!-- Without Feedback -->
+                    <div class="scenario-card negative">
+                        <div class="scenario-icon" style="color: var(--error-color);">❌</div>
+                        <div class="scenario-title" style="color: var(--error-color);">Without Early Feedback</div>
+                        <div class="scenario-description" style="color: #7f1d1d;">
+                            قلة مشاركة stakeholders<br>
+                            عدم التواصل المبكر
+                        </div>
+                        
+                        <div class="scenario-outcomes">
+                            <h5 style="color: var(--error-color);">⚠️ العواقب السلبية:</h5>
+                            <ul>
+                                <li style="border-left: 3px solid var(--error-color);">Costly rework - إعادة عمل مكلفة</li>
+                                <li style="border-left: 3px solid var(--error-color);">Missed deadlines - مواعيد نهائية مفوتة</li>
+                                <li style="border-left: 3px solid var(--error-color);">Blame games - ألعاب اللوم</li>
+                                <li style="border-left: 3px solid var(--error-color);">Complete project failure - فشل المشروع</li>
+                                <li style="border-left: 3px solid var(--error-color);">Product doesn't meet vision - عدم تلبية الرؤية</li>
+                                <li style="border-left: 3px solid var(--error-color);">Requirements misunderstandings - سوء فهم المتطلبات</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="vs-divider">VS</div>
+
+                    <!-- With Feedback -->
+                    <div class="scenario-card positive">
+                        <div class="scenario-icon" style="color: var(--success-color);">✅</div>
+                        <div class="scenario-title" style="color: var(--success-color);">With Early & Frequent Feedback</div>
+                        <div class="scenario-description" style="color: #14532d;">
+                            مشاركة نشطة من stakeholders<br>
+                            تواصل مستمر ومبكر
+                        </div>
+                        
+                        <div class="scenario-outcomes">
+                            <h5 style="color: var(--success-color);">✨ الفوائد الإيجابية:</h5>
+                            <ul>
+                                <li style="border-left: 3px solid var(--success-color);">Early quality problem detection - كشف مبكر للمشاكل</li>
+                                <li style="border-left: 3px solid var(--success-color);">Prevention of misunderstandings - منع سوء الفهم</li>
+                                <li style="border-left: 3px solid var(--success-color);">Better team understanding - فهم أفضل للفريق</li>
+                                <li style="border-left: 3px solid var(--success-color);">Focus on valuable features - تركيز على الميزات القيمة</li>
+                                <li style="border-left: 3px solid var(--success-color);">Earlier requirement changes - تغيير مبكر للمتطلبات</li>
+                                <li style="border-left: 3px solid var(--success-color);">Positive risk impact - تأثير إيجابي على المخاطر</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Benefits Summary -->
+                <div style="background: rgba(255, 255, 255, 0.8); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--success-color); text-align: center; margin-bottom: 15px;">🎯 الفوائد الأساسية:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--success-color);">⚡ التواصل المبكر</strong><br>
+                            <small style="color: #14532d;">كشف مشاكل الجودة مبكراً</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--success-color);">🎯 تلبية الرؤية</strong><br>
+                            <small style="color: #14532d;">المنتج يلبي توقعات stakeholders</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--success-color);">🔄 فهم محسّن</strong><br>
+                            <small style="color: #14532d;">فهم أفضل لما يتم بناؤه</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--success-color);">💎 تركيز القيمة</strong><br>
+                            <small style="color: #14532d;">التركيز على الميزات عالية القيمة</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.2.2 Review Process Activities -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🔄 3.2.2 Review Process Activities</h2>
+            <h3 style="text-align: center; color: var(--orange); margin-bottom: 30px;">أنشطة عملية المراجعة</h3>
+            
+            <div class="english-quote">
+                "The <span class="highlight">ISO/IEC 20246 standard defines a generic review process</span> that provides a structured but flexible framework from which a specific review process may be tailored to a particular situation. The activities in the review process are: <span class="highlight">Planning, Review initiation, Individual review, Communication and analysis, Fixing and reporting</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">معيار ISO/IEC 20246 يحدد عملية مراجعة عامة</span> توفر إطار عمل منظم لكن مرن يمكن تخصيص عملية مراجعة محددة منه لحالة معينة. الأنشطة في عملية المراجعة هي: <span class="code-term">التخطيط، بداية المراجعة، المراجعة الفردية، التواصل والتحليل، الإصلاح والإبلاغ</span>.
+            </div>
+
+            <!-- ISO Reference -->
+            <div class="iso-reference">
+                <h4>📚 ISO/IEC 20246 - Systems and software engineering–Reviews and audits</h4>
+                <p>المعيار الدولي الذي يحدد عمليات المراجعة والتدقيق للأنظمة والبرمجيات، 
+                ويوفر إطار عمل مرن يمكن تخصيصه حسب مستوى الرسمية المطلوب</p>
+            </div>
+
+            <!-- Review Process Flow -->
+            <div class="review-process">
+                <h3 style="color: var(--orange); text-align: center; margin-bottom: 25px;">🔄 خطوات عملية المراجعة - ISO/IEC 20246:</h3>
+                
+                <div class="process-flow">
+                    <div class="flow-line"></div>
+                    <div class="flow-steps">
+                        <!-- Step 1: Planning -->
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-title">Planning</div>
+                            <div class="step-description">
+                                تحديد النطاق والغرض والمنتج المراد مراجعته وخصائص الجودة والمناطق المحورية ومعايير الخروج والمعلومات الداعمة والجهد والأطر الزمنية
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Review Initiation -->
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Review Initiation</div>
+                            <div class="step-description">
+                                التأكد من أن الجميع والكل مستعد لبدء المراجعة، وصول المشاركين للمنتج، فهم الأدوار والمسؤوليات، توفير كل ما يحتاجونه
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Individual Review -->
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-title">Individual Review</div>
+                            <div class="step-description">
+                                كل مراجع يؤدي مراجعة فردية لتقييم الجودة وتحديد الشذوذات والتوصيات والأسئلة باستخدام تقنيات مراجعة وتسجيل النتائج
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Communication and Analysis -->
+                        <div class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-title">Communication & Analysis</div>
+                            <div class="step-description">
+                                تحليل ومناقشة الشذوذات المحددة، اتخاذ قرار حول الحالة والملكية والإجراءات المطلوبة، تحديد مستوى الجودة والإجراءات التالية
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Fixing and Reporting -->
+                        <div class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-title">Fixing & Reporting</div>
+                            <div class="step-description">
+                                إنشاء تقارير العيوب والإجراءات التصحيحية، الوصول لمعايير الخروج، قبول منتج العمل، إبلاغ نتائج المراجعة
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Activities -->
+                <div style="background: white; border-radius: 15px; padding: 25px; margin: 25px 0;">
+                    <h4 style="color: var(--orange); text-align: center; margin-bottom: 20px;">📋 تفاصيل الأنشطة:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
+                        <!-- Planning Details -->
+                        <div style="background: rgba(234, 88, 12, 0.1); border: 2px solid var(--orange); border-radius: 15px; padding: 20px;">
+                            <h5 style="color: var(--orange); margin-bottom: 15px; text-align: center;">📅 1. Planning يشمل:</h5>
+                            <ul style="list-style: none; color: #9a3412; text-align: right;">
+                                <li><strong>Scope:</strong> النطاق والحدود</li>
+                                <li><strong>Purpose:</strong> الغرض والأهداف</li>
+                                <li><strong>Work Product:</strong> المنتج المراد مراجعته</li>
+                                <li><strong>Quality Characteristics:</strong> خصائص الجودة المطلوب تقييمها</li>
+                                <li><strong>Focus Areas:</strong> المناطق المحورية</li>
+                                <li><strong>Exit Criteria:</strong> معايير الخروج</li>
+                                <li><strong>Standards:</strong> المعايير الداعمة</li>
+                                <li><strong>Effort & Timeframes:</strong> الجهد والأطر الزمنية</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Individual Review Details -->
+                        <div style="background: rgba(234, 88, 12, 0.1); border: 2px solid var(--orange); border-radius: 15px; padding: 20px;">
+                            <h5 style="color: var(--orange); margin-bottom: 15px; text-align: center;">🔍 3. Individual Review يتضمن:</h5>
+                            <ul style="list-style: none; color: #9a3412; text-align: right;">
+                                <li><strong>Quality Assessment:</strong> تقييم جودة منتج العمل</li>
+                                <li><strong>Anomalies:</strong> تحديد الشذوذات</li>
+                                <li><strong>Recommendations:</strong> تقديم التوصيات</li>
+                                <li><strong>Questions:</strong> طرح الأسئلة</li>
+                                <li><strong>Review Techniques:</strong> تطبيق تقنيات المراجعة</li>
+                                <li><strong>Logging:</strong> تسجيل جميع النتائج</li>
+                                <li><strong>Checklist-based:</strong> مراجعة قائمة تحقق</li>
+                                <li><strong>Scenario-based:</strong> مراجعة قائمة سيناريو</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Process Flexibility -->
+                <div style="background: rgba(234, 88, 12, 0.1); border: 2px solid var(--orange); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--orange); text-align: center; margin-bottom: 15px;">🔧 مرونة العملية:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--orange);">🎚️ مستوى الرسمية</strong><br>
+                            <small style="color: #9a3412;">كلما زادت الرسمية، كلما زادت المهام المطلوبة</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--orange);">📏 حجم المنتج</strong><br>
+                            <small style="color: #9a3412;">المنتجات الكبيرة تحتاج مراجعات متعددة</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--orange);">🎯 التخصيص</strong><br>
+                            <small style="color: #9a3412;">العملية قابلة للتخصيص حسب الحالة</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--orange);">🔄 التكرار</strong><br>
+                            <small style="color: #9a3412;">العملية قد تُستدعى عدة مرات</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.2.3 Roles and Responsibilities in Reviews -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">👥 3.2.3 Roles and Responsibilities in Reviews</h2>
+            <h3 style="text-align: center; color: var(--purple); margin-bottom: 30px;">الأدوار والمسؤوليات في المراجعات</h3>
+            
+            <div class="english-quote">
+                "<span class="highlight">Reviews involve various stakeholders, who may take on several roles</span>. The principal roles and their responsibilities are: <span class="highlight">Manager, Author, Moderator (facilitator), Scribe (recorder), Reviewer, Review leader</span>. Other, more detailed roles are possible, as described in the ISO/IEC 20246 standard."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">المراجعات تشمل أطراف معنية مختلفة، قد يأخذون عدة أدوار</span>. الأدوار الرئيسية ومسؤولياتها هي: <span class="code-term">المدير، المؤلف، المنسق (الميسر)، الكاتب (المسجل)، المراجع، قائد المراجعة</span>. أدوار أخرى أكثر تفصيلاً ممكنة، كما هو موضح في معيار ISO/IEC 20246.
+            </div>
+
+            <!-- Roles Grid -->
+            <div class="roles-section">
+                <h3 style="color: var(--purple); text-align: center; margin-bottom: 25px;">🎭 الأدوار الستة الرئيسية:</h3>
+                
+                <div class="roles-grid">
+                    <!-- Manager -->
+                    <div class="role-card">
+                        <div class="role-icon">👔</div>
+                        <h4>Manager</h4>
+                        <p style="color: #6b21a8; font-weight: 500; margin-bottom: 15px; text-align: center;">
+                            المدير - صانع القرار والموفر للموارد
+                        </p>
+                        
+                        <div class="role-responsibilities">
+                            <h5 style="color: var(--purple); text-align: center;">🎯 المسؤوليات:</h5>
+                            <ul>
+                                <li><strong>Decision Making:</strong> يقرر ما الذي يجب مراجعته</li>
+                                <li><strong>Resource Provision:</strong> يوفر الموارد مثل الموظفين والوقت</li>
+                                <li><strong>Budget Allocation:</strong> تخصيص الميزانية للمراجعة</li>
+                                <li><strong>Priority Setting:</strong> تحديد أولويات المراجعة</li>
+                                <li><strong>Support:</strong> دعم عملية المراجعة</li>
+                                <li><strong>Authorization:</strong> تفويض إجراء المراجعات</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Author -->
+                    <div class="role-card">
+                        <div class="role-icon">✍️</div>
+                        <h4>Author</h4>
+                        <p style="color: #6b21a8; font-weight: 500; margin-bottom: 15px; text-align: center;">
+                            المؤلف - المنشئ والمصلح لمنتج العمل
+                        </p>
+                        
+                        <div class="role-responsibilities">
+                            <h5 style="color: var(--purple); text-align: center;">🎯 المسؤوليات:</h5>
+                            <ul>
+                                <li><strong>Creation:</strong> ينشئ منتج العمل تحت المراجعة</li>
+                                <li><strong>Fixing:</strong> يصلح منتج العمل بعد المراجعة</li>
+                                <li><strong>Explanation:</strong> يشرح القرارات التصميمية</li>
+                                <li><strong>Clarification:</strong> يوضح الأسئلة والغموض</li>
+                                <li><strong>Documentation:</strong> يوثق التغييرات المطلوبة</li>
+                                <li><strong>Implementation:</strong> ينفذ الإصلاحات المتفق عليها</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Moderator -->
+                    <div class="role-card">
+                        <div class="role-icon">🎪</div>
+                        <h4>Moderator (Facilitator)</h4>
+                        <p style="color: #6b21a8; font-weight: 500; margin-bottom: 15px; text-align: center;">
+                            المنسق - ضامن التشغيل الفعال للاجتماعات
+                        </p>
+                        
+                        <div class="role-responsibilities">
+                            <h5 style="color: var(--purple); text-align: center;">🎯 المسؤوليات:</h5>
+                            <ul>
+                                <li><strong>Meeting Management:</strong> ضمان التشغيل الفعال لاجتماعات المراجعة</li>
+                                <li><strong>Mediation:</strong> الوساطة بين المشاركين</li>
+                                <li><strong>Time Management:</strong> إدارة الوقت</li>
+                                <li><strong>Safe Environment:</strong> خلق بيئة آمنة للحديث بحرية</li>
+                                <li><strong>Process Control:</strong> التحكم في عملية المراجعة</li>
+                                <li><strong>Conflict Resolution:</strong> حل النزاعات</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Scribe -->
+                    <div class="role-card">
+                        <div class="role-icon">📝</div>
+                        <h4>Scribe (Recorder)</h4>
+                        <p style="color: #6b21a8; font-weight: 500; margin-bottom: 15px; text-align: center;">
+                            الكاتب - جامع ومسجل المعلومات
+                        </p>
+                        
+                        <div class="role-responsibilities">
+                            <h5 style="color: var(--purple); text-align: center;">🎯 المسؤوليات:</h5>
+                            <ul>
+                                <li><strong>Anomaly Collection:</strong> جمع الشذوذات من المراجعين</li>
+                                <li><strong>Information Recording:</strong> تسجيل معلومات المراجعة</li>
+                                <li><strong>Decision Documentation:</strong> توثيق القرارات</li>
+                                <li><strong>New Findings:</strong> تسجيل الشذوذات الجديدة في الاجتماع</li>
+                                <li><strong>Minutes:</strong> كتابة محاضر الاجتماعات</li>
+                                <li><strong>Action Items:</strong> تسجيل عناصر الإجراء</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Reviewer -->
+                    <div class="role-card">
+                        <div class="role-icon">🔍</div>
+                        <h4>Reviewer</h4>
+                        <p style="color: #6b21a8; font-weight: 500; margin-bottom: 15px; text-align: center;">
+                            المراجع - منفذ المراجعات الفعلية
+                        </p>
+                        
+                        <div class="role-responsibilities">
+                            <h5 style="color: var(--purple); text-align: center;">🎯 المسؤوليات:</h5>
+                            <ul>
+                                <li><strong>Review Performance:</strong> يؤدي المراجعات الفعلية</li>
+                                <li><strong>Project Worker:</strong> قد يكون شخص يعمل في المشروع</li>
+                                <li><strong>Subject Matter Expert:</strong> خبير في الموضوع</li>
+                                <li><strong>Stakeholder:</strong> أي طرف معني آخر</li>
+                                <li><strong>Quality Assessment:</strong> تقييم جودة منتج العمل</li>
+                                <li><strong>Defect Detection:</strong> اكتشاف العيوب والشذوذات</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Review Leader -->
+                    <div class="role-card">
+                        <div class="role-icon">👑</div>
+                        <h4>Review Leader</h4>
+                        <p style="color: #6b21a8; font-weight: 500; margin-bottom: 15px; text-align: center;">
+                            قائد المراجعة - المسؤول الشامل عن المراجعة
+                        </p>
+                        
+                        <div class="role-responsibilities">
+                            <h5 style="color: var(--purple); text-align: center;">🎯 المسؤوليات:</h5>
+                            <ul>
+                                <li><strong>Overall Responsibility:</strong> يتحمل المسؤولية الشاملة للمراجعة</li>
+                                <li><strong>Participant Selection:</strong> يقرر من سيشارك</li>
+                                <li><strong>Organization:</strong> ينظم متى وأين ستتم المراجعة</li>
+                                <li><strong>Planning:</strong> تخطيط عملية المراجعة</li>
+                                <li><strong>Coordination:</strong> تنسيق الأنشطة</li>
+                                <li><strong>Follow-up:</strong> متابعة الإجراءات</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role Interactions -->
+                <div style="background: white; border-radius: 15px; padding: 25px; margin: 25px 0;">
+                    <h4 style="color: var(--purple); text-align: center; margin-bottom: 20px;">🤝 تفاعل الأدوار:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px; text-align: center;">
+                            <strong style="color: var(--purple);">👥 تعدد الأدوار</strong><br>
+                            <small style="color: #6b21a8;">شخص واحد قد يأخذ عدة أدوار في المراجعة</small>
+                        </div>
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px; text-align: center;">
+                            <strong style="color: var(--purple);">🔗 التكامل</strong><br>
+                            <small style="color: #6b21a8;">جميع الأدوار تعمل معاً لإنجاح المراجعة</small>
+                        </div>
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px; text-align: center;">
+                            <strong style="color: var(--purple);">📚 ISO 20246</strong><br>
+                            <small style="color: #6b21a8;">أدوار أكثر تفصيلاً متوفرة في المعيار</small>
+                        </div>
+                        <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); border-radius: 10px; padding: 15px; text-align: center;">
+                            <strong style="color: var(--purple);">🎯 الوضوح</strong><br>
+                            <small style="color: #6b21a8;">وضوح الأدوار والمسؤوليات أساسي للنجاح</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.2.4 Review Types -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🎭 3.2.4 Review Types</h2>
+            <h3 style="text-align: center; color: var(--cyan); margin-bottom: 30px;">أنواع المراجعة</h3>
+            
+            <div class="english-quote">
+                "<span class="highlight">There exist many review types ranging from informal reviews to formal reviews</span>. The required level of formality depends on factors such as the SDLC being followed, the maturity of the development process, the criticality and complexity of the work product being reviewed, legal or regulatory requirements, and the need for an audit trail. Some commonly used review types are: <span class="highlight">Informal review, Walkthrough, Technical Review, Inspection</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <span class="code-term">توجد أنواع مراجعة كثيرة تتراوح من المراجعات غير الرسمية إلى المراجعات الرسمية</span>. مستوى الرسمية المطلوب يعتمد على عوامل مثل SDLC المتبع، نضج عملية التطوير، الأهمية والتعقيد لمنتج العمل قيد المراجعة، المتطلبات القانونية أو التنظيمية، والحاجة لمسار تدقيق. بعض أنواع المراجعة شائعة الاستخدام هي: <span class="code-term">المراجعة غير الرسمية، الجولة، المراجعة التقنية، التفتيش</span>.
+            </div>
+
+            <!-- Review Types Spectrum -->
+            <div class="review-types">
+                <h3 style="color: var(--cyan); text-align: center; margin-bottom: 25px;">📊 طيف أنواع المراجعة - من غير الرسمية إلى الرسمية:</h3>
+                
+                <div class="types-spectrum">
+                    <div class="spectrum-line">
+                        <div style="position: absolute; top: -30px; left: 5%; color: var(--success-color); font-weight: 600;">أقل رسمية</div>
+                        <div style="position: absolute; top: -30px; right: 5%; color: var(--error-color); font-weight: 600;">أكثر رسمية</div>
+                    </div>
+                    
+                    <div class="spectrum-labels">
+                        <div class="spectrum-label" style="border-color: var(--success-color); color: var(--success-color);">Informal</div>
+                        <div class="spectrum-label" style="border-color: var(--accent-color); color: var(--accent-color);">Walkthrough</div>
+                        <div class="spectrum-label" style="border-color: var(--orange); color: var(--orange);">Technical</div>
+                        <div class="spectrum-label" style="border-color: var(--error-color); color: var(--error-color);">Inspection</div>
+                    </div>
+                </div>
+
+                <!-- Formality Factors -->
+                <div style="background: rgba(6, 182, 212, 0.1); border: 2px solid var(--cyan); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--cyan); text-align: center; margin-bottom: 15px;">🎚️ عوامل تحديد مستوى الرسمية:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--cyan);">🔄 SDLC Type</strong><br>
+                            <small style="color: #0e7490;">نوع دورة حياة التطوير المتبعة</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--cyan);">📈 Process Maturity</strong><br>
+                            <small style="color: #0e7490;">نضج عملية التطوير</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--cyan);">⚠️ Criticality</strong><br>
+                            <small style="color: #0e7490;">أهمية وتعقيد منتج العمل</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--cyan);">⚖️ Legal Requirements</strong><br>
+                            <small style="color: #0e7490;">المتطلبات القانونية والتنظيمية</small>
+                        </div>
+                        <div style="text-align: center; padding: 10px;">
+                            <strong style="color: var(--cyan);">📋 Audit Trail</strong><br>
+                            <small style="color: #0e7490;">الحاجة لمسار تدقيق موثق</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Types Grid -->
+                <div class="types-grid">
+                    <!-- Informal Review -->
+                    <div class="type-card informal">
+                        <div class="type-icon" style="color: var(--success-color);">💬</div>
+                        <h4 style="color: var(--success-color);">Informal Review</h4>
+                        <p style="color: #14532d; font-weight: 500; margin-bottom: 15px; text-align: center;">
+                            مراجعة غير رسمية - بساطة ومرونة
+                        </p>
+                        
+                        <div class="type-characteristics">
+                            <h5 style="color: var(--success-color);">✨ الخصائص:</h5>
+                            <ul>
+                                <li><strong>No defined process:</strong> لا تتبع عملية محددة</li>
+                                <li><strong>No formal output:</strong> لا تتطلب مخرجات رسمية موثقة</li>
+                                <li><strong>Main objective:</strong> الهدف الرئيسي هو كشف الشذوذات</li>
+                                <li><strong>Quick and flexible:</strong> سريعة ومرنة</li>
+                                <li><strong>Low cost:</strong> تكلفة منخفضة</li>
+                                <li><strong>Minimal documentation:</strong> توثيق أدنى</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="type-characteristics">
+                            <h5 style="color: var(--success-color);">🎯 الاستخدام:</h5>
+                            <ul>
+                                <li>Quick peer reviews</li>
+                                <li>Early draft reviews</li>
+                                <li>Casual code reviews</li>
+                                <li>Pair programming</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Walkthrough -->
+                    <div class="type-card walkthrough">
+                        <div class="type-icon" style="color: var(--accent-color);">👨‍🏫</div>
+                        <h4 style="color: var(--accent-color);">Walkthrough</h4>
+                        <p style="color: #92400e; font-weight: 500; margin-bottom: 15px; text-align: center;">
+                            جولة - يقودها المؤلف، متعددة الأهداف
+                        </p>
+                        
+                        <div class="type-characteristics">
+                            <h5 style="color: var(--accent-color);">✨ الخصائص:</h5>
+                            <ul>
+                                <li><strong>Led by author:</strong> يقودها المؤلف</li>
+                                <li><strong>Many objectives:</strong> تخدم أهداف متعددة</li>
+                                <li><strong>Educational:</strong> تعليم المراجعين</li>
+                                <li><strong>Consensus building:</strong> بناء إجماع</li>
+                                <li><strong>Idea generation:</strong> توليد أفكار جديدة</li>
+                                <li><strong>Author improvement:</strong> تحفيز المؤلف للتحسين</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="type-characteristics">
+                            <h5 style="color: var(--accent-color);">🎯 الأهداف:</h5>
+                            <ul>
+                                <li>Quality evaluation</li>
+                                <li>Building confidence</li>
+                                <li>Knowledge sharing</li>
+                                <li>Team alignment</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Technical Review -->
+                    <div class="type-card technical">
+                        <div class="type-icon" style="color: var(--orange);">🔧</div>
+                        <h4 style="color: var(--orange);">Technical Review</h4>
+                        <p style="color: #9a3412; font-weight: 500; margin-bottom: 15px; text-align: center;">
+                            مراجعة تقنية - خبراء مؤهلين تقنياً
+                        </p>
+                        
+                        <div class="type-characteristics">
+                            <h5 style="color: var(--orange);">✨ الخصائص:</h5>
+                            <ul>
+                                <li><strong>Technically qualified:</strong> مراجعين مؤهلين تقنياً</li>
+                                <li><strong>Led by moderator:</strong> يقودها منسق</li>
+                                <li><strong>Consensus focus:</strong> التركيز على الإجماع</li>
+                                <li><strong>Decision making:</strong> اتخاذ قرارات تقنية</li>
+                                <li><strong>Technical problems:</strong> حل المشاكل التقنية</li>
+                                <li><strong>Quality evaluation:</strong> تقييم الجودة</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="type-characteristics">
+                            <h5 style="color: var(--orange);">🎯 الأهداف:</h5>
+                            <ul>
+                                <li>Technical consensus</li>
+                                <li>Problem solving</li>
+                                <li>Architecture decisions</li>
+                                <li>Standards compliance</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Inspection -->
+                    <div class="type-card inspection">
+                        <div class="type-icon" style="color: var(--error-color);">🔍</div>
+                        <h4 style="color: var(--error-color);">Inspection</h4>
+                        <p style="color: #7f1d1d; font-weight: 500; margin-bottom: 15px; text-align: center;">
+                            تفتيش - الأكثر رسمية، أقصى كشف للشذوذات
+                        </p>
+                        
+                        <div class="type-characteristics">
+                            <h5 style="color: var(--error-color);">✨ الخصائص:</h5>
+                            <ul>
+                                <li><strong>Most formal:</strong> الأكثر رسمية من جميع الأنواع</li>
+                                <li><strong>Complete process:</strong> تتبع العملية العامة الكاملة</li>
+                                <li><strong>Maximum anomalies:</strong> إيجاد أقصى عدد من الشذوذات</li>
+                                <li><strong>Metrics collection:</strong> جمع المقاييس</li>
+                                <li><strong>Process improvement:</strong> تحسين SDLC</li>
+                                <li><strong>Author restrictions:</strong> المؤلف لا يقود أو يسجل</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="type-characteristics">
+                            <h5 style="color: var(--error-color);">🎯 الأهداف:</h5>
+                            <ul>
+                                <li>Maximum defect detection</li>
+                                <li>Quality assurance</li>
+                                <li>Process metrics</li>
+                                <li>SDLC improvement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Selection Criteria -->
+                <div style="background: white; border-radius: 15px; padding: 25px; margin: 25px 0;">
+                    <h4 style="color: var(--cyan); text-align: center; margin-bottom: 20px;">⚖️ معايير اختيار نوع المراجعة:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                        <div style="background: rgba(6, 182, 212, 0.1); border: 2px solid var(--cyan); border-radius: 15px; padding: 15px;">
+                            <h5 style="color: var(--cyan); margin-bottom: 10px; text-align: center;">🎯 الأهداف</h5>
+                            <ul style="list-style: none; color: #0e7490; text-align: right;">
+                                <li>• Review objectives المطلوبة</li>
+                                <li>• Level of formality needed</li>
+                                <li>• Documentation requirements</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: rgba(6, 182, 212, 0.1); border: 2px solid var(--cyan); border-radius: 15px; padding: 15px;">
+                            <h5 style="color: var(--cyan); margin-bottom: 10px; text-align: center;">🏗️ السياق</h5>
+                            <ul style="list-style: none; color: #0e7490; text-align: right;">
+                                <li>• Project needs والمتطلبات</li>
+                                <li>• Available resources</li>
+                                <li>• Work product type</li>
+                                <li>• Business domain</li>
+                                <li>• Company culture</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(6, 182, 212, 0.1); border: 2px solid var(--cyan); border-radius: 15px; padding: 15px; margin: 15px 0; text-align: center;">
+                        <p style="color: #0e7490; font-size: 1.1rem; font-weight: 600;">
+                            <strong>💡 نصيحة مهمة:</strong> نفس منتج العمل يمكن مراجعته بأنواع مختلفة، 
+                            مثل مراجعة غير رسمية أولاً ثم رسمية لاحقاً
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.2.5 Success Factors for Reviews -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">🏆 3.2.5 Success Factors for Reviews</h2>
+            <h3 style="text-align: center; color: var(--error-color); margin-bottom: 30px;">عوامل نجاح المراجعات</h3>
+            
+            <div class="english-quote">
+                "There are <span class="highlight">several factors that determine the success of reviews</span>, which include: <span class="highlight">Defining clear objectives and measurable exit criteria</span> (Evaluation of participants should never be an objective), <span class="highlight">Choosing the appropriate review type</span>, <span class="highlight">Conducting reviews on small chunks</span>, <span class="highlight">Providing feedback</span>, <span class="highlight">Providing adequate time</span>, <span class="highlight">Support from management</span>, <span class="highlight">Making reviews part of the organization's culture</span>, <span class="highlight">Providing adequate training</span>, and <span class="highlight">Facilitating meetings</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                هناك <span class="code-term">عدة عوامل تحدد نجاح المراجعات</span>، والتي تشمل: <span class="code-term">تحديد أهداف واضحة ومعايير خروج قابلة للقياس</span> (تقييم المشاركين يجب ألا يكون هدفاً أبداً)، <span class="code-term">اختيار نوع المراجعة المناسب</span>، <span class="code-term">إجراء مراجعات على أجزاء صغيرة</span>، <span class="code-term">تقديم تغذية راجعة</span>، <span class="code-term">توفير وقت كافٍ</span>، <span class="code-term">دعم من الإدارة</span>، <span class="code-term">جعل المراجعات جزءاً من ثقافة المنظمة</span>، <span class="code-term">توفير تدريب كافٍ</span>، و<span class="code-term">تيسير الاجتماعات</span>.
+            </div>
+
+            <!-- Success Factors Grid -->
+            <div class="success-factors">
+                <h3 style="color: var(--error-color); text-align: center; margin-bottom: 25px;">🎯 العوامل التسعة لنجاح المراجعات:</h3>
+                
+                <div class="factors-grid">
+                    <!-- Clear Objectives -->
+                    <div class="factor-card">
+                        <div class="factor-icon">🎯</div>
+                        <h5>Clear Objectives & Exit Criteria</h5>
+                        <p>تحديد أهداف واضحة ومعايير خروج قابلة للقياس. تقييم المشاركين يجب ألا يكون هدفاً أبداً</p>
+                    </div>
+
+                    <!-- Appropriate Review Type -->
+                    <div class="factor-card">
+                        <div class="factor-icon">⚖️</div>
+                        <h5>Appropriate Review Type</h5>
+                        <p>اختيار نوع المراجعة المناسب لتحقيق الأهداف المحددة وليناسب نوع منتج العمل والمشاركين والاحتياجات والسياق</p>
+                    </div>
+
+                    <!-- Small Chunks -->
+                    <div class="factor-card">
+                        <div class="factor-icon">📏</div>
+                        <h5>Small Chunks</h5>
+                        <p>إجراء مراجعات على أجزاء صغيرة بحيث لا يفقد المراجعون التركيز أثناء المراجعة الفردية و/أو اجتماع المراجعة</p>
+                    </div>
+
+                    <!-- Feedback Provision -->
+                    <div class="factor-card">
+                        <div class="factor-icon">🔄</div>
+                        <h5>Feedback Provision</h5>
+                        <p>تقديم تغذية راجعة من المراجعات لـ stakeholders والمؤلفين حتى يتمكنوا من تحسين المنتج وأنشطتهم</p>
+                    </div>
+
+                    <!-- Adequate Time -->
+                    <div class="factor-card">
+                        <div class="factor-icon">⏰</div>
+                        <h5>Adequate Preparation Time</h5>
+                        <p>توفير وقت كافٍ للمشاركين للاستعداد للمراجعة وفهم المواد والتحضير الجيد للمشاركة الفعالة</p>
+                    </div>
+
+                    <!-- Management Support -->
+                    <div class="factor-card">
+                        <div class="factor-icon">👔</div>
+                        <h5>Management Support</h5>
+                        <p>دعم من الإدارة لعملية المراجعة من خلال توفير الموارد والوقت والتشجيع والتأكيد على أهمية المراجعات</p>
+                    </div>
+
+                    <!-- Organizational Culture -->
+                    <div class="factor-card">
+                        <div class="factor-icon">🏛️</div>
+                        <h5>Part of Culture</h5>
+                        <p>جعل المراجعات جزءاً من ثقافة المنظمة لتعزيز التعلم وتحسين العملية والتطوير المستمر</p>
+                    </div>
+
+                    <!-- Adequate Training -->
+                    <div class="factor-card">
+                        <div class="factor-icon">🎓</div>
+                        <h5>Adequate Training</h5>
+                        <p>توفير تدريب كافٍ لجميع المشاركين حتى يعرفوا كيفية إنجاز دورهم بفعالية وإتقان</p>
+                    </div>
+
+                    <!-- Meeting Facilitation -->
+                    <div class="factor-card">
+                        <div class="factor-icon">🎪</div>
+                        <h5>Meeting Facilitation</h5>
+                        <p>تيسير الاجتماعات من خلال إدارة فعالة ووساطة جيدة وخلق بيئة آمنة للنقاش المفتوح</p>
+                    </div>
+                </div>
+
+                <!-- Critical Don'ts -->
+                <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid var(--error-color); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <h4 style="color: var(--error-color); text-align: center; margin-bottom: 15px;">❌ ما يجب تجنبه - نقطة مهمة جداً:</h4>
+                    <div style="text-align: center; padding: 15px; background: white; border-radius: 10px;">
+                        <strong style="color: var(--error-color); font-size: 1.3rem;">🚫 تقييم المشاركين يجب ألا يكون هدفاً أبداً</strong><br>
+                        <small style="color: #7f1d1d; font-size: 1.1rem; margin-top: 10px; display: block;">
+                            المراجعات تهدف لتحسين المنتج، ليس لتقييم الأفراد - هذا أساسي لنجاح المراجعة
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Success Recipe -->
+                <div style="background: white; border-radius: 15px; padding: 25px; margin: 25px 0;">
+                    <h4 style="color: var(--error-color); text-align: center; margin-bottom: 20px;">🏆 وصفة النجاح:</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--error-color); border-radius: 10px; padding: 15px; text-align: center;">
+                            <strong style="color: var(--error-color);">🎯 التخطيط</strong><br>
+                            <small style="color: #7f1d1d;">أهداف واضحة + نوع مناسب</small>
+                        </div>
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--error-color); border-radius: 10px; padding: 15px; text-align: center;">
+                            <strong style="color: var(--error-color);">📏 التنظيم</strong><br>
+                            <small style="color: #7f1d1d;">أجزاء صغيرة + وقت كافي</small>
+                        </div>
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--error-color); border-radius: 10px; padding: 15px; text-align: center;">
+                            <strong style="color: var(--error-color);">👥 الأشخاص</strong><br>
+                            <small style="color: #7f1d1d;">دعم إداري + تدريب + تيسير</small>
+                        </div>
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--error-color); border-radius: 10px; padding: 15px; text-align: center;">
+                            <strong style="color: var(--error-color);">🔄 التطوير</strong><br>
+                            <small style="color: #7f1d1d;">ثقافة التعلم + تغذية راجعة</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">📋 ملخص القسم 3.2</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+                <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid var(--success-color); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--success-color); margin-bottom: 10px;">⚡ 3.2.1 Feedback Benefits</h5>
+                    <p style="color: #14532d; font-size: 0.95rem;">منع سوء الفهم والفشل - التواصل المبكر للمشاكل</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fef7ed 0%, #fed7aa 100%); border: 2px solid var(--orange); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--orange); margin-bottom: 10px;">🔄 3.2.2 Process Activities</h5>
+                    <p style="color: #9a3412; font-size: 0.95rem;">5 خطوات حسب ISO 20246 - مرنة وقابلة للتخصيص</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); border: 2px solid var(--purple); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--purple); margin-bottom: 10px;">👥 3.2.3 Roles</h5>
+                    <p style="color: #6b21a8; font-size: 0.95rem;">6 أدوار رئيسية - واضحة ومتكاملة</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid var(--cyan); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--cyan); margin-bottom: 10px;">🎭 3.2.4 Review Types</h5>
+                    <p style="color: #0e7490; font-size: 0.95rem;">4 أنواع رئيسية - من غير رسمية لرسمية</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border: 2px solid var(--error-color); border-radius: 15px; padding: 20px; text-align: center;">
+                    <h5 style="color: var(--error-color); margin-bottom: 10px;">🏆 3.2.5 Success Factors</h5>
+                    <p style="color: #7f1d1d; font-size: 0.95rem;">9 عوامل نجاح - لا تقيم المشاركين أبداً</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Objectives Summary -->
+        <div class="section-card fade-in">
+            <h2 class="section-title">✅ تأكيد تحقيق الـ Learning Objectives</h2>
+            
+            <div class="learning-objectives">
+                <h3>تم تغطية جميع الـ Learning Objectives بنجاح:</h3>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-3.2.1 (K1):</strong> تحديد شامل لفوائد التغذية الراجعة المبكرة والمتكررة مع مقارنة السيناريوهات</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-3.2.2 (K2):</strong> تلخيص مفصل لأنشطة عملية المراجعة الخمسة حسب ISO/IEC 20246</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-3.2.3 (K1):</strong> استذكار كامل للمسؤوليات الستة الرئيسية مع تفاصيل شاملة</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-3.2.4 (K2):</strong> مقارنة ومقابلة شاملة للأنواع الأربعة مع طيف الرسمية</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-check">✅</span>
+                    <span class="objective-text"><strong>FL-3.2.5 (K1):</strong> استذكار التسعة عوامل النجاح مع التفاصيل والتطبيقات</span>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%); border: 2px solid var(--accent-color); border-radius: 20px; padding: 30px; margin: 20px 0;">
+                <h3 style="color: var(--accent-color); text-align: center; margin-bottom: 15px;">🎓 الخبرات العملية المكتسبة:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="text-align: center;">
+                        <strong>⚡ Feedback Mastery</strong><br>
+                        <small>إتقان أهمية التغذية الراجعة المبكرة والمتكررة</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🔄 Process Excellence</strong><br>
+                        <small>فهم عميق لعملية المراجعة حسب ISO 20246</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>👥 Role Clarity</strong><br>
+                        <small>وضوح كامل في الأدوار والمسؤوليات</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🎭 Type Selection</strong><br>
+                        <small>مهارة اختيار نوع المراجعة المناسب</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <strong>🏆 Success Formula</strong><br>
+                        <small>معرفة عوامل النجاح التسعة الأساسية</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer and Navigation -->
+        <div class="footer">
+            <h3 style="color: var(--success-color); margin-bottom: 20px;">🎉 تمت تغطية جميع "Feedback and Review Process" بالتفصيل الشامل</h3>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">
+                القسم القادم: <strong>ملخص الفصل الثالث</strong><br>
+                "Chapter 3 Summary مع جميع Keywords والمفاهيم 💪"
+            </p>
+
+            <!-- Navigation -->
+            <nav class="section-nav">
+                <div class="nav-grid">
+                    <a href="#" class="nav-btn">القسم 3.1<br>Static Testing Basics</a>
+                    <a href="#" class="nav-btn current">القسم 3.2<br>Feedback & Review Process</a>
+                    <a href="#" class="nav-btn">الفصل الثالث<br>Chapter Summary</a>
+                </div>
+                <div style="text-align: center; margin-top: 20px; color: var(--text-light);">
+                    من الفصل الثالث - Static Testing<br>
+                    من القسم 3.2<br>
+                    Learning Objectives FL-3.2.1, FL-3.2.2, FL-3.2.3, FL-3.2.4, FL-3.2.5
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Progress bar
+        function updateProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+
+        // Add bounce effect on hover for important elements
+        document.querySelectorAll('.highlight').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.classList.add('bounce');
+                setTimeout(() => {
+                    this.classList.remove('bounce');
+                }, 600);
+            });
+        });
+
+        // Scenario cards hover effect
+        document.querySelectorAll('.scenario-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Flow steps hover effect
+        document.querySelectorAll('.flow-step').forEach((step, index) => {
+            step.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.15)';
+                this.style.zIndex = '10';
+            });
+            
+            step.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.zIndex = '1';
+            });
+
+            // Add click effect to show details
+            step.addEventListener('click', function() {
+                const stepNumber = this.querySelector('.step-number').textContent;
+                const stepTitle = this.querySelector('.step-title').textContent;
+                const stepDescription = this.querySelector('.step-description').textContent;
+                
+                alert(`خطوة ${stepNumber}: ${stepTitle}\n\n${stepDescription}`);
+            });
+        });
+
+        // Role cards animation
+        document.querySelectorAll('.role-card').forEach((card, index) => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Type cards hover effect
+        document.querySelectorAll('.type-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Success factor cards animation
+        document.querySelectorAll('.factor-card').forEach((card, index) => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 20%, 60%, 100% { transform: translateY(0); }
+                40% { transform: translateY(-10px); }
+                80% { transform: translateY(-5px); }
+            }
+            
+            .highlight {
+                cursor: pointer;
+            }
+            
+            .nav-btn:active {
+                transform: scale(0.95);
+            }
+            
+            .section-card {
+                scroll-margin-top: 100px;
+            }
+            
+            .scenario-icon,
+            .step-number,
+            .role-icon,
+            .type-icon,
+            .factor-icon {
+                animation: pulse 3s ease-in-out infinite;
+            }
+            
+            @keyframes fadeInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize tooltips for mobile
+        if (window.innerWidth <= 768) {
+            document.querySelectorAll('[title]').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    const tooltip = document.createElement('div');
+                    tooltip.textContent = this.getAttribute('title');
+                    tooltip.style.cssText = `
+                        position: absolute;
+                        background: rgba(0,0,0,0.8);
+                        color: white;
+                        padding: 5px 10px;
+                        border-radius: 4px;
+                        font-size: 12px;
+                        top: -30px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        z-index: 1000;
+                    `;
+                    this.style.position = 'relative';
+                    this.appendChild(tooltip);
+                    
+                    setTimeout(() => {
+                        if (tooltip.parentNode) {
+                            tooltip.parentNode.removeChild(tooltip);
+                        }
+                    }, 2000);
+                });
+            });
+        }
+
+        console.log('🎉 3.2 Feedback and Review Process - تم تحميل الصفحة بنجاح!');
+        console.log('🔄 جميع جوانب عملية المراجعة والتغذية الراجعة تم شرحها بالتفصيل');
+        console.log('🎯 تم تغطية جميع Learning Objectives بنجاح مع التطبيقات العملية');
+    </script>
+</body>
+</html>

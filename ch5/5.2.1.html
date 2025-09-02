@@ -1,0 +1,156 @@
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 5.2.1 Risk Definition and Attributes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ef4444; /* Red */ --secondary: #f97316; /* Orange */ --accent: #facc15; /* Yellow */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af; --warning: #facc15;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.9; margin: 0; padding: 0; direction: rtl; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 20px; background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%); }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(249, 115, 22, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; }
+        .english-item { font-family: 'Source Code Pro', monospace; color: var(--secondary); font-weight: bold; }
+        .section-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-top: 5px solid var(--primary); border-radius: 12px; padding: 30px; margin-bottom: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
+        .english-quote { background-color: rgba(239, 68, 68, 0.05); border-right: 4px solid var(--primary); padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem; }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        
+        .risk-activities-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .activity-card { background: #2a3a4a; padding: 25px; border-radius: 10px; border-bottom: 4px solid; text-align: center; }
+        .analysis-card { border-color: var(--secondary); }
+        .control-card { border-color: #3b82f6; } /* Blue */
+        .activity-card h3 { font-size: 1.8rem; margin-top: 0; margin-bottom: 15px; }
+        .analysis-card h3 { color: var(--secondary); }
+        .control-card h3 { color: #3b82f6; }
+        
+        .risk-formula-container { text-align: center; margin: 30px auto; max-width: 800px; padding: 30px; background-color: #2a3a4a; border-radius: 10px; }
+        .risk-formula { display: flex; justify-content: center; align-items: center; font-family: 'Source Code Pro', monospace; font-size: 2rem; font-weight: bold; direction: ltr; }
+        .risk-formula .term { padding: 10px 20px; border-radius: 8px; }
+        .risk-formula .operator { font-size: 2.5rem; margin: 0 20px; color: var(--text-muted); }
+        .likelihood-term { color: #eab308; background-color: rgba(234, 179, 8, 0.1); } /* Yellow */
+        .impact-term { color: #ef4444; background-color: rgba(239, 68, 68, 0.1); } /* Red */
+        .level-term { color: #f97316; } /* Orange */
+
+        .visual-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 40px; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
+        .visual-table th, .visual-table td { padding: 18px; text-align: right; border-bottom: 1px solid var(--border-color); }
+        .visual-table thead th { background-color: #2a3a4a; font-size: 1.2rem; }
+        .visual-table tbody td { background-color: var(--card-bg); }
+        .visual-table tbody tr:last-child td { border-bottom: none; }
+        
+        .real-life-box { background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1)); border: 1px solid var(--primary); border-right: 5px solid var(--primary); padding: 20px; border-radius: 8px; margin-top: 30px; }
+        .real-life-box h4 { color: var(--primary); margin-top: 0; font-size: 1.5rem; }
+
+        @media (max-width: 768px) { .risk-activities-grid { grid-template-columns: 1fr; } .risk-formula { flex-direction: column; gap: 15px; } .risk-formula .operator { transform: rotate(90deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>5.2 Risk Management</h1>
+            <p class="subtitle">إدارة المخاطر - ISTQB Foundation Level v4.0</p>
+            <p>هدف التعلم: <span class="code-term">FL-5.2.1 (K1) Identify risk level by using risk likelihood and risk impact</span></p>
+        </header>
+
+        <section class="section-card" id="intro-management">
+            <h2 class="section-title">مقدمة في إدارة المخاطر</h2>
+            <div class="english-quote">
+                "Organizations face many internal and external factors that make it uncertain whether and when they will achieve their objectives (ISO 31000). Risk management allows the organizations to increase the likelihood of achieving objectives, improve the quality of their products and increase the stakeholders' confidence and trust."
+            </div>
+            <div class="arabic-explanation">
+                <p>إدارة المخاطر هي عملية استباقية (<span class="english-item">proactive process</span>) تهدف إلى التعامل مع "عدم اليقين" (<span class="english-item">uncertainty</span>). في تطوير البرمجيات، تساعد هذه العملية على تحسين جودة المنتج وزيادة ثقة أصحاب المصلحة من خلال تحديد التهديدات المحتملة والتعامل معها قبل أن تتحول إلى مشاكل حقيقية.</p>
+                <p>تتكون إدارة المخاطر من نشاطين رئيسيين:</p>
+            </div>
+            <div class="risk-activities-grid">
+                <div class="activity-card analysis-card">
+                    <h3>Risk Analysis (تحليل المخاطر)</h3>
+                    <p>الجانب "التحقيقي" من العملية. يتضمن تحديد المخاطر وتقييمها لفهم طبيعتها ومستواها.</p>
+                </div>
+                <div class="activity-card control-card">
+                    <h3>Risk Control (التحكم في المخاطر)</h3>
+                    <p>الجانب "التنفيذي" من العملية. يتضمن اتخاذ إجراءات لتخفيف المخاطر ومراقبتها بشكل مستمر.</p>
+                </div>
+            </div>
+            <p class="arabic-explanation" style="margin-top:20px;">عندما يتم توجيه أنشطة الاختبار بناءً على تحليل المخاطر، تسمى هذه الاستراتيجية <span class="mcq-highlight">risk-based testing</span>.</p>
+        </section>
+
+        <section class="section-card" id="definition-attributes">
+            <h2 class="section-title">5.2.1 تعريف المخاطر وخصائصها</h2>
+            <div class="english-quote">
+                "Risk is a potential event, hazard, threat, or situation whose occurrence causes an adverse effect. A risk can be characterized by two factors: <span class="mcq-highlight">Risk likelihood</span>... and <span class="mcq-highlight">Risk impact</span> (harm)... These two factors express the <span class="english-item">risk level</span>, which is a measure for the risk."
+            </div>
+            <div class="arabic-explanation">
+                <p>المخاطرة (<span class="english-item">Risk</span>) ليست مشكلة حدثت بالفعل، بل هي "احتمالية" حدوث شيء سيء في المستقبل. ولكي نتمكن من قياس هذه المخاطرة وتحديد أولوياتها، فإننا نحللها إلى عاملين أساسيين:</p>
+            </div>
+            <div class="visual-table">
+                <thead><tr><th>العامل (Attribute)</th><th>السؤال الذي يجيب عليه</th><th>الوصف</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Likelihood (احتمالية الحدوث)</strong></td>
+                        <td>"ما مدى احتمالية وقوع هذا الأمر؟"</td>
+                        <td>هي فرصة أو احتمالية (<span class="english-item">probability</span>) حدوث المخاطرة. يتم التعبير عنها كرقم بين 0 و 1 أو كمستوى (مثل: منخفض، متوسط، مرتفع).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Impact (حجم التأثير)</strong></td>
+                        <td>"إذا حدث هذا الأمر، ما مدى سوء العواقب؟"</td>
+                        <td>هو حجم الضرر أو العواقب السلبية (<span class="english-item">consequences</span>) التي ستنجم عن حدوث المخاطرة. يمكن أن يكون التأثير ماليًا، أو على السمعة، أو على سلامة المستخدمين.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="risk-formula-container">
+                <h3>معادلة مستوى المخاطرة (Risk Level)</h3>
+                <p>يتم دمج هذين العاملين لتحديد مستوى المخاطرة الكلي، والذي يساعدنا على تحديد أهم المخاطر التي يجب التركيز عليها أولاً.</p>
+                <div class="risk-formula">
+                    <div class="term level-term">Risk Level</div>
+                    <div class="operator">=</div>
+                    <div class="term likelihood-term">Likelihood</div>
+                    <div class="operator">×</div>
+                    <div class="term impact-term">Impact</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="real-life-example">
+            <div class="real-life-box">
+                <h4>💳 مثال من الواقع: مخاطر نظام دفع إلكتروني</h4>
+                <p>لنفترض أننا نختبر بوابة دفع جديدة. يمكننا تحديد المخاطر التالية وتقييمها:</p>
+                <ul>
+                    <li><strong>المخاطرة أ:</strong> "حساب خاطئ للضريبة المضافة بنسبة 0.1% في حالات نادرة."
+                        <ul>
+                            <li><strong>Likelihood:</strong> منخفض (يحدث فقط للطلبات من دولة معينة بشروط خاصة).</li>
+                            <li><strong>Impact:</strong> منخفض (الخسارة المالية صغيرة جدًا).</li>
+                            <li><strong>Risk Level:</strong> <span style="color:#22c55e; font-weight:bold;">منخفض</span>.</li>
+                        </ul>
+                    </li>
+                    <li><strong>المخاطرة ب:</strong> "فشل عملية الدفع بالكامل إذا كان اسم المستخدم يحتوي على رموز خاصة."
+                        <ul>
+                            <li><strong>Likelihood:</strong> متوسط (بعض المستخدمين لديهم أسماء تحتوي على رموز).</li>
+                            <li><strong>Impact:</strong> مرتفع (فشل الدفع يؤدي إلى خسارة المبيعات وعدم رضا العملاء).</li>
+                            <li><strong>Risk Level:</strong> <span style="color:var(--primary); font-weight:bold;">مرتفع</span>.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p>بناءً على هذا التحليل، يجب أن يعطي فريق الاختبار <strong>أولوية قصوى</strong> لاختبار "المخاطرة ب" لأن مستوى خطورتها أعلى بكثير، حتى لو لم تكن الأكثر احتمالاً للحدوث.</p>
+            </div>
+        </section>
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>

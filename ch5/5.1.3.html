@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 5.1.3 Entry and Exit Criteria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #22c55e; /* Green */ --secondary: #0ea5e9; /* Sky Blue */ --accent: #f97316; /* Orange */
+            --danger: #ef4444; /* Red */ --warning: #facc15; /* Yellow */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.9; margin: 0; padding: 0; direction: rtl; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 20px; background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%); }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(14, 165, 233, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; }
+        .english-item { font-family: 'Source Code Pro', monospace; color: var(--secondary); font-weight: bold; }
+        .section-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-top: 5px solid var(--primary); border-radius: 12px; padding: 30px; margin-bottom: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
+        .english-quote { background-color: rgba(34, 197, 94, 0.05); border-right: 4px solid var(--primary); padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem; }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .comparison-card { background: #2a3a4a; padding: 25px; border-radius: 10px; border-bottom: 4px solid; }
+        .entry-card { border-color: var(--primary); }
+        .exit-card { border-color: var(--danger); }
+        .comparison-card-header { display: flex; align-items: center; margin-bottom: 20px; }
+        .comparison-card-header svg { width: 40px; height: 40px; margin-left: 15px; }
+        .entry-card .comparison-card-header svg { color: var(--primary); }
+        .exit-card .comparison-card-header svg { color: var(--danger); }
+        .comparison-card-header h3 { margin: 0; font-size: 1.8rem; }
+        .agile-term { font-size: 1.2rem; font-weight: bold; margin-top: 10px; }
+        .entry-card .agile-term { color: var(--primary); }
+        .exit-card .agile-term { color: var(--danger); }
+        
+        .visual-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 40px; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
+        .visual-table th, .visual-table td { padding: 18px; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .visual-table thead th { background-color: #2a3a4a; font-size: 1.3rem; }
+        .visual-table tbody td { background-color: var(--card-bg); font-size: 1rem; }
+        .visual-table th:first-child, .visual-table td:first-child { border-left: 1px solid var(--border-color); text-align: right; font-weight: bold; }
+        .visual-table tbody tr:last-child td { border-bottom: none; }
+        .visual-table .col-entry { color: var(--primary); }
+        .visual-table .col-exit { color: var(--danger); }
+        
+        .workflow-diagram { display: flex; align-items: center; justify-content: center; margin: 40px 0; padding: 20px; background-color: #2a3a4a; border-radius: 10px; direction: ltr; }
+        .workflow-step { text-align: center; padding: 10px 20px; font-weight: bold; }
+        .workflow-gate { background-color: var(--dark-bg); border: 2px dashed; padding: 15px; border-radius: 8px; margin: 0 10px; }
+        .workflow-gate-ready { border-color: var(--primary); } .workflow-gate-done { border-color: var(--danger); }
+        .workflow-arrow { font-size: 2rem; color: var(--text-muted); }
+
+        .warning-box { background-color: rgba(250, 204, 21, 0.1); border-right: 4px solid var(--warning); padding: 20px; margin-top: 25px; border-radius: 8px; display:flex; align-items:center; }
+        .warning-box svg { width: 40px; height: 40px; color: var(--warning); margin-left: 15px; flex-shrink: 0; }
+        .warning-box p { margin: 0; }
+
+        @media (max-width: 992px) { .comparison-grid { grid-template-columns: 1fr; } .workflow-diagram { flex-direction: column; } .workflow-arrow { transform: rotate(90deg); margin: 15px 0; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>5.1.3 Entry Criteria and Exit Criteria</h1>
+            <p class="subtitle">معايير الدخول والخروج - ISTQB Foundation Level v4.0</p>
+            <p>هدف التعلم: <span class="code-term">FL-5.1.3 (K2) Compare and contrast entry criteria and exit criteria</span></p>
+        </header>
+
+        <section class="section-card" id="definitions">
+            <h2 class="section-title">بوابات الجودة: مقارنة بين معايير الدخول والخروج</h2>
+            <div class="english-quote">
+                "<span class="mcq-highlight">Entry criteria</span> define the preconditions for undertaking a given activity... <span class="mcq-highlight">Exit criteria</span> define what must be achieved in order to declare an activity completed."
+            </div>
+            <div class="arabic-explanation">
+                <p>تعمل معايير الدخول والخروج كـ "بوابات جودة" (<span class="english-item">Quality Gates</span>) في عملية الاختبار. فهي تضمن أن النشاط لا يبدأ إلا عندما تكون الظروف مهيأة للنجاح، ولا ينتهي إلا بعد تحقيق الأهداف المحددة بوضوح.</p>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card entry-card">
+                    <div class="comparison-card-header">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" /></svg>
+                        <h3>Entry Criteria</h3>
+                    </div>
+                    <p><strong>(معايير الدخول)</strong> هي الشروط المسبقة (<span class="english-item">preconditions</span>) التي يجب تحقيقها "قبل" بدء نشاط اختباري. إذا لم يتم استيفاؤها، يصبح النشاط أكثر صعوبة وتكلفة وخطورة.</p>
+                    <p class="agile-term">في الأجايل: <span class="code-term">Definition of Ready (DoR)</span></p>
+                </div>
+
+                <div class="comparison-card exit-card">
+                    <div class="comparison-card-header">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-1.5M21 3v1.5M21 21v-1.5M3 12h18M3 12h18M3 12h18" /></svg>
+                        <h3>Exit Criteria</h3>
+                    </div>
+                    <p><strong>(معايير الخروج)</strong> هي الشروط التي يجب تحقيقها "لإعلان اكتمال" نشاط اختباري. إنها تحدد متى يمكننا التوقف عن الاختبار.</p>
+                    <p class="agile-term">في الأجايل: <span class="code-term">Definition of Done (DoD)</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="examples">
+            <h2 class="section-title">أمثلة تفصيلية للمعايير</h2>
+            <div class="english-quote">
+                "Typical entry criteria include: availability of resources..., availability of testware..., and initial quality level of a test object... Typical exit criteria include: measures of thoroughness..., and completion criteria..."
+            </div>
+            <div class="arabic-explanation">
+                <p>لفهم الفروق بشكل أعمق، إليك جدول يقارن أمثلة محددة لكل نوع من المعايير عبر فئات مختلفة.</p>
+            </div>
+            <div class="visual-table">
+                <thead>
+                    <tr>
+                        <th>الفئة</th>
+                        <th class="col-entry">أمثلة لمعايير الدخول (Entry Criteria)</th>
+                        <th class="col-exit">أمثلة لمعايير الخروج (Exit Criteria)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>الموارد</strong><br><span class="english-item">(Resources)</span></td>
+                        <td>توفر بيئة الاختبار، الأدوات، والمختبرين بالمهارات المطلوبة.</td>
+                        <td>لا ينطبق عادةً (الموارد شرط للبدء وليس للانتهاء).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>وثائق الاختبار</strong><br><span class="english-item">(Testware)</span></td>
+                        <td>توفر أساس الاختبار (<span class="code-term">test basis</span>) مثل المتطلبات القابلة للاختبار، وحالات الاختبار جاهزة.</td>
+                        <td>تنفيذ جميع حالات الاختبار المخطط لها.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>جودة المنتج</strong><br><span class="english-item">(Quality)</span></td>
+                        <td>الكود جاهز للاختبار، وجميع اختبارات الدخان (<span class="code-term">smoke tests</span>) ناجحة.</td>
+                        <td>تحقيق مستوى تغطية معين (مثل <span class="code-term">90% branch coverage</span>).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>العيوب</strong><br><span class="english-item">(Defects)</span></td>
+                        <td>عدم وجود عيوب حرجة (<span class="code-term">blocker defects</span>) تمنع بدء الاختبار.</td>
+                        <td>عدم وجود عيوب حرجة متبقية، وكثافة العيوب (<span class="code-term">defect density</span>) أقل من الحد المتفق عليه.</td>
+                    </tr>
+                </tbody>
+            </div>
+        </section>
+
+        <section class="section-card" id="agile-context">
+            <h2 class="section-title">المعايير في سياق الأجايل</h2>
+            <div class="arabic-explanation">
+                <p>في الأجايل، تكتسب هذه المفاهيم أسماء محددة وتعمل كعقود اجتماعية داخل الفريق لتنظيم تدفق العمل من فكرة إلى ميزة مكتملة.</p>
+            </div>
+            <div class="workflow-diagram">
+                <div class="workflow-step">Iteration<br>Backlog</div>
+                <div class="workflow-arrow">➜</div>
+                <div class="workflow-gate workflow-gate-ready">
+                    <strong>Definition of Ready</strong><br>هل القصة جاهزة للبدء؟
+                </div>
+                <div class="workflow-arrow">➜</div>
+                <div class="workflow-step">In Progress</div>
+                <div class="workflow-arrow">➜</div>
+                <div class="workflow-gate workflow-gate-done">
+                    <strong>Definition of Done</strong><br>هل القصة مكتملة حقًا؟
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="special-case">
+            <div class="warning-box">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+                <div>
+                    <h4>حالة خاصة ومهمة للامتحان</h4>
+                    <div class="english-quote" style="background:none; border:none; padding:0; margin:10px 0; font-size: 1rem;">
+                        "<span class="mcq-highlight">Running out of time or budget can also be viewed as valid exit criteria</span>. Even without other exit criteria being satisfied, it can be acceptable to end testing under such circumstances, if the stakeholders have reviewed and accepted the risk to go live without further testing."
+                    </div>
+                    <p><strong>باختصار:</strong> يمكن أن يكون نفاد الوقت أو الميزانية معيار خروج صالحًا، ولكن بشرط أساسي: <strong>موافقة أصحاب المصلحة بعد مراجعة وقبول المخاطر المترتبة.</strong></p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>

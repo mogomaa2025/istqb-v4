@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 6.2 Benefits and Risks of Test Automation (Corrected)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #10b981; /* Emerald */ --secondary: #ef4444; /* Red */ --accent: #f59e0b; /* Amber */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af; --warning: #facc15;
+            --benefit-color: #10b981; --risk-color: #ef4444;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.9; margin: 0; padding: 0; direction: rtl; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 20px; background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%); }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(239, 68, 68, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; }
+        .english-item { font-family: 'Source Code Pro', monospace; font-weight: bold; }
+        .section-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-top: 5px solid; border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.2rem; margin-bottom: 20px; display: flex; align-items: center; }
+        .section-title svg { width: 35px; height: 35px; margin-left: 15px; }
+        .english-quote { background-color: rgba(255, 255, 255, 0.03); border-right: 4px solid; padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem; }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .comparison-card { background-color: #2a3a4a; padding: 25px; border-radius: 10px; border-top: 4px solid; }
+        .comparison-card h3 { display: flex; align-items: center; font-size: 1.8rem; margin: 0 0 15px 0; }
+        .comparison-card h3 svg { width: 30px; height: 30px; margin-left: 10px; }
+        .comparison-card ul { list-style-type: none; padding: 0; margin: 0; }
+        .comparison-card li { margin-bottom: 15px; background-color: var(--card-bg); padding: 15px; border-radius: 8px; border-right: 3px solid; }
+        .comparison-card li .english-item { display: block; font-size: 0.9rem; color: var(--text-muted); direction: ltr; }
+
+        .benefits-card { border-color: var(--benefit-color); }
+        .benefits-card h3, .benefits-card svg { color: var(--benefit-color); }
+        .benefits-card li { border-right-color: var(--benefit-color); }
+
+        .risks-card { border-color: var(--risk-color); }
+        .risks-card h3, .risks-card svg { color: var(--risk-color); }
+        .risks-card li { border-right-color: var(--risk-color); }
+        
+        .real-life-box { border-top-color: var(--accent) !important; }
+        .real-life-box .section-title { color: var(--accent); }
+        .real-life-box table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+        .real-life-box th { text-align: right; padding: 10px; background: #2a3a4a; }
+        .real-life-box td { background: #2a3a4a; padding: 15px; border: 1px solid var(--border-color); }
+        
+        @media (max-width: 992px) { .comparison-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>6.2 Benefits and Risks of Test Automation</h1>
+            <p class="subtitle">فوائد ومخاطر أتمتة الاختبار - ISTQB Foundation Level v4.0</p>
+            <p>هدف التعلم: <span class="code-term">FL-6.2.1 (K1) Recall the benefits and risks of test automation</span></p>
+        </header>
+
+        <!-- Block 1: The Core Concept -->
+        <section class="section-card" style="border-top-color: var(--primary);">
+            <h2 class="section-title" style="color:var(--primary);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>الأتمتة ليست حلاً سحريًا</h2>
+            <div class="english-quote" style="border-right-color:var(--primary);">
+                "<span class="mcq-highlight">Simply acquiring a tool does not guarantee success.</span> Each new tool will require effort to achieve real and lasting benefits (e.g., for tool introduction, maintenance and training). There are also some risks, which need analysis and mitigation."
+            </div>
+            <div class="arabic-explanation">
+                <p>أتمتة الاختبار هي استثمار. مجرد شراء أداة أتمتة باهظة الثمن لا يضمن النجاح. يتطلب الأمر جهدًا كبيرًا في إدخال الأداة، تدريب الفريق، وصيانة الاختبارات الآلية بشكل مستمر.</p>
+                <p>لذلك، قبل البدء في الأتمتة، من الضروري الموازنة بين الفوائد المحتملة والمخاطر الكامنة.</p>
+            </div>
+        </section>
+        
+        <!-- Block 2: Benefits vs Risks Diagram -->
+        <section class="section-card" style="border-top-color: var(--secondary);">
+            <h2 class="section-title" style="color:var(--secondary);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>موازنة الفوائد والمخاطر</h2>
+            <div class="comparison-grid">
+                <!-- Benefits -->
+                <div class="comparison-card benefits-card">
+                    <h3><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" /></svg>الفوائد المحتملة (Benefits)</h3>
+                    <div class="english-quote" style="border-color:var(--benefit-color);">"Potential benefits of using test automation include:"</div>
+                    <ul>
+                        <li><strong>توفير الوقت</strong><br><span class="english-item">Time saved by reducing repetitive manual work (e.g., execute regression tests, re-enter the same test data, compare expected results vs actual results, and check against coding standards)</span></li>
+                        <li><strong>منع الأخطاء البشرية</strong><br><span class="english-item">Prevention of simple human errors through greater consistency and repeatability...</span></li>
+                        <li><strong>تقييم موضوعي</strong><br><span class="english-item">More objective assessment (e.g., coverage) and providing measures that are too complicated for humans to derive</span></li>
+                        <li><strong>سهولة الوصول للمعلومات</strong><br><span class="english-item">Easier access to information about testing to support test management and test reporting...</span></li>
+                        <li><strong>تغذية راجعة أسرع</strong><br><span class="english-item">Reduced test execution times to provide earlier defect detection, faster feedback and faster time to market</span></li>
+                        <li><strong>وقت إضافي للاختبارات الأعمق</strong><br><span class="english-item">More time for testers to design new, deeper and more effective tests</span></li>
+                    </ul>
+                </div>
+                <!-- Risks -->
+                <div class="comparison-card risks-card">
+                    <h3><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>المخاطر المحتملة (Risks)</h3>
+                    <div class="english-quote" style="border-color:var(--risk-color);">"There are also some risks, which need analysis and mitigation."</div>
+                    <ul>
+                        <li><strong>توقعات غير واقعية</strong><br><span class="english-item">Unrealistic expectations about what the tool can do.</span></li>
+                        <li><strong>تقدير خاطئ للجهد الأولي</strong><br><span class="english-item">Underestimating the time, cost, and effort for the initial introduction of a tool.</span></li>
+                        <li><strong>جهد الصيانة المرتفع</strong><br><span class="english-item">Underestimating the effort to maintain the testware created by the tool.</span></li>
+                        <li><strong>الاعتماد المفرط على الأداة</strong><br><span class="english-item">Over-reliance on the tool, losing focus on testing objectives.</span></li>
+                        <li><strong>مشاكل في الأداة نفسها</strong><br><span class="english-item">Defects in the test tool can lead to false negatives or positives.</span></li>
+                        <li><strong>فقدان المهارات اليدوية</strong><br><span class="english-item">Testers might become less effective at manual or exploratory testing.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Block 3: Real-World Example -->
+        <section class="section-card real-life-box">
+            <h2 class="section-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7.5l3 4.5m0 0l3-4.5M12 12v5.25M15 12H9m6 3H9m12-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>دراسة حالة: قرار أتمتة اختبار تسجيل الدخول</h2>
+            <p><strong>السيناريو:</strong> فريق في شركة ناشئة يناقش ما إذا كان يجب أتمتة اختبارات الانحدار (<span class="english-item">regression tests</span>) لوظيفة تسجيل الدخول.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="color:var(--benefit-color);">الفوائد (لماذا يجب أن نؤتمت؟)</th>
+                        <th style="color:var(--risk-color);">المخاطر (ما الذي قد يحدث بشكل خاطئ؟)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul style="direction:ltr;">
+                                <li><strong><span class="english-item">Time saved</span>:</strong> Running the 20 login regression tests manually takes 30 minutes each day. Automation can do it in 2 minutes.</li>
+                                <li><strong><span class="english-item">Faster feedback</span>:</strong> We can run it on every code commit, finding login bugs instantly instead of at the end of the day.</li>
+                                <li><strong><span class="english-item">Prevention of human errors</span>:</strong> No more typos in passwords or forgetting a specific test case.</li>
+                                <li><strong><span class="english-item">More time for testers</span>:</strong> Testers can use those saved 30 minutes to do exploratory testing on new, more complex features.</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul style="direction:ltr;">
+                                <li><strong><span class="english-item">Maintenance Effort</span>:</strong> If we add a "Remember Me" checkbox, all 20 automated tests might break and will need to be updated.</li>
+                                <li><strong><span class="english-item">Initial Effort</span>:</strong> It might take a senior engineer 3 full days to set up the framework and write these initial 20 tests.</li>
+                                <li><strong><span class="english-item">Over-reliance</span>:</strong> The team might stop manually checking the login page altogether, potentially missing a visual bug (e.g., a misaligned button) that the automated script wouldn't catch.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top:20px;"><strong>القرار:</strong> في هذه الحالة، الفوائد تفوق المخاطر بوضوح. وظيفة تسجيل الدخول مستقرة وحيوية، وتوفير الوقت والتغذية الراجعة السريعة أمران حاسمان. سيقرر الفريق استثمار الثلاثة أيام الأولية لأتمتة هذه الاختبارات.</p>
+        </section>
+
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>

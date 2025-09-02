@@ -1,0 +1,183 @@
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 5.1.6 Test Pyramid</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #10b981; /* Emerald */ --secondary: #3b82f6; /* Blue */ --accent: #f59e0b; /* Amber */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af; --warning: #facc15;
+            --ui-color: #ef4444; --service-color: #f59e0b; --unit-color: #22c55e;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.9; margin: 0; padding: 0; direction: rtl; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 20px; background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%); }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(59, 130, 246, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; }
+        .english-item { font-family: 'Source Code Pro', monospace; color: var(--secondary); font-weight: bold; }
+        .section-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-top: 5px solid var(--primary); border-radius: 12px; padding: 30px; margin-bottom: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
+        .english-quote { background-color: rgba(16, 185, 129, 0.05); border-right: 4px solid var(--primary); padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem; }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        
+        .diagram-comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; align-items: center; }
+        .diagram-container { text-align: center; }
+        .diagram-container h3 { font-size: 1.5rem; margin-bottom: 20px; }
+        .pyramid, .cone { position: relative; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; }
+        .cone { flex-direction: column-reverse; }
+        .pyramid-layer { width: 100%; text-align: center; color: white; padding: 15px; font-weight: bold; transition: transform 0.3s, filter 0.3s; cursor: pointer; }
+        .pyramid-layer:hover { transform: scale(1.05); filter: brightness(1.2); z-index: 10; }
+        .layer-ui { background-color: var(--ui-color); }
+        .layer-service { background-color: var(--service-color); }
+        .layer-unit { background-color: var(--unit-color); }
+        .pyramid .layer-ui { height: 40px; clip-path: polygon(35% 0, 65% 0, 100% 100%, 0% 100%); width: 40%; margin: 0 auto; }
+        .pyramid .layer-service { height: 60px; clip-path: polygon(20% 0, 80% 0, 100% 100%, 0% 100%); width: 70%; margin: 0 auto; }
+        .pyramid .layer-unit { height: 100px; width: 100%; }
+        .cone .layer-unit { height: 40px; clip-path: polygon(0 0, 100% 0, 65% 100%, 35% 100%); width: 40%; margin: 0 auto; }
+        .cone .layer-service { height: 60px; clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%); width: 70%; margin: 0 auto; }
+        .cone .layer-unit, .cone .layer-service, .cone .layer-ui { clip-path: none; } /* Simplified cone */
+        .cone .layer-unit { height: 40px; width: 100%; }
+        .cone .layer-service { height: 60px; width: 70%; margin: 0 auto; }
+        .cone .layer-ui { height: 100px; width: 40%; margin: 0 auto; }
+        .cone { flex-direction: column; } /* Correcting cone direction */
+        
+        .visual-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 40px; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
+        .visual-table th, .visual-table td { padding: 18px; text-align: right; border-bottom: 1px solid var(--border-color); }
+        .visual-table thead th { background-color: #2a3a4a; font-size: 1.2rem; }
+        .visual-table tbody td { background-color: var(--card-bg); }
+        .visual-table tbody tr:last-child td { border-bottom: none; }
+        .visual-table .layer-name { font-weight: bold; font-size: 1.1rem; display: flex; align-items: center; }
+        .layer-dot { width: 15px; height: 15px; border-radius: 50%; margin-left: 10px; }
+        
+        .real-life-box { background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1)); border: 1px solid var(--accent); border-right: 5px solid var(--accent); padding: 20px; border-radius: 8px; margin-top: 30px; }
+        .real-life-box h4 { color: var(--accent); margin-top: 0; font-size: 1.5rem; }
+
+        @media (max-width: 992px) { .diagram-comparison-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>5.1.6 Test Pyramid</h1>
+            <p class="subtitle">هرم الاختبار - ISTQB Foundation Level v4.0</p>
+            <p>هدف التعلم: <span class="code-term">FL-5.1.6 (K1) Recall the concepts of the test pyramid</span></p>
+        </header>
+
+        <section class="section-card" id="intro">
+            <h2 class="section-title">ما هو هرم الاختبار؟</h2>
+            <div class="english-quote">
+                "The test pyramid is a model showing that different tests may have different granularity. The test pyramid model supports the team in <span class="mcq-highlight">test automation</span> and in <span class="mcq-highlight">test effort allocation</span> by showing that different goals are supported by different levels of test automation."
+            </div>
+            <div class="arabic-explanation">
+                <p>هرم الاختبار هو نموذج استراتيجي بصري (<span class="english-item">visual model</span>) يساعد الفرق على توزيع جهود الاختبار الآلي بشكل فعال. الفكرة الأساسية بسيطة: يجب أن يكون لديك عدد كبير من الاختبارات الصغيرة والسريعة في قاعدة الهرم، وعدد قليل جدًا من الاختبارات الكبيرة والبطيئة في قمته.</p>
+                <p><strong>الهدف الأساسي:</strong> تحقيق حلقة تغذية راجعة سريعة (<span class="english-item">fast feedback loop</span>). عندما يقوم مطور بإجراء تغيير، يجب أن يحصل على نتيجة الاختبار في دقائق، وليس ساعات. هذا يساعد على اكتشاف الأخطاء وإصلاحها بسرعة وكفاءة.</p>
+            </div>
+        </section>
+
+        <section class="section-card" id="diagrams">
+            <h2 class="section-title">الهرم الصحيح مقابل النمط الخاطئ</h2>
+            <div class="diagram-comparison-grid">
+                <div class="diagram-container">
+                    <h3>✅ هرم الاختبار (The Test Pyramid)</h3>
+                    <div class="pyramid">
+                        <div class="pyramid-layer layer-ui">UI Tests (قليل)</div>
+                        <div class="pyramid-layer layer-service">Service Tests (أكثر)</div>
+                        <div class="pyramid-layer layer-unit">Unit Tests (كثير جداً)</div>
+                    </div>
+                    <p style="color:var(--unit-color); margin-top:15px;"><strong>نمط صحي:</strong> سريع، مستقر، وتكلفة صيانة منخفضة.</p>
+                </div>
+                <div class="diagram-container">
+                    <h3>❌ مخروط الآيس كريم (The Ice-Cream Cone)</h3>
+                    <div class="cone">
+                        <div class="pyramid-layer layer-ui" style="height:100px; width:100%;">UI Tests (كثير جداً)</div>
+                        <div class="pyramid-layer layer-service" style="height:60px; width:70%; margin:0 auto;">Service Tests (أقل)</div>
+                        <div class="pyramid-layer layer-unit" style="height:40px; width:40%; margin:0 auto;">Unit Tests (قليل)</div>
+                    </div>
+                    <p style="color:var(--ui-color); margin-top:15px;"><strong>نمط خاطئ (Anti-Pattern):</strong> بطيء، هش، وتكلفة صيانة عالية.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="layers-details">
+            <h2 class="section-title">طبقات هرم الاختبار بالتفصيل</h2>
+            <div class="english-quote">
+                "The original test pyramid model (Cohn 2009) defines three layers: <span class="mcq-highlight">'unit tests'</span>, <span class="mcq-highlight">'service tests'</span> and <span class="mcq-highlight">'UI tests'</span>... Tests in the bottom layer are small, isolated, fast, and check a small piece of functionality... The top layer represents complex, high-level, end-to-end tests... These high-level tests are generally slower..."
+            </div>
+            <div class="visual-table">
+                <thead>
+                    <tr>
+                        <th>الطبقة</th>
+                        <th>الهدف (Purpose)</th>
+                        <th>الخصائص (Characteristics)</th>
+                        <th>السرعة والتكلفة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="layer-name">
+                                <div class="layer-dot" style="background-color:var(--unit-color);"></div>
+                                Unit Tests (قاعدة الهرم)
+                            </div>
+                        </td>
+                        <td>التحقق من أن أصغر وحدة من الكود (دالة، كلاس) تعمل كما هو متوقع بشكل معزول.</td>
+                        <td>صغيرة، معزولة (<span class="english-item">isolated</span>)، سريعة جدًا، تتحقق من جزء صغير من الوظيفة. يكتبها المطورون عادةً.</td>
+                        <td><strong>السرعة:</strong> ميلي ثانية<br><strong>التكلفة:</strong> منخفضة جدًا</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="layer-name">
+                                <div class="layer-dot" style="background-color:var(--service-color);"></div>
+                                Service / Integration Tests (الوسط)
+                            </div>
+                        </td>
+                        <td>التحقق من أن المكونات المختلفة تعمل معًا بشكل صحيح. تختبر التفاعلات عبر الواجهات (مثل <span class="code-term">API</span>، قاعدة البيانات).</td>
+                        <td>أكبر من اختبارات الوحدة، تختبر تدفق العمل بين عدة مكونات. لا تعتمد على واجهة المستخدم.</td>
+                        <td><strong>السرعة:</strong> ثوانٍ<br><strong>التكلفة:</strong> متوسطة</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="layer-name">
+                                <div class="layer-dot" style="background-color:var(--ui-color);"></div>
+                                UI / End-to-End Tests (القمة)
+                            </div>
+                        </td>
+                        <td>التحقق من أن النظام بأكمله يعمل من وجهة نظر المستخدم النهائي عبر واجهة المستخدم (<span class="english-item">UI</span>).</td>
+                        <td>معقدة، تختبر تدفقات عمل كاملة، بطيئة، وهشة (<span class="english-item">brittle</span>) أي سهلة الكسر مع أي تغيير في الواجهة.</td>
+                        <td><strong>السرعة:</strong> دقائق<br><strong>التكلفة:</strong> عالية جدًا</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="arabic-explanation" style="margin-top:20px;"><strong>ملاحظة هامة:</strong> "The number and naming of the layers may differ." - قد تختلف أسماء وعدد الطبقات. على سبيل المثال، قد تجد نماذج تستخدم <span class="code-term">component tests</span> أو <span class="code-term">end-to-end tests</span>، لكن المبدأ الأساسي يبقى كما هو.</p>
+        </section>
+
+        <section class="section-card" id="real-life-example">
+            <div class="real-life-box">
+                <h4>🎵 مثال من الواقع: استراتيجية الاختبار في Spotify</h4>
+                <p>تتبنى شركة <strong>Spotify</strong> بشدة مبادئ هرم الاختبار لتمكين فرقها المستقلة من إطلاق الميزات بسرعة وثقة. استراتيجيتهم، كما هو موضح في مدوناتهم الهندسية، تركز على:</p>
+                <ul>
+                    <li><strong>قاعدة ضخمة من Unit Tests:</strong> كل مكون أو <span class="english-item">microservice</span> لديه مجموعة شاملة من اختبارات الوحدة التي تعمل في ثوانٍ عند كل <span class="code-term">build</span>. هذا هو خط الدفاع الأول.</li>
+                    <li><strong>طبقة وسطى مركزة من Integration Tests:</strong> يتم إجراء اختبارات التكامل للتحقق من العقود (<span class="english-item">contracts</span>) بين الخدمات المختلفة، مما يضمن أن التغيير في خدمة واحدة لن يكسر خدمة أخرى تعتمد عليها.</li>
+                    <li><strong>طبقة عليا صغيرة جدًا من End-to-End Tests:</strong> يتم تشغيل عدد محدود جدًا من اختبارات الواجهة الكاملة التي تغطي فقط أهم مسارات المستخدم الحرجة (<span class="english-item">critical user journeys</span>)، مثل تسجيل الدخول وتشغيل أغنية.</li>
+                </ul>
+                <p>هذا التوزيع يسمح لهم بتحقيق توازن مثالي بين سرعة التغذية الراجعة وثقة النشر (<span class="english-item">deployment confidence</span>).</p>
+            </div>
+        </section>
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>

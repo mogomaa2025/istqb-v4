@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 5.1.7 Testing Quadrants</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0ea5e9; /* Sky Blue */ --secondary: #f43f5e; /* Rose */ --accent: #f59e0b; /* Amber */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af; --warning: #facc15;
+            --q1-color: #14b8a6; /* Teal */ --q2-color: #f43f5e; /* Rose */
+            --q3-color: #f59e0b; /* Amber */ --q4-color: #8b5cf6; /* Violet */
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.9; margin: 0; padding: 0; direction: rtl; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 20px; background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%); }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(244, 63, 94, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; }
+        .english-item { font-family: 'Source Code Pro', monospace; color: var(--primary); font-weight: bold; }
+        .section-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-top: 5px solid var(--primary); border-radius: 12px; padding: 30px; margin-bottom: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
+        .english-quote { background-color: rgba(14, 165, 233, 0.05); border-right: 4px solid var(--primary); padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem; }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        
+        .quadrant-diagram { position: relative; width: 100%; max-width: 800px; margin: 40px auto; aspect-ratio: 1/1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 15px; direction: ltr; }
+        .quadrant { padding: 20px; border-radius: 10px; border: 2px solid; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .q1 { border-color: var(--q1-color); } .q2 { border-color: var(--q2-color); }
+        .q3 { border-color: var(--q3-color); } .q4 { border-color: var(--q4-color); }
+        .quadrant-title { font-size: 2rem; font-weight: 900; margin-bottom: 10px; }
+        .q1 .quadrant-title { color: var(--q1-color); } .q2 .quadrant-title { color: var(--q2-color); }
+        .q3 .quadrant-title { color: var(--q3-color); } .q4 .quadrant-title { color: var(--q4-color); }
+        .quadrant-subtitle { font-weight: bold; font-size: 1.1rem; }
+        .quadrant-examples { margin-top: 15px; font-size: 0.9rem; color: var(--text-muted); }
+        .axis { position: absolute; background-color: var(--border-color); }
+        .axis-x { left: 5%; right: 5%; top: 50%; height: 2px; transform: translateY(-50%); }
+        .axis-y { top: 5%; bottom: 5%; left: 50%; width: 2px; transform: translateX(-50%); }
+        .axis-label { position: absolute; background-color: var(--dark-bg); padding: 0 10px; font-weight: bold; color: var(--text-muted); }
+        .axis-label-left { left: 10px; top: 50%; transform: translateY(-50%); }
+        .axis-label-right { right: 10px; top: 50%; transform: translateY(-50%); }
+        .axis-label-top { top: 10px; left: 50%; transform: translateX(-50%); }
+        .axis-label-bottom { bottom: 10px; left: 50%; transform: translateX(-50%); }
+
+        .visual-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 40px; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
+        .visual-table th, .visual-table td { padding: 18px; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .visual-table thead th { background-color: #2a3a4a; font-size: 1.2rem; }
+        .visual-table tbody td { background-color: var(--card-bg); font-size: 1.1rem; }
+        .visual-table tbody tr:last-child td { border-bottom: none; }
+
+        .real-life-box { background: linear-gradient(135deg, rgba(244, 63, 94, 0.2), rgba(236, 72, 153, 0.1)); border: 1px solid var(--secondary); border-right: 5px solid var(--secondary); padding: 20px; border-radius: 8px; margin-top: 30px; }
+        .real-life-box h4 { color: var(--secondary); margin-top: 0; font-size: 1.5rem; }
+        
+        @media (max-width: 768px) { .quadrant-diagram { aspect-ratio: auto; grid-template-rows: auto; } .quadrant { min-height: 200px; } .axis { display:none; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>5.1.7 Testing Quadrants</h1>
+            <p class="subtitle">رباعيات الاختبار - ISTQB Foundation Level v4.0</p>
+            <p>هدف التعلم: <span class="code-term">FL-5.1.7 (K2) Summarize the testing quadrants and their relationships with test levels and test types</span></p>
+        </header>
+
+        <section class="section-card" id="intro">
+            <h2 class="section-title">ما هي رباعيات الاختبار؟</h2>
+            <div class="english-quote">
+                "The testing quadrants, defined by Brian Marick..., group the test levels with the appropriate test types, activities, test techniques and work products in the Agile software development. The model supports test management in visualizing these to ensure that all appropriate test types and test levels are included..."
+            </div>
+            <div class="arabic-explanation">
+                <p>رباعيات الاختبار هي نموذج تصنيفي (<span class="english-item">classification model</span>) يساعد فرق الأجايل على التفكير في أنواع الاختبارات المختلفة التي يحتاجونها. إنها ليست وصفة أو تسلسلًا زمنيًا، بل هي أداة تفكير لضمان عدم إغفال أي جانب مهم من جوانب الجودة.</p>
+                <p>النموذج يقسم الاختبارات بناءً على محورين رئيسيين:</p>
+            </div>
+            <div class="visual-table">
+                <thead>
+                    <tr>
+                        <th>المحور</th>
+                        <th>الجانب الأول</th>
+                        <th>الجانب الثاني</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>التركيز</strong></td>
+                        <td><span class="mcq-highlight">Technology facing (موجه للتكنولوجيا)</span><br>يركز على "كيف" يعمل النظام من الداخل.</td>
+                        <td><span class="mcq-highlight">Business facing (موجه للأعمال)</span><br>يركز على "ماذا" يقدم النظام من قيمة للمستخدم.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>الهدف</strong></td>
+                        <td><span class="mcq-highlight">Support the team (يدعم الفريق)</span><br>اختبارات تساعد المطورين أثناء البناء.</td>
+                        <td><span class="mcq-highlight">Critique the product (ينقد المنتج)</span><br>اختبارات تقيّم المنتج النهائي.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section-card" id="diagram">
+            <h2 class="section-title">مخطط رباعيات الاختبار</h2>
+            <div class="quadrant-diagram">
+                <div class="axis axis-x"></div><div class="axis axis-y"></div>
+                <div class="axis-label axis-label-top">Business Facing</div><div class="axis-label axis-label-bottom">Technology Facing</div>
+                <div class="axis-label axis-label-left">Support Team</div><div class="axis-label axis-label-right">Critique Product</div>
+                
+                <div class="quadrant q2">
+                    <div class="quadrant-title">Q2</div>
+                    <div class="quadrant-subtitle">Business facing, Support team</div>
+                    <div class="quadrant-examples">Functional tests, User story tests, Prototypes, Simulations</div>
+                </div>
+                <div class="quadrant q3">
+                    <div class="quadrant-title">Q3</div>
+                    <div class="quadrant-subtitle">Business facing, Critique product</div>
+                    <div class="quadrant-examples">Exploratory testing, Usability testing, UAT, Alpha/Beta testing</div>
+                </div>
+                <div class="quadrant q1">
+                    <div class="quadrant-title">Q1</div>
+                    <div class="quadrant-subtitle">Technology facing, Support team</div>
+                    <div class="quadrant-examples">Unit tests, Component tests, API tests, Component integration tests</div>
+                </div>
+                <div class="quadrant q4">
+                    <div class="quadrant-title">Q4</div>
+                    <div class="quadrant-subtitle">Technology facing, Critique product</div>
+                    <div class="quadrant-examples">Non-functional tests (Performance, Load, Security), Infrastructure testing</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="quadrant-details">
+            <h2 class="section-title">شرح تفصيلي للرباعيات</h2>
+            <div class="english-quote">"The combination of these two viewpoints determines the four quadrants: Q1 (technology facing, support the team)... Q2 (business facing, support the team)... Q3 (business facing, critique the product)... Q4 (technology facing, critique the product)..."</div>
+            <ul>
+                <li><strong><span style="color:var(--q1-color);">Quadrant Q1:</span></strong> هذا هو ربع الجودة الداخلية للكود. يحتوي على اختبارات آلية (<span class="english-item">automated</span>) يكتبها المطورون لدعم عملية التطوير، مثل <span class="code-term">Unit tests</span> و <span class="code-term">API tests</span>. هذه الاختبارات يجب أن تكون جزءًا من عملية الـ <span class="mcq-highlight">CI (Continuous Integration)</span>.</li>
+                <li><strong><span style="color:var(--q2-color);">Quadrant Q2:</span></strong> هذا هو ربع الوظائف التي تهم المستخدم. يحتوي على اختبارات (آلية أو يدوية) للتحقق من أن النظام يلبي متطلبات العمل. يركز على اختبار قصص المستخدم (<span class="english-item">user story tests</span>) ومعايير القبول (<span class="english-item">acceptance criteria</span>).</li>
+                <li><strong><span style="color:var(--q3-color);">Quadrant Q3:</span></strong> هذا هو ربع التقييم العملي للمنتج. يحتوي على اختبارات يدوية (<span class="english-item">often manual</span>) واستكشافية لتقييم تجربة المستخدم وإيجاد عيوب غير متوقعة. يشمل <span class="code-term">Exploratory testing</span>, <span class="code-term">Usability testing</span>, و <span class="code-term">UAT</span>.</li>
+                <li><strong><span style="color:var(--q4-color);">Quadrant Q4:</span></strong> هذا هو ربع الخصائص غير الوظيفية. يحتوي على اختبارات آلية (<span class="english-item">often automated</span>) متخصصة لتقييم "كيف" يعمل النظام تحت ظروف معينة. يشمل اختبارات الأداء، الأمان، وقابلية التوسع.</li>
+            </ul>
+        </section>
+
+        <section class="section-card" id="real-life-example">
+            <div class="real-life-box">
+                <h4>🛒 مثال من الواقع: التخطيط لاختبار ميزة "إضافة إلى السلة"</h4>
+                <p>لنفترض أن فريق أجايل في موقع تجارة إلكتروني يخطط لتطوير ميزة "إضافة منتج إلى سلة التسوق". باستخدام رباعيات الاختبار كأداة تفكير، يمكن للفريق تحديد أنشطة الاختبار التالية لضمان تغطية شاملة:</p>
+                <ul>
+                    <li><strong>Q1 (Technology/Support):</strong>
+                        <ul>
+                            <li><span class="code-term">Unit test</span> للتحقق من أن دالة `addToCart()` تضيف المنتج الصحيح بالكمية الصحيحة.</li>
+                            <li><span class="code-term">API test</span> للتحقق من أن استدعاء `POST /cart` يرجع استجابة `200 OK` ويقوم بتحديث قاعدة البيانات.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Q2 (Business/Support):</strong>
+                        <ul>
+                            <li>اختبار آلي لواجهة المستخدم يحاكي سيناريو: "كمستخدم، عندما أضغط على زر 'إضافة للسلة'، يجب أن يزداد عداد السلة بمقدار 1".</li>
+                        </ul>
+                    </li>
+                    <li><strong>Q3 (Business/Critique):</strong>
+                        <ul>
+                            <li>جلسة <span class="code-term">Exploratory testing</span>: ماذا يحدث إذا أضفت 1000 قطعة؟ ماذا لو أضفت المنتج ثم تمت إزالته من المخزون؟ ماذا لو انقطع الاتصال بالإنترنت أثناء الإضافة؟</li>
+                            <li><span class="code-term">Usability test</span>: هل الزر واضح وسهل الوصول إليه على شاشات الموبايل؟</li>
+                        </ul>
+                    </li>
+                    <li><strong>Q4 (Technology/Critique):</strong>
+                        <ul>
+                            <li><span class="code-term">Load test</span>: كيف يتصرف النظام إذا قام 1000 مستخدم بإضافة منتجات إلى سلالهم في نفس الثانية؟</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>

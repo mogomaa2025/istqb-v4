@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 5.1.5 Test Case Prioritization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6; /* Violet */ --secondary: #ec4899; /* Pink */ --accent: #f59e0b; /* Amber */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af; --warning: #facc15; --success: #22c55e;
+            --risk-color: #ef4444; --coverage-color: #3b82f6; --req-color: #10b981;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.9; margin: 0; padding: 0; direction: rtl; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 20px; background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%); }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(236, 72, 153, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; }
+        .english-item { font-family: 'Source Code Pro', monospace; color: var(--secondary); font-weight: bold; }
+        .section-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-top: 5px solid var(--primary); border-radius: 12px; padding: 30px; margin-bottom: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
+        .english-quote { background-color: rgba(139, 92, 246, 0.05); border-right: 4px solid var(--primary); padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem; }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        
+        .strategy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px; }
+        .strategy-card { background: #2a3a4a; padding: 25px; border-radius: 10px; border-top: 4px solid; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .strategy-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+        .strategy-card h3 { display: flex; align-items: center; font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; }
+        .strategy-card h3 svg { width: 30px; height: 30px; margin-left: 10px; }
+        .risk-card { border-color: var(--risk-color); } .risk-card h3 { color: var(--risk-color); } .risk-card h3 svg { color: var(--risk-color); }
+        .coverage-card { border-color: var(--coverage-color); } .coverage-card h3 { color: var(--coverage-color); } .coverage-card h3 svg { color: var(--coverage-color); }
+        .req-card { border-color: var(--req-color); } .req-card h3 { color: var(--req-color); } .req-card h3 svg { color: var(--req-color); }
+        
+        .visual-diagram { padding: 30px; margin-top: 30px; background-color: #2a3a4a; border-radius: 10px; text-align: center; }
+        .test-suite { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px; border: 2px dashed var(--border-color); border-radius: 8px; min-height: 100px; }
+        .test-case { background-color: var(--card-bg); padding: 10px 15px; border-radius: 6px; font-family: 'Source Code Pro', monospace; border-left: 4px solid; cursor: grab; }
+        .tc-high { border-color: var(--risk-color); } .tc-medium { border-color: var(--accent); } .tc-low { border-color: var(--success); }
+        .arrow { font-size: 3rem; color: var(--primary); margin: 20px 0; }
+        .schedule { border-style: solid; padding: 10px; background-color: var(--dark-bg); }
+        .schedule .test-case { margin-bottom: 10px; }
+        .schedule .test-case:last-child { margin-bottom: 0; }
+        
+        .warning-box { background-color: rgba(245, 158, 11, 0.1); border-right: 4px solid var(--accent); padding: 20px; margin-top: 25px; border-radius: 8px; display:flex; align-items:center; }
+        .warning-box svg { width: 40px; height: 40px; color: var(--accent); margin-left: 15px; flex-shrink: 0; }
+        
+        .real-life-box { background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.1)); border: 1px solid var(--req-color); border-right: 5px solid var(--req-color); padding: 20px; border-radius: 8px; margin-top: 30px; }
+        .real-life-box h4 { color: var(--req-color); margin-top: 0; font-size: 1.5rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>5.1.5 Test Case Prioritization</h1>
+            <p class="subtitle">تحديد أولويات حالات الاختبار - ISTQB Foundation Level v4.0</p>
+            <p>هدف التعلم: <span class="code-term">FL-5.1.5 (K3) Apply test case prioritization</span></p>
+        </header>
+
+        <section class="section-card" id="intro">
+            <h2 class="section-title">لماذا نحتاج لتحديد الأولويات؟</h2>
+            <div class="english-quote">
+                "Once the test cases and test procedures are specified and assembled into test suites, these test suites can be arranged in a <span class="mcq-highlight">test execution schedule</span> that defines the order in which they are to be run. When prioritizing test cases, different factors can be taken into account."
+            </div>
+            <div class="arabic-explanation">
+                <p>بعد إعداد حالات الاختبار وتجميعها في مجموعات اختبار <span class="english-item">(test suites)</span>، لا يتم تنفيذها بشكل عشوائي. تحديد الأولويات هو عملية "ترتيب" هذه الاختبارات في جدول تنفيذ <span class="english-item">(test execution schedule)</span> لتحقيق أقصى فائدة في أسرع وقت ممكن.</p>
+                <p><strong>الهدف الأساسي:</strong> زيادة فعالية الاختبار، خاصة عندما تكون الموارد (مثل الوقت) محدودة. نريد أن نجد أهم العيوب في أسرع وقت ممكن.</p>
+            </div>
+            <div class="visual-diagram">
+                <h3>تصور عملية تحديد الأولويات</h3>
+                <p>مجموعة من حالات الاختبار بدرجات أولوية مختلفة:</p>
+                <div class="test-suite">
+                    <div class="test-case tc-medium">TC-003 (P2)</div>
+                    <div class="test-case tc-low">TC-005 (P3)</div>
+                    <div class="test-case tc-high">TC-001 (P1)</div>
+                    <div class="test-case tc-low">TC-004 (P3)</div>
+                    <div class="test-case tc-high">TC-002 (P1)</div>
+                </div>
+                <div class="arrow">⬇</div>
+                <p>جدول التنفيذ بعد ترتيب الأولويات (الأولوية الأعلى أولاً):</p>
+                <div class="test-suite schedule">
+                    <div class="test-case tc-high">1. TC-001 (P1)</div>
+                    <div class="test-case tc-high">2. TC-002 (P1)</div>
+                    <div class="test-case tc-medium">3. TC-003 (P2)</div>
+                    <div class="test-case tc-low">4. TC-004 (P3)</div>
+                    <div class="test-case tc-low">5. TC-005 (P3)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="strategies">
+            <h2 class="section-title">استراتيجيات تحديد الأولويات الأكثر شيوعًا</h2>
+            <div class="english-quote">"The most commonly used test case prioritization strategies are as follows: <span class="mcq-highlight">Risk-based prioritization</span>..., <span class="mcq-highlight">Coverage-based prioritization</span>..., <span class="mcq-highlight">Requirements-based prioritization</span>..."</div>
+            <div class="strategy-grid">
+                <div class="strategy-card risk-card">
+                    <h3><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0_0_24_24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>Risk-based</h3>
+                    <p><strong>(على أساس المخاطر)</strong> يتم تنفيذ حالات الاختبار التي تغطي أهم المخاطر (<span class="english-item">most important risks</span>) أولاً. هذه هي الاستراتيجية الأكثر فعالية لتقليل المخاطر الإجمالية للمنتج في وقت مبكر.</p>
+                </div>
+                <div class="strategy-card coverage-card">
+                    <h3><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>Coverage-based</h3>
+                    <p><strong>(على أساس التغطية)</strong> يتم تنفيذ حالات الاختبار التي تحقق أعلى مستوى من التغطية (<span class="english-item">highest coverage</span>) - مثل تغطية الكود أو المتطلبات - أولاً. هناك نوع فرعي يسمى <span class="code-term">additional coverage prioritization</span> حيث يتم اختيار حالة الاختبار التالية بناءً على أكبر زيادة "إضافية" في التغطية.</p>
+                </div>
+                <div class="strategy-card req-card">
+                    <h3><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12h-3.375" /></svg>Requirements-based</h3>
+                    <p><strong>(على أساس المتطلبات)</strong> يتم تنفيذ حالات الاختبار المرتبطة بالمتطلبات ذات الأولوية الأعلى (<span class="english-item">priorities of the requirements</span>) التي يحددها أصحاب المصلحة أولاً. هذا يضمن أن أهم الوظائف بالنسبة للعميل يتم اختبارها مبكرًا.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="constraints">
+            <h2 class="section-title">قيود واعتبارات إضافية</h2>
+            <div class="warning-box">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0_0_24_24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+                <div>
+                    <h4>تحديات ترتيب الأولويات</h4>
+                    <div class="english-quote" style="background:none; border:none; padding:0; margin:10px 0; font-size: 1rem;">
+                        "However, this practice may not work if the test cases or the features being tested have <span class="mcq-highlight">dependencies</span>. If a test case with a higher priority is dependent on a test case with a lower priority, the lower priority test case must be executed first... The order of test execution must also take into account the <span class="mcq-highlight">availability of resources</span>."
+                    </div>
+                    <p><strong>باختصار:</strong> الترتيب المثالي للأولويات قد لا يكون ممكنًا دائمًا بسبب:</p>
+                        <ul>
+                            <li><strong>التبعيات (<span class="english-item">Dependencies</span>):</strong> يجب تنفيذ حالة اختبار ذات أولوية منخفضة أولاً إذا كانت حالة اختبار ذات أولوية أعلى تعتمد عليها.</li>
+                            <li><strong>توفر الموارد (<span class="english-item">Availability of resources</span>):</strong> قد تحتاج حالة اختبار ذات أولوية عالية إلى بيئة اختبار أو أداة معينة لا تكون متاحة إلا في وقت لاحق.</li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="real-life-example">
+            <div class="real-life-box">
+                <h4>🚀 مثال من الواقع: تحديد الأولويات في Netflix CI/CD Pipeline</h4>
+                <p>تجري شركة <strong>Netflix</strong> آلاف عمليات النشر يوميًا. من المستحيل تشغيل مجموعة الاختبارات الكاملة (التي قد تستغرق ساعات) عند كل تغيير في الكود (<span class="english-item">commit</span>). لذلك، يستخدمون استراتيجيات تحديد أولويات متقدمة:</p>
+                <ol>
+                    <li><strong>المرحلة الأولى (Smoke Tests):</strong> عند كل <span class="code-term">commit</span>، يتم تشغيل مجموعة صغيرة جدًا وسريعة من الاختبارات عالية الأولوية (<span class="english-item">risk-based</span>) التي تغطي الوظائف الحيوية. إذا فشلت، يتم رفض التغيير فورًا.</li>
+                    <li><strong>المرحلة الثانية (Integration Tests):</strong> إذا نجحت المرحلة الأولى، يتم تشغيل مجموعة أكبر من الاختبارات التي تركز على <span class="english-item">coverage</span> للتغييرات الجديدة والتكاملات المرتبطة بها.</li>
+                    <li><strong>المرحلة الثالثة (Full Regression):</strong> يتم تشغيل مجموعة الاختبارات الكاملة بشكل دوري (مثلاً، كل ليلة) بدلاً من تشغيلها عند كل تغيير.</li>
+                </ol>
+                <p>هذا النهج متعدد المستويات، المبني على تحديد الأولويات، يسمح لـ Netflix بالحفاظ على سرعة التطوير العالية مع ضمان مستوى عالٍ من الجودة.</p>
+            </div>
+        </section>
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 5.5 Defect Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ef4444; /* Red */ --secondary: #f97316; /* Orange */ --accent: #facc15; /* Yellow */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af; --warning: #facc15; --info: #3b82f6;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.9; margin: 0; padding: 0; direction: rtl; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 20px; background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%); }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(249, 115, 22, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; }
+        .english-item { font-family: 'Source Code Pro', monospace; font-weight: bold; }
+        .section-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-top: 5px solid; border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.2rem; margin-bottom: 20px; display: flex; align-items: center; }
+        .section-title svg { width: 35px; height: 35px; margin-left: 15px; }
+        .english-quote { background-color: rgba(255, 255, 255, 0.03); border-right: 4px solid; padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem; }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        
+        .lifecycle-diagram { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 30px; padding: 20px; background-color: #2a3a4a; border-radius: 10px; direction: ltr; }
+        .state { background: var(--card-bg); padding: 10px 20px; border-radius: 30px; font-weight: bold; border: 1px solid; }
+        .arrow { font-size: 2rem; color: var(--text-muted); }
+        .state-new { border-color: #3b82f6; color: #3b82f6; }
+        .state-open { border-color: #f97316; color: #f97316; }
+        .state-fixed { border-color: #10b981; color: #10b981; }
+        .state-closed { border-color: #9ca3af; color: #9ca3af; }
+        .state-rejected { border-color: #ef4444; color: #ef4444; }
+
+        .visual-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 25px; }
+        .visual-table td { background-color: #2a3a4a; padding: 20px; border: 1px solid var(--border-color); }
+        .visual-table td:first-child { border-right: 4px solid var(--primary); font-weight: bold; width: 40%; }
+        
+        .real-life-box { border-top-color: var(--accent) !important; }
+        .real-life-box .section-title { color: var(--accent); }
+        .jira-ticket { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-top: 20px; font-size: 0.95rem; }
+        .jira-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px; }
+        .jira-title { font-size: 1.2rem; font-weight: bold; }
+        .jira-status { background-color: #3b82f6; color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold; }
+        .jira-field { margin-bottom: 15px; }
+        .jira-label { font-weight: bold; color: var(--text-muted); }
+        .jira-value { color: var(--text-light); }
+        .jira-value ol { padding-right: 20px; margin: 5px 0 0 0; }
+        
+        @media (max-width: 768px) { .lifecycle-diagram { flex-direction: column; } .arrow { transform: rotate(90deg); margin: 5px 0; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>5.5 Defect Management</h1>
+            <p class="subtitle">إدارة العيوب - ISTQB Foundation Level v4.0</p>
+            <p>هدف التعلم: <span class="code-term">FL-5.5.1 (K3) Prepare a defect report</span></p>
+        </header>
+
+        <!-- Block 1: The Defect Management Process -->
+        <section class="section-card" style="border-top-color: var(--primary);">
+            <h2 class="section-title" style="color:var(--primary);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>ما هي عملية إدارة العيوب؟</h2>
+            <div class="english-quote" style="border-right-color:var(--primary);">
+                "Since one of the major test objectives is to find defects, an established defect management process is essential... At a minimum, the defect management process includes a workflow for handling individual anomalies from their discovery to their closure and rules for their classification."
+            </div>
+            <div class="arabic-explanation">
+                <p>إدارة العيوب هي العملية المنظمة التي تتبعها الفرق للتعامل مع الشذوذ (<span class="english-item">anomalies</span>) التي يتم العثور عليها أثناء الاختبار. هذه العملية تضمن عدم ضياع أي مشكلة، وتتبعها من لحظة اكتشافها حتى حلها بشكل نهائي.</p>
+                <p><strong>ملاحظة هامة:</strong> <span class="mcq-highlight">"Although we refer to 'defects' here, the reported anomalies may turn out to be real defects or something else (e.g., false positive, change request)"</span>. ليس كل ما يتم الإبلاغ عنه هو عيب حقيقي؛ قد يكون نتيجة إيجابية كاذبة أو طلب تغيير.</p>
+                <p>دورة حياة العيب (<span class="english-item">Defect Workflow</span>) النموذجية:</p>
+            </div>
+            <div class="lifecycle-diagram">
+                <div class="state state-new">New</div>
+                <div class="arrow">→</div>
+                <div class="state state-open">Open / Assigned</div>
+                <div class="arrow">→</div>
+                <div class="state state-fixed">Fixed</div>
+                <div class="arrow">→</div>
+                <div class="state state-closed">Closed</div>
+            </div>
+        </section>
+
+        <!-- Block 2: Objectives of a Defect Report -->
+        <section class="section-card" style="border-top-color: var(--secondary);">
+            <h2 class="section-title" style="color:var(--secondary);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-6.75c-.622 0-1.125.504-1.125 1.125V18.75m9-15.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-6.75c-.622 0-1.125.504-1.125 1.125V3z" /></svg>أهداف تقرير العيب</h2>
+            <div class="english-quote" style="border-right-color:var(--secondary);">
+                "Typical defect reports have the following objectives:"
+            </div>
+            <ul class="risk-list" style="direction:ltr;">
+                <li style="border-color:var(--secondary);"><span class="english-item mcq-highlight">Provide those responsible for handling and resolving reported defects with sufficient information to resolve the issue</span> (توفير معلومات كافية للمطورين لحل المشكلة).</li>
+                <li style="border-color:var(--secondary);"><span class="english-item">Provide a means of tracking the quality of the work product</span> (توفير وسيلة لتتبع جودة المنتج).</li>
+                <li style="border-color:var(--secondary);"><span class="english-item">Provide ideas for improvement of the development and test process</span> (تقديم أفكار لتحسين عملية التطوير والاختبار).</li>
+            </ul>
+        </section>
+
+        <!-- Block 3: Content of a Defect Report -->
+        <section class="section-card" style="border-top-color: var(--info);">
+            <h2 class="section-title" style="color:var(--info);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>محتويات تقرير العيب</h2>
+            <div class="english-quote" style="border-right-color:var(--info);">
+                "A defect report logged during dynamic testing typically includes:"
+            </div>
+             <p class="arabic-explanation">لكتابة تقرير عيب جيد (وهو هدف تعليمي بمستوى K3)، يجب أن يتضمن معلومات محددة وواضحة.</p>
+            <table class="visual-table">
+                <tbody>
+                    <tr><td><span class="english-item">Unique identifier</span></td><td>معرّف فريد لكل تقرير (عادةً يتم إنشاؤه تلقائيًا).</td></tr>
+                    <tr><td><span class="english-item">Title with a short summary of the anomaly</span></td><td>عنوان موجز ووصفي (مثال: "فشل الدفع عند استخدام بطاقة Visa منتهية الصلاحية").</td></tr>
+                    <tr><td><span class="english-item">Date... issuing organization, and author</span></td><td>تاريخ الاكتشاف، القسم، واسم كاتب التقرير.</td></tr>
+                    <tr><td><span class="english-item">Identification of the test object and test environment</span></td><td>تحديد المنتج المختبر وبيئة الاختبار (مثل: "تطبيق أندرويد إصدار 2.5.1 على جهاز Samsung S22، نظام Android 13").</td></tr>
+                    <tr><td><span class="english-item">Context of the defect</span></td><td>سياق حدوث الخلل (مثل: "أثناء تنفيذ حالة الاختبار TC-PAY-05"، مرحلة اختبار القبول).</td></tr>
+                    <tr><td><span class="english-item mcq-highlight">Description of the failure to enable reproduction and resolution</span></td><td>وصف دقيق لخطوات إعادة إنتاج الخلل، بما في ذلك أي سجلات، صور شاشة، أو تسجيلات. <strong>(هذا هو أهم جزء للمطور)</strong>.</td></tr>
+                    <tr><td><span class="english-item mcq-highlight">Expected results and actual results</span></td><td>النتيجة المتوقعة مقابل النتيجة الفعلية. (مثال: "المتوقع: ظهور رسالة خطأ. الفعلي: تعطل التطبيق").</td></tr>
+                    <tr><td><span class="english-item">Severity... and Priority...</span></td><td>الحدة (تأثير الخلل على النظام) والأولوية (مدى سرعة إصلاحه).</td></tr>
+                    <tr><td><span class="english-item">Status of the defect</span></td><td>حالة العيب الحالية (مثل: <span class="code-term">open, deferred, duplicate, rejected</span>).</td></tr>
+                </tbody>
+            </table>
+            <p class="arabic-explanation" style="margin-top: 20px;"><strong>ملاحظة:</strong> المعيار <span class="code-term">ISO/IEC/IEEE 29119-3</span> يشير إلى تقارير العيوب باسم <span class="english-item">incident reports</span>.</p>
+        </section>
+
+        <!-- Block 5: Real-World Example -->
+        <section class="section-card real-life-box">
+            <h2 class="section-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>دراسة حالة: كتابة تقرير عيب في Jira</h2>
+            <p><strong>السيناريو:</strong> مختبر يجد عيبًا في صفحة تسجيل الدخول لموقع تجارة إلكترونية.</p>
+            <div class="jira-ticket" lang="en" dir="ltr">
+                <div class="jira-header">
+                    <div class="jira-title">ECOMM-451: Application crashes on login with incorrect password</div>
+                    <div class="jira-status">OPEN</div>
+                </div>
+                <div class="jira-field"><span class="jira-label">Severity:</span> <span class="jira-value" style="color:#ef4444; font-weight:bold;">Blocker</span></div>
+                <div class="jira-field"><span class="jira-label">Priority:</span> <span class="jira-value" style="color:#f97316; font-weight:bold;">Highest</span></div>
+                <div class="jira-field"><span class="jira-label">Environment:</span> <span class="jira-value">UAT Server | Chrome 108 on Windows 11</span></div>
+                <div class="jira-field"><span class="jira-label">Test Object:</span> <span class="jira-value">WebApp Build v3.1.2-rc1</span></div>
+                <hr style="border-color:var(--border-color);">
+                <div class="jira-field">
+                    <div class="jira-label">Description (Steps to Reproduce):</div>
+                    <div class="jira-value">
+                        <ol>
+                            <li>Navigate to the login page.</li>
+                            <li>Enter a valid username ('testuser').</li>
+                            <li>Enter any incorrect password (e.g., 'wrongpass').</li>
+                            <li>Click the 'Login' button.</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="jira-field">
+                    <div class="jira-label">Expected Result:</div>
+                    <div class="jira-value">An error message "Invalid username or password" should be displayed below the login button.</div>
+                </div>
+                <div class="jira-field">
+                    <div class="jira-label">Actual Result:</div>
+                    <div class="jira-value">The application crashes. The browser tab becomes unresponsive and must be closed. No error message is displayed.</div>
+                </div>
+                <div class="jira-field">
+                    <div class="jira-label">Attachments:</div>
+                    <div class="jira-value">[console_logs.txt], [crash_screenshot.png]</div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 5.1.2 Tester's Contribution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6; /* Violet */ --secondary: #10b981; /* Emerald */ --accent: #f97316; /* Orange */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af; --warning: #facc15;
+            --cyan: #22d3ee; --rose: #f43f5e;
+        }
+        body {
+            font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light);
+            line-height: 1.9; margin: 0; padding: 0; direction: rtl;
+        }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header {
+            text-align: center; margin-bottom: 60px; padding-bottom: 20px;
+            background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%);
+        }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(16, 185, 129, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; text-shadow: 0 0 5px rgba(250, 204, 21, 0.3); }
+        .english-item { font-family: 'Source Code Pro', monospace; color: var(--cyan); font-weight: bold; }
+        .section-card {
+            background-color: var(--card-bg); border: 1px solid var(--border-color);
+            border-top: 5px solid var(--primary); border-radius: 12px; padding: 30px;
+            margin-bottom: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
+        .english-quote {
+            background-color: rgba(139, 92, 246, 0.05); border-right: 4px solid var(--primary);
+            padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem;
+        }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        .planning-comparison-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px;
+        }
+        .planning-card {
+            background: #2a3a4a; padding: 25px; border-radius: 10px;
+            border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .planning-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+        .planning-card-header { display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
+        .planning-card-header svg { width: 40px; height: 40px; margin-left: 15px; }
+        .planning-card-header h3 { margin: 0; font-size: 1.8rem; }
+        .release-card { border-top: 4px solid var(--rose); }
+        .release-card .planning-card-header svg { color: var(--rose); }
+        .iteration-card { border-top: 4px solid var(--cyan); }
+        .iteration-card .planning-card-header svg { color: var(--cyan); }
+        .planning-card ul { list-style-type: none; padding: 0; margin: 0; }
+        .planning-card li {
+            display: flex; align-items: flex-start; margin-bottom: 15px;
+            font-size: 1rem; color: var(--text-muted);
+        }
+        .planning-card li svg {
+            width: 20px; height: 20px; margin-left: 10px; color: var(--secondary); flex-shrink: 0;
+            margin-top: 5px;
+        }
+        .key-points {
+            background-color: rgba(249, 115, 22, 0.1); border-right: 4px solid var(--accent);
+            padding: 20px; margin-top: 25px; border-radius: 8px;
+        }
+        .key-points h4 { color: var(--accent); margin-top: 0; font-size: 1.5rem; }
+        .key-points p { font-size: 1.1rem; margin-bottom: 0; }
+        @media (max-width: 992px) {
+            .planning-comparison-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>5.1.2 Tester's Contribution to Iteration and Release Planning</h1>
+            <p class="subtitle">مساهمة المختبِر في تخطيط التكرار والإصدار - ISTQB Foundation Level v4.0</p>
+            <p>هدف التعلم: <span class="code-term">FL-5.1.2 (K1) Recognize how a tester adds value to iteration and release planning</span></p>
+        </header>
+
+        <section class="section-card" id="planning-types">
+            <h2 class="section-title">أنواع التخطيط في المنهجيات التكرارية</h2>
+            <div class="english-quote">
+                "In iterative SDLCs, typically two kinds of planning occur: <span class="mcq-highlight">release planning</span> and <span class="mcq-highlight">iteration planning</span>."
+            </div>
+            <div class="arabic-explanation">
+                <p>في منهجيات تطوير البرمجيات التكرارية (<span class="english-item">iterative SDLCs</span>) مثل الأجايل، لم يعد التخطيط نشاطًا يتم مرة واحدة في بداية المشروع. بدلاً من ذلك، يتم على مستويين مختلفين ومستمرين:</p>
+                <ul>
+                    <li><strong>تخطيط الإصدار (<span class="english-item">Release Planning</span>):</strong> نظرة بعيدة المدى تركز على ما سيتم تقديمه في الإصدار القادم.</li>
+                    <li><strong>تخطيط التكرار (<span class="english-item">Iteration Planning</span>):</strong> نظرة قصيرة المدى تركز على ما سيتم إنجازه في التكرار أو الـ <span class="code-term">sprint</span> الحالي.</li>
+                </ul>
+                <p>في كلا النوعين من التخطيط، لم يعد المختبِر مجرد متلقٍ للمهام، بل أصبح شريكًا أساسيًا يضيف قيمة كبيرة في المراحل المبكرة.</p>
+            </div>
+
+            <div class="planning-comparison-grid">
+                <!-- Release Planning Card -->
+                <div class="planning-card release-card">
+                    <div class="planning-card-header">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.63 2.18a14.98 14.98 0 00-5.84 7.38m5.84 2.58v-4.8m0 4.8a6 6 0 01-3.36 5.84m3.36-5.84a6 6 0 012.48-5.84" /></svg>
+                        <h3>Release Planning</h3>
+                    </div>
+                    <div class="english-quote" style="background:none; border-color:var(--rose); padding:10px; font-size:1rem;">
+                        "Release planning looks ahead to the release of a product, defines and re-defines the product backlog... Testers involved in release planning participate in writing testable user stories and acceptance criteria, participate in project and quality risk analyses, estimate test effort..., determine the test approach, and plan the testing for the release."
+                    </div>
+                    <ul>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <div><strong>صياغة متطلبات قابلة للاختبار:</strong> المشاركة في كتابة <span class="code-term">testable user stories</span> وتحديد <span class="code-term">acceptance criteria</span> واضحة وقابلة للقياس.</div>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <div><strong>تحليل المخاطر:</strong> المساهمة في تحليل مخاطر المشروع والجودة (<span class="english-item">project and quality risk analyses</span>) على مستوى عالٍ.</div>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <div><strong>تقدير الجهد:</strong> المساعدة في تقدير جهد الاختبار المطلوب (<span class="english-item">estimate test effort</span>) المرتبط بالـ <span class="code-term">user stories</span> في الـ <span class="code-term">product backlog</span>.</div>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <div><strong>تحديد استراتيجية الاختبار:</strong> المساهمة في تحديد نهج الاختبار العام (<span class="english-item">test approach</span>) وخطة الاختبار للإصدار بأكمله.</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Iteration Planning Card -->
+                <div class="planning-card iteration-card">
+                    <div class="planning-card-header">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18M-4.5 12h22.5" /></svg>
+                        <h3>Iteration Planning</h3>
+                    </div>
+                    <div class="english-quote" style="background:none; border-color:var(--cyan); padding:10px; font-size:1rem;">
+                        "Iteration planning looks ahead to the end of a single iteration... Testers involved in iteration planning participate in the detailed risk analysis of user stories, determine the testability of user stories, break down user stories into tasks (particularly testing tasks), estimate test effort for all testing tasks..."
+                    </div>
+                    <ul>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <div><strong>تحليل المخاطر التفصيلي:</strong> المشاركة في التحليل التفصيلي لمخاطر (<span class="english-item">detailed risk analysis</span>) كل <span class="code-term">user story</span> تم اختيارها للتكرار الحالي.</div>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <div><strong>تقييم قابلية الاختبار:</strong> تحديد قابلية كل <span class="code-term">user story</span> للاختبار (<span class="english-item">determine the testability</span>) والتأكد من وضوح المتطلبات.</div>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <div><strong>تقسيم المهام:</strong> المساعدة في تقسيم الـ <span class="code-term">user stories</span> إلى مهام صغيرة، وتحديد مهام الاختبار (<span class="mcq-highlight">testing tasks</span>) بشكل خاص.</div>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <div><strong>تقدير الجهد التفصيلي:</strong> تقدير جهد الاختبار (<span class="english-item">estimate test effort</span>) لكل مهام الاختبار داخل التكرار.</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" id="value-add">
+            <div class="key-points">
+                <h4>💡 القيمة المضافة من المختبِر (Value Add of the Tester)</h4>
+                <p>مشاركة المختبرين المبكرة في التخطيط تحول الاختبار من كونه "شبكة أمان" في نهاية العملية إلى "نشاط لمنع العيوب" (<span class="english-item">defect prevention activity</span>) مدمج في كل خطوة. هذا يؤدي إلى فهم أفضل للمتطلبات، تقديرات أكثر دقة، وتحديد استباقي للمخاطر، مما يرفع جودة المنتج النهائي ويقلل من تكلفة الإصلاحات.</p>
+            </div>
+        </section>
+
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>

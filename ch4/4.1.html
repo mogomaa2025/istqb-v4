@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.1 Test Techniques Overview - نظرة عامة على تقنيات الاختبار</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
+            --highlight-bg: #fef3c7;
+            --highlight-text: #92400e;
+            --purple: #7c3aed;
+            --orange: #ea580c;
+            --pink: #ec4899;
+            --cyan: #06b6d4;
+            --indigo: #6366f1;
+            --green: #059669;
+            --red: #dc2626;
+            --yellow: #d97706;
+            --teal: #0d9488;
+            --lime: #65a30d;
+            --emerald: #059669;
+            --violet: #8b5cf6;
+            --rose: #f43f5e;
+            --slate: #64748b;
+            --mcq-highlight: #ff6b6b;
+            --mcq-bg: #ffe0e0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--success-color), var(--pink));
+        }
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+        .section-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+        .section-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        .section-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+        }
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            position: relative;
+            text-align: center;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+            border-radius: 2px;
+        }
+        .mini-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .english-quote {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-left: 5px solid var(--cyan);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #0277bd;
+            font-weight: 600;
+        }
+        .arabic-explanation {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border-right: 5px solid var(--purple);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #6b21a8;
+        }
+        .mcq-highlight {
+            background: var(--mcq-bg);
+            color: var(--mcq-highlight);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            box-shadow: 0 0 0 1px var(--mcq-highlight);
+        }
+        .code-term {
+            background: #1f2937;
+            color: #f59e0b;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 600;
+        }
+        .step-counter {
+            background: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .key-points {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--success-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .key-points h4 {
+            color: var(--success-color);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+        .key-points ul {
+            list-style: none;
+            padding-right: 20px;
+        }
+        .key-points li {
+            margin: 8px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        .key-points li:last-child {
+            border-bottom: none;
+        }
+        .comparison-mini {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .comparison-item {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .comparison-item:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        .comparison-item.vs {
+            background: var(--error-color);
+            color: white;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .footer {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .header {
+                padding: 30px 20px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .section-card {
+                padding: 20px;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .comparison-mini {
+                grid-template-columns: 1fr;
+            }
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>4.1 Test Techniques Overview</h1>
+            <p class="subtitle">نظرة عامة على تقنيات الاختبار - ISTQB Foundation Level v4.0</p>
+            <p style="font-size: 1rem; color: var(--text-light); margin-top: 10px;">
+                Learning Objective: <span class="code-term">FL-4.1.1 (K2) Distinguish black-box, white-box and experience-based test techniques</span>
+            </p>
+        </div>
+
+        <!-- Part 1: What are Test Techniques? -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">1</div>
+                <h3>What are Test Techniques? - إيه هي تقنيات الاختبار؟</h3>
+            </div>
+            
+            <div class="english-quote">
+                "<span class="mcq-highlight">Test techniques support the tester in test analysis (what to test) and in test design (how to test)</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <p><strong>Test Techniques</strong> دي الطرق والأساليب اللي بتساعد المختبر في حاجتين أساسيتين:</p>
+                <ul style="margin-top: 10px; padding-right: 20px;">
+                    <li>📋 <strong><span class="code-term">Test Analysis</span></strong> - تحليل الاختبار: <span style="background: rgba(255,255,255,0.3); padding: 2px 6px; border-radius: 4px;">إيه اللي هنختبره؟</span></li>
+                    <li>🔧 <strong><span class="code-term">Test Design</span></strong> - تصميم الاختبار: <span style="background: rgba(255,255,255,0.3); padding: 2px 6px; border-radius: 4px;">إزاي هنختبره؟</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Part 2: Purpose and Goals -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">2</div>
+                <h3>Purpose and Goals - الهدف والغاية</h3>
+            </div>
+            
+            <div class="english-quote">
+                "<span class="mcq-highlight">Test techniques help to develop a relatively small, but sufficient, set of test cases in a systematic way</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <p>الهدف الأساسي من <strong>Test Techniques</strong> إننا نعمل:</p>
+                <div class="key-points">
+                    <h4>🎯 الأهداف الرئيسية:</h4>
+                    <ul>
+                        <li>✅ مجموعة <span class="code-term">test cases</span> صغيرة العدد (<span style="color: #059669;">relatively small</span>)</li>
+                        <li>✅ بس كافية ومؤثرة (<span style="color: #059669;">sufficient</span>)</li>
+                        <li>✅ بطريقة منهجية ومنظمة (<span style="color: #059669;">systematic way</span>)</li>
+                        <li>✅ مش عشوائية أو بدون تخطيط</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 15px;"><strong>🇪🇬 بالمصري:</strong> "العبرة بالكيف مش بالكم" - نعمل اختبارات قليلة بس مفيدة ومؤثرة</p>
+            </div>
+        </div>
+
+        <!-- Part 3: What Test Techniques Help With -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">3</div>
+                <h3>What They Help With - بيساعدوا في إيه؟</h3>
+            </div>
+            
+            <div class="english-quote">
+                "<span class="mcq-highlight">Test techniques also help the tester to define test conditions, identify coverage items, and identify test data</span> during the test analysis and design."
+            </div>
+            
+            <div class="arabic-explanation">
+                <p><strong>Test Techniques</strong> بتساعد المختبر في تحديد 3 حاجات مهمة جداً:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0;">
+                    <div style="background: rgba(6, 182, 212, 0.1); border: 2px solid var(--cyan); border-radius: 10px; padding: 15px; text-align: center;">
+                        <h4 style="color: var(--cyan); margin-bottom: 8px;">📋 Test Conditions</h4>
+                        <p style="font-size: 0.95rem;">الشروط والحالات اللي هنختبرها</p>
+                    </div>
+                    
+                    <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success-color); border-radius: 10px; padding: 15px; text-align: center;">
+                        <h4 style="color: var(--success-color); margin-bottom: 8px;">📊 Coverage Items</h4>
+                        <p style="font-size: 0.95rem;">العناصر اللي لازم نغطيها في الاختبار</p>
+                    </div>
+                    
+                    <div style="background: rgba(245, 158, 11, 0.1); border: 2px solid var(--accent-color); border-radius: 10px; padding: 15px; text-align: center;">
+                        <h4 style="color: var(--accent-color); margin-bottom: 8px;">💾 Test Data</h4>
+                        <p style="font-size: 0.95rem;">البيانات المناسبة واللازمة للاختبار</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 4: Reference Standard -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">4</div>
+                <h3>Reference Standard - المرجع الرسمي</h3>
+            </div>
+            
+            <div class="english-quote">
+                "Further information on test techniques and their corresponding measures can be found in the <span class="mcq-highlight">ISO/IEC/IEEE 29119-4 standard</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <p>المعلومات الكاملة عن <strong>Test Techniques</strong> موجودة في:</p>
+                <div class="key-points">
+                    <h4>📚 المراجع الرسمية:</h4>
+                    <ul>
+                        <li>🏛️ <span class="code-term">ISO/IEC/IEEE 29119-4</span> - المعيار الدولي الرسمي</li>
+                        <li>📖 مراجع أكاديمية متعددة من خبراء الاختبار</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 5: Classification -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">5</div>
+                <h3>ISTQB Classification - التصنيف الرسمي</h3>
+            </div>
+            
+            <div class="english-quote">
+                "In this syllabus, <span class="mcq-highlight">test techniques are classified as black-box, white-box, and experience-based</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <p>في المنهج ده، <strong>Test Techniques</strong> مقسمة لـ <span style="background: var(--mcq-bg); color: var(--mcq-highlight); padding: 2px 6px; border-radius: 4px; font-weight: 700;">3 أنواع رئيسية</span>:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                    <div style="background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); border: 3px solid var(--indigo); border-radius: 15px; padding: 20px; text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">🎯</div>
+                        <h4 style="color: var(--indigo); margin-bottom: 8px;">Black-Box</h4>
+                        <p style="font-size: 0.9rem;">اختبار من الخارج</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border: 3px solid var(--emerald); border-radius: 15px; padding: 20px; text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">⚪</div>
+                        <h4 style="color: var(--emerald); margin-bottom: 8px;">White-Box</h4>
+                        <p style="font-size: 0.9rem;">اختبار من الداخل</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%); border: 3px solid var(--orange); border-radius: 15px; padding: 20px; text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">👨‍💼</div>
+                        <h4 style="color: var(--orange); margin-bottom: 8px;">Experience-Based</h4>
+                        <p style="font-size: 0.9rem;">بناءً على الخبرة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 6: Black-Box Definition -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">6</div>
+                <h3>🎯 Black-Box Test Techniques</h3>
+            </div>
+            
+            <div class="english-quote">
+                "<span class="mcq-highlight">Black-box test techniques (also known as specification-based techniques) are based on an analysis of the specified behavior of the test object without reference to its internal structure</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <div class="key-points">
+                    <h4>🔍 الخصائص الأساسية:</h4>
+                    <ul>
+                        <li>📛 <strong>الاسم البديل:</strong> <span class="code-term">Specification-based techniques</span></li>
+                        <li>📋 <strong>مبنية على:</strong> تحليل السلوك المحدد للبرنامج</li>
+                        <li>🚫 <strong>بدون الرجوع:</strong> للهيكل الداخلي للبرنامج</li>
+                        <li>🇪🇬 <strong>بالمصري:</strong> زي ما تختبر آلة حاسبة من برة - تدخل 2+3 وتتوقع 5</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 7: Black-Box Independence -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">7</div>
+                <h3>🎯 Black-Box Independence - الاستقلالية</h3>
+            </div>
+            
+            <div class="english-quote">
+                "Therefore, <span class="mcq-highlight">the test cases are independent of how the software is implemented</span>. Consequently, <span class="mcq-highlight">if the implementation changes, but the required behavior stays the same, then the test cases are still useful</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <p><strong>المميزة الكبيرة لـ Black-Box:</strong></p>
+                <div class="comparison-mini">
+                    <div class="comparison-item" style="border-color: var(--success-color);">
+                        <h4 style="color: var(--success-color); margin-bottom: 8px;">✅ Independent</h4>
+                        <p style="font-size: 0.9rem;"><span class="code-term">Test Cases</span> مستقلة عن طريقة التنفيذ</p>
+                    </div>
+                    <div class="comparison-item" style="border-color: var(--success-color);">
+                        <h4 style="color: var(--success-color); margin-bottom: 8px;">✅ Reusable</h4>
+                        <p style="font-size: 0.9rem;">لو التنفيذ اتغير والسلوك فضل زي ما هو، الاختبارات لسه مفيدة</p>
+                    </div>
+                </div>
+                <p style="margin-top: 15px;"><strong>🇪🇬 مثال:</strong> لو غيرت محرك العربية بس العربية لسه بتمشي نفس السرعة، اختباراتك لسه صالحة</p>
+            </div>
+        </div>
+
+        <!-- Part 8: White-Box Definition -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">8</div>
+                <h3>⚪ White-Box Test Techniques</h3>
+            </div>
+            
+            <div class="english-quote">
+                "<span class="mcq-highlight">White-box test techniques (also known as structure-based techniques) are based on an analysis of the test object's internal structure and processing</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <div class="key-points">
+                    <h4>🔍 الخصائص الأساسية:</h4>
+                    <ul>
+                        <li>📛 <strong>الاسم البديل:</strong> <span class="code-term">Structure-based techniques</span></li>
+                        <li>🏗️ <strong>مبنية على:</strong> تحليل الهيكل الداخلي والمعالجة</li>
+                        <li>👀 <strong>تحتاج رؤية:</strong> الكود والتصميم الداخلي</li>
+                        <li>🇪🇬 <strong>بالمصري:</strong> زي ما تفحص محرك العربية من جوة - تشوف كل جزء يشتغل صح</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 9: White-Box Dependency -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">9</div>
+                <h3>⚪ White-Box Dependency - الاعتمادية</h3>
+            </div>
+            
+            <div class="english-quote">
+                "<span class="mcq-highlight">As the test cases are dependent on how the software is designed, they can only be created after the design or implementation of the test object</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <p><strong>الخاصية المهمة لـ White-Box:</strong></p>
+                <div class="comparison-mini">
+                    <div class="comparison-item" style="border-color: var(--error-color);">
+                        <h4 style="color: var(--error-color); margin-bottom: 8px;">⚠️ Dependent</h4>
+                        <p style="font-size: 0.9rem;"><span class="code-term">Test Cases</span> معتمدة على تصميم البرنامج</p>
+                    </div>
+                    <div class="comparison-item" style="border-color: var(--error-color);">
+                        <h4 style="color: var(--error-color); margin-bottom: 8px;">⏰ After Design</h4>
+                        <p style="font-size: 0.9rem;">مينفعش تتعمل إلا بعد التصميم أو التنفيذ</p>
+                    </div>
+                </div>
+                <p style="margin-top: 15px;"><strong>🇪🇬 يعني:</strong> عشان تختبر المحرك من جوة، لازم الأول المحرك يتصنع وتشوف تصميمه</p>
+            </div>
+        </div>
+
+        <!-- Part 10: Experience-Based Definition -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">10</div>
+                <h3>👨‍💼 Experience-Based Test Techniques</h3>
+            </div>
+            
+            <div class="english-quote">
+                "<span class="mcq-highlight">Experience-based test techniques effectively use the knowledge and experience of testers for the design and implementation of test cases</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <div class="key-points">
+                    <h4>🧠 الخصائص الأساسية:</h4>
+                    <ul>
+                        <li>🎓 <strong>مبنية على:</strong> معرفة وخبرة المختبر</li>
+                        <li>⚡ <strong>استخدام فعال:</strong> للمعرفة المتراكمة</li>
+                        <li>🎯 <strong>في تصميم وتنفيذ:</strong> <span class="code-term">Test Cases</span></li>
+                        <li>🇪🇬 <strong>بالمصري:</strong> زي الدكتور المتمرس اللي يشخص المرض من خبرته</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 11: Experience-Based Effectiveness -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">11</div>
+                <h3>👨‍💼 Experience-Based Effectiveness - الفعالية</h3>
+            </div>
+            
+            <div class="english-quote">
+                "<span class="mcq-highlight">The effectiveness of these techniques depends heavily on the tester's skills</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <p><strong>🎯 نقطة مهمة جداً:</strong></p>
+                <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid var(--error-color); border-radius: 10px; padding: 20px; text-align: center;">
+                    <h4 style="color: var(--error-color); margin-bottom: 12px;">⚠️ فعالية Experience-Based معتمدة جداً على:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 15px;">
+                        <div style="background: white; padding: 10px; border-radius: 8px;">
+                            <strong>🎓 المهارات</strong><br>
+                            <span style="font-size: 0.9rem;">Tester's Skills</span>
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 8px;">
+                            <strong>📚 المعرفة</strong><br>
+                            <span style="font-size: 0.9rem;">Knowledge</span>
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 8px;">
+                            <strong>⏳ الخبرة</strong><br>
+                            <span style="font-size: 0.9rem;">Experience</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 12: Experience-Based Complementary -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">12</div>
+                <h3>👨‍💼 Experience-Based as Complementary - مكملة للآخرين</h3>
+            </div>
+            
+            <div class="english-quote">
+                "<span class="mcq-highlight">Experience-based test techniques can detect defects that may be missed using the black-box and white-box test techniques</span>. Hence, <span class="mcq-highlight">experience-based test techniques are complementary to the black-box and white-box test techniques</span>."
+            </div>
+            
+            <div class="arabic-explanation">
+                <p><strong>🌟 القوة الحقيقية لـ Experience-Based:</strong></p>
+                <div class="key-points">
+                    <h4>💪 المميزات الفريدة:</h4>
+                    <ul>
+                        <li>🔍 <strong>تكتشف عيوب:</strong> ممكن تفوت على Black-Box و White-Box</li>
+                        <li>🤝 <strong>مكملة ومش بديلة:</strong> للنوعين التانيين</li>
+                        <li>➕ <strong>تضيف قيمة:</strong> مش تحل محل الطرق التانية</li>
+                    </ul>
+                </div>
+                
+                <div style="background: rgba(16, 185, 129, 0.1); border-radius: 10px; padding: 15px; margin-top: 15px;">
+                    <p style="text-align: center; font-weight: 600; color: var(--success-color);">
+                        🇪🇬 <strong>المعادلة الصحيحة:</strong><br>
+                        Black-Box + White-Box + Experience-Based = Complete Testing
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="section-card fade-in">
+            <div class="mini-title">
+                <div class="step-counter">✅</div>
+                <h3>Final Summary - الخلاصة النهائية</h3>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border: 3px solid var(--primary-color); border-radius: 15px; padding: 25px;">
+                <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 20px; font-size: 1.4rem;">🎯 Key MCQ Points</h4>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                    <div style="background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--cyan);">
+                        <h5 style="color: var(--cyan); margin-bottom: 10px;">🎯 Purpose</h5>
+                        <ul style="font-size: 0.9rem; list-style: none; padding-right: 15px;">
+                            <li>• Support <span class="code-term">test analysis</span> & <span class="code-term">test design</span></li>
+                            <li>• Develop small but <span class="code-term">sufficient</span> test cases</li>
+                            <li>• In a <span class="code-term">systematic way</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--indigo);">
+                        <h5 style="color: var(--indigo); margin-bottom: 10px;">🎯 Black-Box</h5>
+                        <ul style="font-size: 0.9rem; list-style: none; padding-right: 15px;">
+                            <li>• = <span class="code-term">Specification-based</span></li>
+                            <li>• <span class="code-term">Independent</span> of implementation</li>
+                            <li>• Test cases remain <span class="code-term">useful</span> if behavior same</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--emerald);">
+                        <h5 style="color: var(--emerald); margin-bottom: 10px;">⚪ White-Box</h5>
+                        <ul style="font-size: 0.9rem; list-style: none; padding-right: 15px;">
+                            <li>• = <span class="code-term">Structure-based</span></li>
+                            <li>• <span class="code-term">Dependent</span> on software design</li>
+                            <li>• Created <span class="code-term">after</span> design/implementation</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--orange);">
+                        <h5 style="color: var(--orange); margin-bottom: 10px;">👨‍💼 Experience-Based</h5>
+                        <ul style="font-size: 0.9rem; list-style: none; padding-right: 15px;">
+                            <li>• Effectiveness depends on <span class="code-term">tester's skills</span></li>
+                            <li>• Can detect <span class="code-term">missed defects</span></li>
+                            <li>• <span class="code-term">Complementary</span> to others</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h3 style="color: var(--primary-color); margin-bottom: 15px;">🎉 4.1 Test Techniques Overview - Complete!</h3>
+            <p>تم تقسيم المحتوى إلى أجزاء صغيرة سهلة الفهم مع الشرح التدريجي</p>
+            <p style="margin-top: 10px; color: var(--text-light);">ISTQB Foundation Level v4.0 - Section 4.1 ✅</p>
+            <p style="margin-top: 10px; font-size: 0.9rem; color: var(--success-color); font-weight: 600;">
+                12 Progressive Parts with English Quotes + Arabic Explanations
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Progress bar
+        function updateProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+        window.addEventListener('scroll', updateProgress);
+        
+        // Hover effects for section cards
+        document.querySelectorAll('.section-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+        
+        console.log('🎉 4.1 Test Techniques Overview - Progressive Learning!');
+        console.log('📚 Content broken into 12 digestible parts');
+        console.log('🎯 English quotes followed by Arabic explanations');
+        console.log('✅ MCQ-ready with highlighted key terms');
+    </script>
+</body>
+</html>

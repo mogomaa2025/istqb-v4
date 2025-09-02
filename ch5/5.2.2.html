@@ -1,0 +1,163 @@
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 5.2.2 Project vs. Product Risks (Definitive Edition)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6; /* Purple */ --secondary: #ef4444; /* Red */ --accent: #f59e0b; /* Amber */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af; --warning: #facc15;
+            --project-color: #8b5cf6; --product-color: #ef4444;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.9; margin: 0; padding: 0; direction: rtl; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 20px; background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%); }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(239, 68, 68, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; }
+        .english-item { font-family: 'Source Code Pro', monospace; font-weight: bold; }
+        .section-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-top: 5px solid; border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.2rem; margin-bottom: 20px; display: flex; align-items: center; }
+        .section-title svg { width: 35px; height: 35px; margin-left: 15px; }
+        .english-quote { background-color: rgba(255, 255, 255, 0.03); border-right: 4px solid; padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem; }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        .risk-list { list-style-type: none; padding: 0; }
+        .risk-list li { background-color: #2a3a4a; margin-bottom: 10px; padding: 15px; border-radius: 8px; border-right: 3px solid; }
+        
+        .project-card { border-top-color: var(--project-color); }
+        .project-card .section-title { color: var(--project-color); }
+        .project-card .english-quote { border-right-color: var(--project-color); }
+        .project-card .risk-list li { border-right-color: var(--project-color); }
+
+        .product-card { border-top-color: var(--product-color); }
+        .product-card .section-title { color: var(--product-color); }
+        .product-card .english-quote { border-right-color: var(--product-color); }
+        .product-card .risk-list li { border-right-color: var(--product-color); }
+
+        .analogy-diagram { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; margin-top: 30px; background-color: #2a3a4a; padding: 30px; border-radius: 10px; }
+        .analogy-side { text-align: center; }
+        .analogy-side svg { width: 80px; height: 80px; margin-bottom: 15px; }
+        .analogy-side h3 { font-size: 1.8rem; margin: 0; }
+        .analogy-divider { font-size: 3rem; color: var(--text-muted); }
+
+        .real-life-box { border-top-color: var(--accent) !important; }
+        .real-life-box .section-title { color: var(--accent); }
+        .real-life-box h4 { font-size: 1.3rem; margin-bottom: 10px; }
+        .real-life-box ul { padding-right: 20px; }
+        
+        @media (max-width: 768px) { .analogy-diagram { grid-template-columns: 1fr; } .analogy-divider { transform: rotate(90deg); margin: 20px 0; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>5.2.2 Project Risks and Product Risks</h1>
+            <p class="subtitle">مخاطر المشروع ومخاطر المنتج - الإصدار النهائي</p>
+            <p>هدف التعلم: <span class="code-term">FL-5.2.2 (K2) Distinguish between project risks and product risks</span></p>
+        </header>
+
+        <!-- Block 1: The Core Distinction & Analogy -->
+        <section class="section-card" style="border-top-color: #374151;">
+            <h2 class="section-title" style="color:var(--text-light);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>التمييز الأساسي</h2>
+            <div class="english-quote" style="border-right-color:var(--text-muted);">
+                "In software testing one is generally concerned with two types of risks: project risks and product risks."
+            </div>
+            <div class="arabic-explanation">
+                <p>لفهم هذا المفهوم بشكل بديهي، تخيل أننا نبني سيارة في مصنع:</p>
+            </div>
+            <div class="analogy-diagram">
+                <div class="analogy-side">
+                    <svg style="color:var(--project-color);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h6M9 11.25h6M9 15.75h6" /></svg>
+                    <h3 style="color:var(--project-color);">المصنع (The Project)</h3>
+                    <p>مخاطر المشروع هي مشاكل في "المصنع" نفسه (العملية).</p>
+                </div>
+                <div class="analogy-divider">↔️</div>
+                <div class="analogy-side">
+                    <svg style="color:var(--product-color);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5h10.5m-10.5-4.5v-3.375c0-.621.504-1.125 1.125-1.125h14.25c.621 0 1.125.504 1.125 1.125v3.375m-17.25-4.5c0-1.657 1.343-3 3-3h12c1.657 0 3 1.343 3 3m-15-3V6.375c0-.621.504-1.125 1.125-1.125h12.75c.621 0 1.125.504 1.125 1.125v3.375" /></svg>
+                    <h3 style="color:var(--product-color);">السيارة (The Product)</h3>
+                    <p>مخاطر المنتج هي عيوب في "السيارة" نفسها (النتيجة).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Block 2: Project Risks In-Depth -->
+        <section class="section-card project-card">
+            <h2 class="section-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18M-4.5 12h22.5" /></svg>مخاطر المشروع (Project Risks)</h2>
+            <div class="english-quote">
+                "Project risks are related to the management and control of the project."
+            </div>
+            <p class="arabic-explanation"><strong>تشمل مخاطر المشروع:</strong></p>
+            <ul class="risk-list">
+                <li><strong><span class="english-item">Organizational issues</span>:</strong> (e.g., delays in work products deliveries, inaccurate estimates, cost-cutting)</li>
+                <li><strong><span class="english-item">People issues</span>:</strong> (e.g., insufficient skills, conflicts, communication problems, shortage of staff)</li>
+                <li><strong><span class="english-item">Technical issues</span>:</strong> (e.g., scope creep, poor tool support)</li>
+                <li><strong><span class="english-item">Supplier issues</span>:</strong> (e.g., third-party delivery failure, bankruptcy of the supporting company)</li>
+            </ul>
+             <p class="arabic-explanation"><strong>تأثيرها:</strong></p>
+            <div class="english-quote">
+                "Project risks, when they occur, may have an impact on the <span class="mcq-highlight">project schedule, budget or scope</span>, which affects the project's ability to achieve its objectives."
+            </div>
+        </section>
+
+        <!-- Block 3: Product Risks In-Depth -->
+        <section class="section-card product-card">
+            <h2 class="section-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>مخاطر المنتج (Product Risks)</h2>
+            <div class="english-quote">
+                "Product risks are related to the product quality characteristics (e.g., described in the ISO 25010 quality model)."
+            </div>
+            <p class="arabic-explanation"><strong>من أمثلة مخاطر المنتج:</strong></p>
+            <div class="english-quote" style="font-style:normal;">
+                "Examples of product risks include: <span class="mcq-highlight">missing or wrong functionality, incorrect calculations, runtime errors, poor architecture, inefficient algorithms, inadequate response time, poor user experience, security vulnerabilities</span>."
+            </div>
+             <p class="arabic-explanation"><strong>عواقبها السلبية المحتملة:</strong></p>
+            <div class="english-quote">
+                "Product risks, when they occur, may result in various negative consequences, including:
+                <ul>
+                    <li>User dissatisfaction</li>
+                    <li>Loss of revenue, trust, reputation</li>
+                    <li>Damage to third parties</li>
+                    <li>High maintenance costs, overload of the helpdesk</li>
+                    <li>Criminal penalties</li>
+                    <li class="mcq-highlight">In extreme cases, physical damage, injuries or even death</li>
+                </ul>"
+            </div>
+        </section>
+
+        <!-- Block 4: Real-World Case Study -->
+        <section class="section-card real-life-box">
+            <h2 class="section-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25" /></svg>دراسة حالة: إطلاق منصة بث فيديو جديدة</h2>
+            <p>تخيل أن شركة "Streamify" تطلق خدمة بث منافسة لـ Netflix. إليك كيف يمكن أن تظهر المخاطر:</p>
+            <div>
+                <h4 style="color:var(--project-color);">مخاطر المشروع التي تواجه Streamify:</h4>
+                <ul>
+                    <li><strong>نقص الموظفين (<span class="english-item">shortage of staff</span>):</strong> فريق صغير جدًا لا يستطيع مواكبة الجدول الزمني الطموح.</li>
+                    <li><strong>مشاكل الموردين (<span class="english-item">supplier issues</span>):</strong> فشل الشركة التي توفر تقنية ضغط الفيديو في تسليم مكتبتها البرمجية في الوقت المحدد.</li>
+                    <li><strong>تقديرات غير دقيقة (<span class="english-item">inaccurate estimates</span>):</strong> قلل الفريق من تقدير الوقت اللازم للحصول على تراخيص المحتوى.</li>
+                </ul>
+            </div>
+            <div style="margin-top: 20px;">
+                <h4 style="color:var(--product-color);">مخاطر المنتج التي تواجه Streamify:</h4>
+                <ul>
+                    <li><strong>أداء غير كافٍ (<span class="english-item">inadequate response time</span>):</strong> الفيديو يتوقف باستمرار للمستخدمين ذوي الاتصال البطيء بالإنترنت.</li>
+                    <li><strong>ثغرات أمنية (<span class="english-item">security vulnerabilities</span>):</strong> يمكن للمستخدمين مشاركة حساباتهم بسهولة، مما يؤدي إلى خسارة الإيرادات.</li>
+                    <li><strong>وظيفة مفقودة (<span class="english-item">missing functionality</span>):</strong> لا يمكن للمستخدمين تنزيل الحلقات لمشاهدتها بدون إنترنت، وهي ميزة أساسية لدى المنافسين.</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>

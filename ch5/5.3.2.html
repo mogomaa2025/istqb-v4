@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTQB FL v4.0 | 5.3.2 Test Reports</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ec4899; /* Pink */ --secondary: #14b8a6; /* Teal */ --accent: #f97316; /* Orange */
+            --dark-bg: #111827; --card-bg: #1f2937; --border-color: #374151;
+            --text-light: #e5e7eb; --text-muted: #9ca3af; --warning: #facc15;
+            --progress-report-color: #3b82f6; --completion-report-color: #10b981;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.9; margin: 0; padding: 0; direction: rtl; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 20px; background: linear-gradient(180deg, rgba(31, 41, 55, 0) 0%, var(--card-bg) 100%); }
+        .header h1 { font-size: 3.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 900; }
+        .header .subtitle { font-size: 1.5rem; color: var(--secondary); margin-top: 0; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+        .code-term { font-family: 'Source Code Pro', monospace; color: var(--secondary); background-color: rgba(20, 184, 166, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+        .mcq-highlight { color: var(--warning); font-weight: bold; }
+        .english-item { font-family: 'Source Code Pro', monospace; font-weight: bold; }
+        .section-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-top: 5px solid; border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section-card.visible { opacity: 1; transform: translateY(0); }
+        .section-title { font-size: 2.2rem; margin-bottom: 20px; display: flex; align-items: center; }
+        .section-title svg { width: 35px; height: 35px; margin-left: 15px; }
+        .english-quote { background-color: rgba(255, 255, 255, 0.03); border-right: 4px solid; padding: 20px; margin: 25px 0; border-radius: 8px; font-style: italic; direction: ltr; font-size: 1.1rem; }
+        .arabic-explanation { margin-top: 15px; font-size: 1.1rem; }
+        
+        .report-comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .report-card { background: #2a3a4a; padding: 25px; border-radius: 10px; border-bottom: 4px solid; }
+        .report-card-header { text-align: center; margin-bottom: 20px; }
+        .report-card-header svg { width: 60px; height: 60px; margin-bottom: 10px; }
+        .report-card-header h3 { font-size: 1.8rem; margin: 0; }
+        .report-card .purpose { font-style: italic; color: var(--text-muted); min-height: 80px; }
+        .report-card ul { list-style-type: none; padding: 0; margin-top: 20px; }
+        .report-card li { display: flex; align-items: flex-start; margin-bottom: 10px; }
+        .report-card li svg { width: 20px; height: 20px; margin-left: 10px; margin-top: 5px; flex-shrink: 0; }
+
+        .progress-card { border-color: var(--progress-report-color); }
+        .progress-card h3, .progress-card svg { color: var(--progress-report-color); }
+        
+        .completion-card { border-color: var(--completion-report-color); }
+        .completion-card h3, .completion-card svg { color: var(--completion-report-color); }
+        
+        .real-life-box { border-top-color: var(--accent) !important; }
+        .real-life-box .section-title { color: var(--accent); }
+        .audience-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 20px; }
+        .audience-table td { background: #2a3a4a; padding: 15px; border: 1px solid var(--border-color); }
+        .audience-table td:first-child { border-right: 4px solid; font-weight: bold; }
+        
+        @media (max-width: 992px) { .report-comparison-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>5.3.2 Purpose, Content, and Audience for Test Reports</h1>
+            <p class="subtitle">الغرض والمحتوى والجمهور المستهدف لتقارير الاختبار - ISTQB Foundation Level v4.0</p>
+            <p>هدف التعلم: <span class="code-term">FL-5.3.2 (K2) Summarize the purposes, content, and audiences for test reports</span></p>
+        </header>
+
+        <!-- Block 1: The Core Purpose of Reporting -->
+        <section class="section-card" style="border-top-color: var(--primary);">
+            <h2 class="section-title" style="color:var(--primary);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 100 15h8.028a5.5 5.5 0 005.286-4.026 5.5 5.5 0 00-3.328-6.495A5.5 5.5 0 0014.25 6H10.5z" /></svg>الغرض الأساسي من تقارير الاختبار</h2>
+            <div class="english-quote" style="border-right-color:var(--primary);">
+                "Test reporting summarizes and communicates test information during and after testing."
+            </div>
+            <div class="arabic-explanation">
+                <p>التقارير هي الوسيلة الأساسية التي يتواصل بها فريق الاختبار مع بقية العالم. بدون تقارير واضحة، تصبح جميع جهود الاختبار بلا قيمة، حيث لا يمكن لأحد معرفة النتائج أو اتخاذ قرارات بناءً عليها.</p>
+                <p>هناك نوعان رئيسيان من تقارير الاختبار، كل منهما يخدم غرضًا مختلفًا في توقيت مختلف:</p>
+            </div>
+        </section>
+
+        <!-- Block 2: Comparing the Two Report Types -->
+        <section class="section-card" style="border-top-color: var(--secondary);">
+            <h2 class="section-title" style="color:var(--secondary);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>مقارنة بين تقرير التقدم وتقرير الإكمال</h2>
+            <div class="report-comparison-grid">
+                <!-- Test Progress Report Card -->
+                <div class="report-card progress-card">
+                    <div class="report-card-header">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" /></svg>
+                        <h3>Test Progress Report</h3>
+                        <h4>(تقرير تقدم الاختبار)</h4>
+                    </div>
+                    <p class="purpose"><span class="english-item">"support[s] the ongoing control of the testing"</span> - يدعم التحكم المستمر في عملية الاختبار أثناء تنفيذها.</p>
+                    <hr style="border-color:var(--border-color);">
+                    <ul>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <div><strong>التوقيت:</strong> <span class="mcq-highlight">يتم إصداره بشكل دوري</span> (يوميًا، أسبوعيًا) "أثناء" الاختبار.</div></li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 1.085-1.085-1.085m0 0l-1.085 1.085L9.75 16.5m0 0l1.085 1.085L12 16.5m0 0l1.085-1.085 1.085 1.085m0 0l1.085-1.085L15.75 16.5m0 0l1.085 1.085L18 16.5m-7.5-9h7.5" /></svg>
+                        <div><strong>المحتوى النموذجي:</strong>
+                            <span class="english-item">Test period, Test progress, Impediments, Test metrics, New and changed risks, Testing planned for the next period.</span>
+                        </div></li>
+                    </ul>
+                </div>
+                <!-- Test Completion Report Card -->
+                <div class="report-card completion-card">
+                    <div class="report-card-header">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                        <h3>Test Completion Report</h3>
+                        <h4>(تقرير إكمال الاختبار)</h4>
+                    </div>
+                    <p class="purpose"><span class="english-item">"summarize a specific stage of testing... and can give information for subsequent testing"</span> - يلخص مرحلة اختبار معينة ويوفر معلومات للاختبارات المستقبلية.</p>
+                    <hr style="border-color:var(--border-color);">
+                    <ul>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18" /></svg>
+                        <div><strong>التوقيت:</strong> <span class="mcq-highlight">يتم إصداره مرة واحدة</span> "بعد" اكتمال مرحلة هامة (نهاية الـ <span class="code-term">sprint</span>، نهاية مستوى اختبار، إصدار المنتج).</div></li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-6.75c-.622 0-1.125.504-1.125 1.125V18.75m9-15.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-6.75c-.622 0-1.125.504-1.125 1.125V3z" /></svg>
+                        <div><strong>المحتوى النموذجي:</strong>
+                            <span class="english-item">Test summary, Evaluation based on the original test plan, Deviations, Test metrics, Unmitigated risks, Lessons learned.</span>
+                        </div></li>
+                    </ul>
+                </div>
+            </div>
+             <p class="arabic-explanation" style="margin-top: 20px;"><strong>ملاحظة:</strong> المعيار الدولي <span class="code-term">ISO/IEC/IEEE 29119-3</span> يتضمن قوالب وأمثلة لهذه التقارير.</p>
+        </section>
+
+        <!-- Block 3: Audience for Test Reports -->
+        <section class="section-card" style="border-top-color: var(--accent);">
+            <h2 class="section-title" style="color:var(--accent);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-7.5-2.964A3 3 0 0012 12v-1.5a3 3 0 00-3-3H6a3 3 0 00-3 3v1.5a3 3 0 003 3m10.5-11.25h.008v.008h-.008V7.5zm-10.5 0h.008v.008h-.008V7.5z" /></svg>الجمهور المستهدف للتقارير</h2>
+            <div class="english-quote" style="border-right-color:var(--accent);">
+                "Different audiences require different information in the reports, and influence the degree of formality and the frequency of reporting."
+            </div>
+            <div class="arabic-explanation"><p>لا يوجد تقرير واحد يناسب الجميع. يجب تخصيص محتوى التقرير ومستوى تفاصيله بناءً على الجمهور المستهدف.</p></div>
+            <table class="audience-table">
+                <tbody>
+                    <tr>
+                        <td style="border-right-color: #a855f7;"><strong>المديرون التنفيذيون / مدراء المشاريع</strong></td>
+                        <td>يهتمون بالصورة الكبيرة: هل نحن على المسار الصحيح؟ ما هي المخاطر الرئيسية؟ هل سنحقق موعد التسليم؟ يحتاجون إلى ملخصات عالية المستوى ورسوم بيانية.</td>
+                    </tr>
+                    <tr>
+                        <td style="border-right-color: #3b82f6;"><strong>المطورون</strong></td>
+                        <td>يهتمون بالتفاصيل الفنية: ما هي العيوب التي تم العثور عليها؟ كيف يمكن إعادة إنتاجها؟ ما هي المناطق التي فشلت في الاختبار؟ يحتاجون إلى تقارير عيوب مفصلة وسجلات (<span class="code-term">logs</span>).</td>
+                    </tr>
+                    <tr>
+                        <td style="border-right-color: #10b981;"><strong>زملاء فريق الاختبار</strong></td>
+                        <td>يهتمون بالتقدم اليومي: ما هي الاختبارات التي تم تنفيذها؟ ما هي العوائق التي نواجهها؟ يحتاجون إلى تواصل متكرر وغير رسمي (مثل تحديثات يومية في اجتماع الـ <span class="code-term">stand-up</span>).</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="arabic-explanation" style="margin-top: 20px;"><span class="mcq-highlight">"Reporting on test progress to others in the same team is often frequent and informal, while reporting on testing for a completed project follows a set template and occurs only once."</span></p>
+        </section>
+
+        <!-- Block 4: Real-World Example -->
+        <section class="section-card real-life-box">
+            <h2 class="section-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>دراسة حالة: تقارير اختبار في مشروع بنكي</h2>
+            <p><strong>السيناريو:</strong> فريق يختبر ميزة "فتح حساب جديد" في تطبيق بنكي.</p>
+            <ul>
+                <li><strong>تقرير التقدم الأسبوعي (لإدارة المشروع):</strong>
+                    <ul>
+                        <li><strong>ملخص:</strong> تقدم الاختبار 75%، متأخرون يومين عن الخطة.</li>
+                        <li><strong>عوائق (<span class="english-item">Impediments</span>):</strong> بيئة الاختبار كانت غير مستقرة، مما أدى إلى إعادة تشغيل الاختبارات.</li>
+                        <li><strong>مخاطر جديدة (<span class="english-item">New risks</span>):</strong> تم اكتشاف أن أداء الميزة بطيء جدًا تحت الضغط.</li>
+                        <li><strong>الخطط التالية (<span class="english-item">Next period</span>):</strong> التركيز على اختبارات الأداء وسيناريوهات الأمان.</li>
+                    </ul>
+                </li>
+                <li style="margin-top:20px;"><strong>تقرير إكمال الاختبار (في نهاية الـ <span class="code-term">Sprint</span>):</strong>
+                    <ul>
+                        <li><strong>ملخص الاختبار (<span class="english-item">Test summary</span>):</strong> تم تنفيذ 95 من أصل 100 حالة اختبار، نجح منها 90.</li>
+                        <li><strong>تقييم الجودة (<span class="english-item">Evaluation</span>):</strong> الوظائف الأساسية تعمل، ولكن لا تزال هناك 5 عيوب متوسطة الأولوية مفتوحة.</li>
+                        <li><strong>المخاطر المتبقية (<span class="english-item">Unmitigated risks</span>):</strong> مشكلة الأداء لم يتم حلها بالكامل وتعتبر مخاطرة متبقية.</li>
+                        <li><strong>دروس مستفادة (<span class="english-item">Lessons learned</span>):</strong> يجب ضمان استقرار بيئة الاختبار قبل بدء الـ <span class="code-term">sprint</span> القادم.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.section-card').forEach(card => { observer.observe(card); });
+    </script>
+</body>
+</html>
