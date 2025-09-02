@@ -1,0 +1,1117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2: Testing Throughout the Software Development Lifecycle - Complete ISTQB Foundation Level v4.0 Summary</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #f9f9f9; }
+        .exam-highlight { background-color: #ffeb3b; font-weight: bold; padding: 3px 6px; border-radius: 4px; }
+        .important-formula { background-color: #e3f2fd; padding: 12px; border-left: 5px solid #2196f3; margin: 15px 0; border-radius: 5px; }
+        .real-example { background-color: #f1f8e9; padding: 12px; border-left: 5px solid #4caf50; margin: 15px 0; border-radius: 5px; }
+        .warning { background-color: #fff3e0; padding: 12px; border-left: 5px solid #ff9800; margin: 15px 0; border-radius: 5px; }
+        .critical-point { background-color: #ffebee; padding: 12px; border-left: 5px solid #f44336; margin: 15px 0; border-radius: 5px; }
+        table { border-collapse: collapse; width: 100%; margin: 15px 0; background-color: white; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f5f5f5; font-weight: bold; color: #333; }
+        .section-header { background-color: #1976d2; color: white; padding: 20px; margin: 25px 0 15px 0; border-radius: 8px; }
+        .subsection-header { background-color: #42a5f5; color: white; padding: 15px; margin: 20px 0 15px 0; border-radius: 6px; }
+        .sdlc-box { background-color: #e8f5e8; border: 2px solid #4caf50; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .level-box { background-color: #fff8e1; border: 2px solid #ff9800; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .quality-box { background-color: #f3e5f5; border: 2px solid #9c27b0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .maintenance-box { background-color: #e0f2f1; border: 2px solid #00695c; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .shift-left-comparison { background-color: #fff; border: 2px solid #333; }
+        .traditional { background-color: #ffcdd2; }
+        .shift-left { background-color: #c8e6c9; font-weight: bold; }
+        .risk-matrix { background-color: #fff; border: 2px solid #333; }
+        .high-risk { background-color: #ffcdd2; font-weight: bold; }
+        .medium-risk { background-color: #fff3e0; }
+        .low-risk { background-color: #c8e6c9; }
+    </style>
+</head>
+<body>
+
+<h1>Chapter 2: Testing Throughout the Software Development Lifecycle - Complete ISTQB Foundation Level v4.0 Summary</h1>
+
+<div class="section-header">
+<h2>2.1 Testing in the Context of a Software Development Lifecycle</h2>
+</div>
+
+<div class="exam-highlight">
+<strong>Learning Objectives:</strong><br>
+• FL-2.1.1 (K2) Explain the relationships between software development activities and test activities in the software development lifecycle<br>
+• FL-2.1.2 (K1) Identify the reasons why testing is dependent on the software development lifecycle<br>
+• FL-2.1.3 (K2) Describe how the shift-left approach can be implemented in software development
+</div>
+
+<h3>2.1.1 Impact of Software Development Lifecycle on Testing</h3>
+
+<div class="important-formula">
+<strong>5 Key Factors Affected by SDLC Model:</strong> These factors determine how testing is implemented and executed in any development lifecycle.
+</div>
+
+<table>
+<tr>
+<th>Factor</th>
+<th>Arabic Description</th>
+<th>Impact</th>
+<th>Example</th>
+</tr>
+<tr>
+<td><strong>Scope and Timing</strong></td>
+<td>نطاق وتوقيت أنشطة الاختبار - متى نبدأ؟ ماذا نختبر؟</td>
+<td>Determines when testing starts and what is tested</td>
+<td>Waterfall: Testing after development vs Agile: Continuous testing</td>
+</tr>
+<tr>
+<td><strong>Documentation Detail</strong></td>
+<td>مستوى تفاصيل وثائق الاختبار - من بسيط إلى شامل</td>
+<td>Defines test documentation requirements</td>
+<td>Formal: Comprehensive test plans vs Agile: Lightweight documentation</td>
+</tr>
+<tr>
+<td><strong>Test Techniques</strong></td>
+<td>اختيار تقنيات ونُهج الاختبار المناسبة للنموذج</td>
+<td>Influences testing methods and approaches</td>
+<td>Sequential: Formal techniques vs Iterative: Exploratory testing</td>
+</tr>
+<tr>
+<td><strong>Automation Level</strong></td>
+<td>مدى أتمتة الاختبار - من يدوي إلى آلي بالكامل</td>
+<td>Determines automation strategy</td>
+<td>Traditional: Manual focus vs DevOps: High automation</td>
+</tr>
+<tr>
+<td><strong>Tester Role</strong></td>
+<td>دور ومسؤوليات المختبر في كل مرحلة</td>
+<td>Defines tester responsibilities and involvement</td>
+<td>V-Model: Phase-specific roles vs Agile: Cross-functional collaboration</td>
+</tr>
+</table>
+
+<h3>2.1.2 Testing Activities Aligned with Software Development</h3>
+
+<div class="sdlc-box">
+<h4>4 Good Testing Practices for All SDLCs</h4>
+</div>
+
+<table>
+<tr>
+<th>Practice</th>
+<th>Description</th>
+<th>Implementation</th>
+<th>Benefit</th>
+</tr>
+<tr>
+<td><strong>Corresponding Activities</strong></td>
+<td>لكل نشاط تطوير، يوجد نشاط testing مقابل - Quality Control شامل</td>
+<td>For every development activity, there's a corresponding test activity</td>
+<td>Comprehensive quality control</td>
+</tr>
+<tr>
+<td><strong>Distinct Test Levels</strong></td>
+<td>مستويات Testing مختلفة لها أهداف محددة - تجنب التكرار</td>
+<td>Different test levels have specific objectives</td>
+<td>Avoid duplication, focused testing</td>
+</tr>
+<tr>
+<td><strong>Early Start</strong></td>
+<td>Test Analysis والـ Design يبدآن مع مرحلة التطوير المقابلة</td>
+<td>Test analysis and design begin with corresponding development phase</td>
+<td>Early defect detection</td>
+</tr>
+<tr>
+<td><strong>Review Participation</strong></td>
+<td>Testers يشاركون في مراجعة المستندات فور توفرها</td>
+<td>Testers participate in reviewing documents as soon as available</td>
+<td>Prevent defects in documentation</td>
+</tr>
+</table>
+
+<h4>Development-Test Activity Mapping</h4>
+
+<table>
+<tr>
+<th>Development Phase</th>
+<th>Corresponding Test Activity</th>
+<th>Focus</th>
+<th>Deliverable</th>
+</tr>
+<tr>
+<td><strong>Requirements</strong></td>
+<td>Test Analysis</td>
+<td>Understanding and analyzing requirements for testability</td>
+<td>Test conditions, test basis analysis</td>
+</tr>
+<tr>
+<td><strong>Design</strong></td>
+<td>Test Design</td>
+<td>Creating detailed test specifications</td>
+<td>Test cases, test procedures</td>
+</tr>
+<tr>
+<td><strong>Coding</strong></td>
+<td>Test Implementation</td>
+<td>Preparing test execution environment and data</td>
+<td>Test scripts, test data, test environment</td>
+</tr>
+<tr>
+<td><strong>Deployment</strong></td>
+<td>Test Execution</td>
+<td>Running tests and recording results</td>
+<td>Test results, defect reports</td>
+</tr>
+</table>
+
+<h4>Test Level Objectives</h4>
+
+<table>
+<tr>
+<th>Test Level</th>
+<th>Primary Objective</th>
+<th>Focus Area</th>
+<th>Typical Defects Found</th>
+</tr>
+<tr>
+<td><strong>Unit Testing</strong></td>
+<td>Code Logic</td>
+<td>Individual component functionality</td>
+<td>Logic errors, calculation mistakes</td>
+</tr>
+<tr>
+<td><strong>Integration Testing</strong></td>
+<td>Interface Issues</td>
+<td>Component interactions</td>
+<td>Interface mismatches, data flow issues</td>
+</tr>
+<tr>
+<td><strong>System Testing</strong></td>
+<td>End-to-end</td>
+<td>Complete system behavior</td>
+<td>Workflow issues, performance problems</td>
+</tr>
+<tr>
+<td><strong>Acceptance Testing</strong></td>
+<td>User Needs</td>
+<td>Business requirements satisfaction</td>
+<td>Usability issues, missing features</td>
+</tr>
+</table>
+
+<h3>2.1.3 Advanced Development Approaches</h3>
+
+<div class="subsection-header">
+<h4>Test-Driven Development (TDD)</h4>
+</div>
+
+<div class="important-formula">
+<strong>TDD Philosophy:</strong> توجيه الـ Coding من خلال Test Cases بدلاً من التصميم المكثف (Guide coding through test cases instead of intensive design)
+</div>
+
+<table>
+<tr>
+<th>TDD Phase</th>
+<th>Activity</th>
+<th>Focus</th>
+<th>Outcome</th>
+</tr>
+<tr>
+<td><strong>Red</strong></td>
+<td>Write failing test</td>
+<td>Define expected behavior</td>
+<td>Test that fails initially</td>
+</tr>
+<tr>
+<td><strong>Green</strong></td>
+<td>Write minimal code to pass</td>
+<td>Make test pass with simplest solution</td>
+<td>Working code that passes test</td>
+</tr>
+<tr>
+<td><strong>Refactor</strong></td>
+<td>Improve code quality</td>
+<td>Clean up while maintaining functionality</td>
+<td>Clean, maintainable code</td>
+</tr>
+</table>
+
+<div class="exam-highlight">
+<strong>TDD Key Players:</strong> المطورون - تركيز على Unit Testing والكود (Developers - focus on Unit Testing and code)
+</div>
+
+<div class="subsection-header">
+<h4>Acceptance Test-Driven Development (ATDD)</h4>
+</div>
+
+<div class="important-formula">
+<strong>ATDD Philosophy:</strong> اشتقاق Tests من Acceptance Criteria كجزء من عملية تصميم النظام (Derive tests from acceptance criteria as part of system design process)
+</div>
+
+<div class="exam-highlight">
+<strong>ATDD Key Players:</strong> Business Analysts + Testers - تركيز على User Requirements (focus on User Requirements)
+</div>
+
+<div class="subsection-header">
+<h4>Behavior-Driven Development (BDD)</h4>
+</div>
+
+<div class="important-formula">
+<strong>BDD Philosophy:</strong> التعبير عن السلوك المطلوب بـ Test Cases بلغة طبيعية مفهومة للجميع (Express required behavior with test cases in natural language understandable by everyone)
+</div>
+
+<div class="exam-highlight">
+<strong>BDD Key Players:</strong> All Stakeholders - لغة مفهومة للجميع (Language understandable by everyone)
+</div>
+
+<div class="real-example">
+<strong>Real-Life BDD Example:</strong> E-commerce Login Feature<br>
+<div class="quality-box">
+<strong>Gherkin Scenario:</strong><br>
+Given I am on the login page<br>
+When I enter valid username and password<br>
+And I click the login button<br>
+Then I should be redirected to the dashboard<br>
+And I should see a welcome message
+</div>
+This scenario is understandable by all stakeholders and can be automatically translated into executable tests.
+</div>
+
+<h3>2.1.4 DevOps and Testing</h3>
+
+<div class="important-formula">
+<strong>DevOps Testing Approach:</strong> High automation with continuous testing throughout the CI/CD pipeline, but manual testing from user perspective remains essential.
+</div>
+
+<table>
+<tr>
+<th>Pipeline Stage</th>
+<th>Testing Activity</th>
+<th>Purpose</th>
+<th>Automation Level</th>
+</tr>
+<tr>
+<td><strong>Commit Stage</strong></td>
+<td>تشغل مع كل commit - فحص سريع للوظائف الأساسية</td>
+<td>Fast check of basic functionality</td>
+<td>100% Automated</td>
+</tr>
+<tr>
+<td><strong>Build Stage</strong></td>
+<td>في مرحلة Build - التحقق من تكامل المكونات</td>
+<td>Component integration verification</td>
+<td>100% Automated</td>
+</tr>
+<tr>
+<td><strong>Staging</strong></td>
+<td>في بيئة Staging - اختبار النظام الكامل</td>
+<td>Complete system testing</td>
+<td>Mostly Automated</td>
+</tr>
+<tr>
+<td><strong>Production Pipeline</strong></td>
+<td>في Pipeline - مراقبة الأداء والاستقرار</td>
+<td>Performance and stability monitoring</td>
+<td>Automated + Manual</td>
+</tr>
+</table>
+
+<div class="critical-point">
+<strong>Important DevOps Principle:</strong> رغم المستوى العالي من الأتمتة في DevOps، Manual Testing - خاصة من منظور المستخدم - سيظل مطلوباً (Despite high automation in DevOps, manual testing - especially from user perspective - will remain required)
+</div>
+
+<h3>2.1.5 Shift-Left Testing Approach</h3>
+
+<div class="important-formula">
+<strong>Shift-Left Concept:</strong> Moving testing activities earlier in the development lifecycle to detect and prevent defects sooner, reducing cost and improving quality.
+</div>
+
+<h4>Traditional vs Shift-Left Testing Comparison</h4>
+
+<table class="shift-left-comparison">
+<tr>
+<th>Activity</th>
+<th class="traditional">Traditional Approach</th>
+<th class="shift-left">Shift-Left Approach</th>
+<th>Benefit</th>
+</tr>
+<tr>
+<td><strong>Requirements Review</strong></td>
+<td class="traditional">مراجعة المتطلبات</td>
+<td class="shift-left">مراجعة المواصفات من منظور Testing + البحث عن الغموض والتناقضات</td>
+<td>Early requirement defect detection</td>
+</tr>
+<tr>
+<td><strong>Design Review</strong></td>
+<td class="traditional">مراجعة التصميم</td>
+<td class="shift-left">كتابة Test Cases قبل الكود + تشغيل في Test Harness أثناء التنفيذ</td>
+<td>Test-driven design validation</td>
+</tr>
+<tr>
+<td><strong>Coding Phase</strong></td>
+<td class="traditional">كتابة الكود</td>
+<td class="shift-left">استخدام CI/CD + تغذية راجعة سريعة + Component Tests مع كل commit</td>
+<td>Continuous quality feedback</td>
+</tr>
+<tr>
+<td><strong>Testing Start</strong></td>
+<td class="traditional">بداية Testing</td>
+<td class="shift-left">Static Analysis للكود + Non-functional Testing على مستوى Component</td>
+<td>Early quality assessment</td>
+</tr>
+<tr>
+<td><strong>System Testing</strong></td>
+<td class="traditional">اختبار شامل متأخر</td>
+<td class="shift-left">اختبار مستمر + عمليات آلية + بيئات اختبار مستقرة</td>
+<td>Continuous validation</td>
+</tr>
+</table>
+
+<h4>Five Key Shift-Left Practices</h4>
+
+<table>
+<tr>
+<th>Practice</th>
+<th>Description</th>
+<th>Implementation</th>
+<th>Impact</th>
+</tr>
+<tr>
+<td><strong>Early Specification Review</strong></td>
+<td>مراجعة المواصفات من منظور Testing للعثور على الغموض والنقص والتناقضات</td>
+<td>Review specifications from testing perspective to find ambiguity and contradictions</td>
+<td>Prevent requirement defects</td>
+</tr>
+<tr>
+<td><strong>Test-First Development</strong></td>
+<td>كتابة Test Cases قبل الكود وتشغيلها في Test Harness أثناء التنفيذ</td>
+<td>Write test cases before code and run in test harness during implementation</td>
+<td>Code driven by tests</td>
+</tr>
+<tr>
+<td><strong>CI/CD Integration</strong></td>
+<td>استخدام CI وCD للحصول على تغذية راجعة سريعة مع Component Tests آلية</td>
+<td>Use CI and CD for fast feedback with automated component tests</td>
+<td>Rapid quality feedback</td>
+</tr>
+<tr>
+<td><strong>Static Analysis</strong></td>
+<td>إجراء Static Analysis للكود قبل Dynamic Testing أو كجزء من عملية آلية</td>
+<td>Perform static analysis before dynamic testing or as part of automated process</td>
+<td>Early code quality assessment</td>
+</tr>
+<tr>
+<td><strong>Early Non-functional Testing</strong></td>
+<td>تنفيذ Non-functional Testing من مستوى Component بدلاً من انتظار النظام الكامل</td>
+<td>Execute non-functional testing at component level instead of waiting for complete system</td>
+<td>Early performance insights</td>
+</tr>
+</table>
+
+<div class="warning">
+<strong>Success Requirements:</strong> للنجاح في نهج Shift-Left، من المهم أن يكون أصحاب المصلحة مقتنعين ومؤيدين لهذا المفهوم (For Shift-Left success, stakeholders must be convinced and supportive of this concept). يحتاج تغيير في الثقافة والعقلية والاستثمار في التدريب والأدوات (Requires culture and mindset change and investment in training and tools).
+</div>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> Microsoft's Shift-Left Implementation<br>
+Microsoft implemented shift-left testing across their development teams:
+<ul>
+<li><strong>Early Review:</strong> Security requirements reviewed by security testers during design phase</li>
+<li><strong>Test-First:</strong> Azure services use TDD approach with automated unit tests written before implementation</li>
+<li><strong>CI/CD:</strong> Every commit triggers automated test suite within 10 minutes</li>
+<li><strong>Static Analysis:</strong> Code quality gates prevent poor code from reaching main branch</li>
+<li><strong>Early Performance:</strong> Performance tests run on individual microservices, not just complete systems</li>
+</ul>
+Result: 70% reduction in production defects and 40% faster release cycles.
+</div>
+
+<h3>2.1.6 Retrospectives and Process Improvement</h3>
+
+<div class="important-formula">
+<strong>Three Key Questions for Improvement:</strong>
+<ul>
+<li>ما الذي كان ناجحاً ويجب الاحتفاظ به؟ (What was successful and should be kept?)</li>
+<li>ما الذي لم يكن ناجحاً ويمكن تحسينه؟ (What wasn't successful and can be improved?)</li>
+<li>كيف ندمج التحسينات ونحتفظ بالنجاحات؟ (How do we integrate improvements and maintain successes?)</li>
+</ul>
+</div>
+
+<table>
+<tr>
+<th>Retrospective Activity</th>
+<th>Purpose</th>
+<th>Participants</th>
+<th>Outcome</th>
+</tr>
+<tr>
+<td><strong>Process Review</strong></td>
+<td>تطبيق اقتراحات تحسين العمليات</td>
+<td>Development and testing teams</td>
+<td>Process improvements implementation</td>
+</tr>
+<tr>
+<td><strong>Joint Testing Review</strong></td>
+<td>مراجعة مشتركة لعمليات الاختبار</td>
+<td>All team members involved in testing</td>
+<td>Testing process optimization</td>
+</tr>
+<tr>
+<td><strong>Issue Discussion</strong></td>
+<td>فرصة لإثارة المشاكل واقتراح التحسينات</td>
+<td>Cross-functional team</td>
+<td>Problem identification and solutions</td>
+</tr>
+<tr>
+<td><strong>Requirements Analysis</strong></td>
+<td>معالجة أوجه القصور في المتطلبات</td>
+<td>Business analysts, testers, developers</td>
+<td>Improved requirement quality</td>
+</tr>
+<tr>
+<td><strong>Regular Communication</strong></td>
+<td>بين التطوير والاختبار بانتظام</td>
+<td>Development and testing leads</td>
+<td>Better collaboration</td>
+</tr>
+</table>
+
+<div class="exam-highlight">
+<strong>Critical Success Factors:</strong><br>
+• Retrospectives حاسمة للتنفيذ الناجح للتحسين المستمر (Retrospectives are crucial for successful continuous improvement implementation)<br>
+• من المهم متابعة أي تحسينات موصى بها (Important to follow up on any recommended improvements)
+</div>
+
+<div class="section-header">
+<h2>2.2 Test Levels and Test Types</h2>
+</div>
+
+<div class="exam-highlight">
+<strong>Learning Objectives:</strong><br>
+• FL-2.2.1 (K2) Compare the different test levels from the perspective of objectives, test basis, test objects, typical defects and failures, and approaches and responsibilities<br>
+• FL-2.2.2 (K2) Compare functional, non-functional, and white-box testing<br>
+• FL-2.2.3 (K1) Recognize that functional and structural tests occur at any test level<br>
+• FL-2.2.4 (K2) Compare the purposes of confirmation testing and regression testing
+</div>
+
+<h3>2.2.1 Test Levels Overview</h3>
+
+<div class="important-formula">
+<strong>Test Levels Framework:</strong> WHEN & WHERE (متى وأين نختبر؟) vs WHAT & HOW (ماذا وكيف نختبر؟) - Development phases vs Quality characteristics
+</div>
+
+<div class="level-box">
+<h4>Five Main Test Levels</h4>
+</div>
+
+<table>
+<tr>
+<th>Test Level</th>
+<th>Arabic Description</th>
+<th>Primary Focus</th>
+<th>Typical Test Objects</th>
+<th>Key Defects Found</th>
+</tr>
+<tr>
+<td><strong>Component Testing</strong></td>
+<td>اختبار المكونات الفردية بمعزل عن بقية النظام</td>
+<td>Individual components in isolation</td>
+<td>Units, modules, classes</td>
+<td>Logic errors, data handling issues</td>
+</tr>
+<tr>
+<td><strong>Integration Testing</strong></td>
+<td>اختبار التفاعل بين المكونات المترابطة</td>
+<td>Interactions between integrated components</td>
+<td>Interfaces, subsystems</td>
+<td>Interface mismatches, data flow problems</td>
+</tr>
+<tr>
+<td><strong>System Testing</strong></td>
+<td>اختبار النظام الكامل والسلوك الشامل</td>
+<td>Complete system and overall behavior</td>
+<td>Complete applications, systems</td>
+<td>End-to-end workflow issues</td>
+</tr>
+<tr>
+<td><strong>System Integration Testing</strong></td>
+<td>اختبار التكامل مع الأنظمة والخدمات الخارجية</td>
+<td>Integration with external systems and services</td>
+<td>System of systems, external interfaces</td>
+<td>External interface failures, data exchange issues</td>
+</tr>
+<tr>
+<td><strong>Acceptance Testing</strong></td>
+<td>التحقق من جاهزية النظام والتحقق من احتياجات المستخدمين</td>
+<td>System readiness and user needs verification</td>
+<td>Complete business processes, user workflows</td>
+<td>Usability issues, business rule violations</td>
+</tr>
+</table>
+
+<h3>2.2.2 Test Types</h3>
+
+<div class="important-formula">
+<strong>Four Main Test Types:</strong> جميع الأنواع الأربعة يمكن تطبيقها في جميع مستويات الاختبار. التركيز يختلف في كل مستوى حسب الهدف والسياق (All four types can be applied at all test levels. Focus differs at each level according to objective and context)
+</div>
+
+<h4>Test Type Categories</h4>
+
+<table>
+<tr>
+<th>Test Type</th>
+<th>Purpose</th>
+<th>Focus Area</th>
+<th>Techniques Used</th>
+</tr>
+<tr>
+<td><strong>Functional Testing</strong></td>
+<td>فحص سلوك النظام مقابل مواصفاته دون معرفة البنية الداخلية</td>
+<td>What the system does</td>
+<td>Black-box techniques, specification-based</td>
+</tr>
+<tr>
+<td><strong>Non-functional Testing</strong></td>
+<td>فحص خصائص الجودة غير الوظيفية حسب معيار ISO/IEC 25010</td>
+<td>How well the system performs</td>
+<td>Specialized tools and techniques</td>
+</tr>
+<tr>
+<td><strong>White-box Testing</strong></td>
+<td>تغطية البنية الأساسية بالاختبارات لمستوى مقبول</td>
+<td>Internal structure and implementation</td>
+<td>Structure-based techniques, coverage analysis</td>
+</tr>
+<tr>
+<td><strong>Change-related Testing</strong></td>
+<td>Verification of changes and prevention of unintended consequences</td>
+<td>Change impact and regression</td>
+<td>Re-testing, regression testing</td>
+</tr>
+</table>
+
+<h3>2.2.3 Non-functional Testing and ISO/IEC 25010</h3>
+
+<div class="quality-box">
+<h4>Seven Quality Characteristics (ISO/IEC 25010)</h4>
+</div>
+
+<table>
+<tr>
+<th>Quality Characteristic</th>
+<th>Arabic Description</th>
+<th>Definition</th>
+<th>Test Examples</th>
+</tr>
+<tr>
+<td><strong>Performance Efficiency</strong></td>
+<td>قدرة النظام على الأداء الفعال مع استغلال الموارد المناسب</td>
+<td>System's ability to perform effectively with appropriate resource utilization</td>
+<td>Load testing, stress testing, volume testing</td>
+</tr>
+<tr>
+<td><strong>Compatibility</strong></td>
+<td>قدرة النظام على التوافق مع منتجات أو أنظمة أخرى</td>
+<td>System's ability to be compatible with other products or systems</td>
+<td>Interoperability testing, co-existence testing</td>
+</tr>
+<tr>
+<td><strong>Usability</strong></td>
+<td>قدرة النظام على الاستخدام بفعالية وكفاءة من قبل المستخدمين</td>
+<td>System's ability to be used effectively and efficiently by users</td>
+<td>User experience testing, accessibility testing</td>
+</tr>
+<tr>
+<td><strong>Reliability</strong></td>
+<td>قدرة النظام على أداء وظائفه تحت ظروف محددة لفترة معينة</td>
+<td>System's ability to perform functions under specified conditions for a specified time</td>
+<td>Stability testing, recovery testing</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>قدرة النظام على حماية المعلومات والبيانات من الوصول غير المصرح</td>
+<td>System's ability to protect information and data from unauthorized access</td>
+<td>Vulnerability testing, penetration testing</td>
+</tr>
+<tr>
+<td><strong>Maintainability</strong></td>
+<td>سهولة تعديل وتصحيح وتحسين النظام</td>
+<td>Ease of modifying, correcting, and improving the system</td>
+<td>Code analysis, changeability testing</td>
+</tr>
+<tr>
+<td><strong>Portability</strong></td>
+<td>قدرة النظام على النقل من بيئة إلى أخرى</td>
+<td>System's ability to be transferred from one environment to another</td>
+<td>Installation testing, migration testing</td>
+</tr>
+</table>
+
+<h4>Non-functional Testing Considerations</h4>
+
+<table>
+<tr>
+<th>Consideration</th>
+<th>Description</th>
+<th>Implementation</th>
+<th>Example</th>
+</tr>
+<tr>
+<td><strong>Early Start</strong></td>
+<td>أحياناً من المناسب البدء مبكراً في دورة الحياة</td>
+<td>Start early in lifecycle (reviews, component testing)</td>
+<td>Performance requirements review during design</td>
+</tr>
+<tr>
+<td><strong>Derived from Functional</strong></td>
+<td>العديد من Non-functional tests مشتقة من functional tests</td>
+<td>Many non-functional tests derived from functional tests</td>
+<td>Load testing based on functional user scenarios</td>
+</tr>
+<tr>
+<td><strong>Late Discovery Risk</strong></td>
+<td>الاكتشاف المتأخر للعيوب غير الوظيفية تهديد جدي لنجاح المشروع</td>
+<td>Late discovery of non-functional defects is serious threat</td>
+<td>Performance issues found only in production</td>
+</tr>
+<tr>
+<td><strong>Specialized Environment</strong></td>
+<td>أحياناً يحتاج بيئة اختبار خاصة</td>
+<td>Sometimes requires special test environment</td>
+<td>Usability lab for user experience testing</td>
+</tr>
+</table>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> Netflix Performance Testing Strategy<br>
+Netflix conducts comprehensive non-functional testing across all quality characteristics:
+<ul>
+<li><strong>Performance:</strong> Simulates millions of concurrent users streaming video</li>
+<li><strong>Compatibility:</strong> Tests across 1000+ device types and configurations</li>
+<li><strong>Usability:</strong> A/B tests user interface changes with real users</li>
+<li><strong>Reliability:</strong> Chaos engineering to test system resilience</li>
+<li><strong>Security:</strong> Continuous security scanning and penetration testing</li>
+<li><strong>Maintainability:</strong> Code quality metrics and technical debt monitoring</li>
+<li><strong>Portability:</strong> Tests deployment across multiple cloud providers</li>
+</ul>
+This comprehensive approach ensures Netflix delivers high-quality streaming experience globally.
+</div>
+
+<h3>2.2.4 Confirmation and Regression Testing</h3>
+
+<div class="important-formula">
+<strong>Two-Phase Change Verification:</strong>
+<ul>
+<li>يؤكد إصلاح العيب الأصلي (Confirms original defect fix)</li>
+<li>يؤكد عدم وجود عواقب سلبية (Confirms no negative consequences)</li>
+</ul>
+</div>
+
+<h4>Confirmation Testing (Re-testing)</h4>
+
+<table>
+<tr>
+<th>Aspect</th>
+<th>Description</th>
+<th>Purpose</th>
+<th>Scope</th>
+</tr>
+<tr>
+<td><strong>Objective</strong></td>
+<td>Verify that original defect has been fixed</td>
+<td>Confirm successful defect resolution</td>
+<td>Specific defect area only</td>
+</tr>
+<tr>
+<td><strong>Test Cases</strong></td>
+<td>Execute same test cases that originally failed</td>
+<td>Prove defect no longer exists</td>
+<td>Exact reproduction steps</td>
+</tr>
+<tr>
+<td><strong>Timing</strong></td>
+<td>Immediately after defect fix</td>
+<td>Quick verification of fix</td>
+<td>Before broader testing</td>
+</tr>
+</table>
+
+<h4>Regression Testing</h4>
+
+<div class="exam-highlight">
+<strong>Impact Analysis Recommendation:</strong> "من المستحسن أولاً إجراء تحليل التأثير لتحسين نطاق اختبار الانحدار. تحليل التأثير يُظهر أي أجزاء من البرنامج يمكن أن تتأثر" (It's advisable to first conduct impact analysis to improve regression test scope. Impact analysis shows which parts of software can be affected)
+</div>
+
+<h4>Impact Analysis Questions</h4>
+
+<table>
+<tr>
+<th>Question</th>
+<th>Arabic Translation</th>
+<th>Analysis Focus</th>
+<th>Decision Impact</th>
+</tr>
+<tr>
+<td><strong>Which parts will be affected?</strong></td>
+<td>أي أجزاء ستتأثر بالتغيير؟</td>
+<td>Change scope analysis</td>
+<td>Test selection</td>
+</tr>
+<tr>
+<td><strong>What is the risk level?</strong></td>
+<td>ما مستوى المخاطر لكل جزء؟</td>
+<td>Risk assessment</td>
+<td>Prioritization</td>
+</tr>
+<tr>
+<td><strong>Which tests should be re-run?</strong></td>
+<td>أي اختبارات يجب إعادة تشغيلها؟</td>
+<td>Test case selection</td>
+<td>Execution planning</td>
+</tr>
+</table>
+
+<h4>Regression Testing Benefits</h4>
+
+<table>
+<tr>
+<th>Benefit</th>
+<th>Description</th>
+<th>Value</th>
+</tr>
+<tr>
+<td><strong>Prioritization</strong></td>
+<td>تشغيل الأهم أولاً وتوفير الوقت</td>
+<td>Run most important first, save time</td>
+</tr>
+<tr>
+<td><strong>Speed</strong></td>
+<td>تشغيل مئات الاختبارات في دقائق بدلاً من أيام</td>
+<td>Run hundreds of tests in minutes instead of days</td>
+</tr>
+<tr>
+<td><strong>Accuracy</strong></td>
+<td>تجنب الأخطاء البشرية في الاختبارات المتكررة</td>
+<td>Avoid human errors in repetitive tests</td>
+</tr>
+<tr>
+<td><strong>Frequency</strong></td>
+<td>إمكانية التشغيل المستمر مع كل build جديد</td>
+<td>Continuous execution with every new build</td>
+</tr>
+<tr>
+<td><strong>Coverage</strong></td>
+<td>إمكانية اختبار سيناريوهات أكثر وأعمق</td>
+<td>Test more and deeper scenarios</td>
+</tr>
+</table>
+
+<div class="exam-highlight">
+<strong>CI/CD Integration:</strong> "عند استخدام CI (كما في DevOps)، من الممارسات الجيدة تضمين automated regression tests. حسب الحالة، قد يشمل هذا regression tests في مستويات مختلفة" (When using CI (as in DevOps), it's good practice to include automated regression tests. Depending on case, this may include regression tests at different levels)
+</div>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> Google's Regression Testing Strategy<br>
+Google maintains one of the largest automated regression test suites in the industry:
+<ul>
+<li><strong>Scale:</strong> Over 100 million test cases executed daily</li>
+<li><strong>Speed:</strong> Results available within 10 minutes of code commit</li>
+<li><strong>Intelligence:</strong> Machine learning selects most relevant tests based on code changes</li>
+<li><strong>Coverage:</strong> Tests run at component, integration, and system levels</li>
+<li><strong>Impact Analysis:</strong> Automated analysis determines which tests to run for each change</li>
+</ul>
+This approach allows Google to maintain quality while deploying thousands of changes daily.
+</div>
+
+<div class="section-header">
+<h2>2.3 Maintenance Testing</h2>
+</div>
+
+<div class="exam-highlight">
+<strong>Learning Objectives:</strong><br>
+• FL-2.3.1 (K2) Summarize triggers for maintenance testing<br>
+• FL-2.3.2 (K2) Describe the role of impact analysis in maintenance testing
+</div>
+
+<h3>2.3.1 Maintenance Testing Context</h3>
+
+<div class="maintenance-box">
+<h4>Maintenance Testing Lifecycle Position</h4>
+</div>
+
+<div class="critical-point">
+<strong>Key Timing:</strong> Maintenance Testing يحدث في مرحلة Production وما بعدها، عندما يكون النظام حي ويعمل مع المستخدمين الحقيقيين (Maintenance Testing occurs in Production phase and beyond, when system is live and working with real users)
+</div>
+
+<h4>Three Types of Maintenance (ISO 14764)</h4>
+
+<table>
+<tr>
+<th>Maintenance Type</th>
+<th>Arabic Description</th>
+<th>Purpose</th>
+<th>Examples</th>
+<th>Frequency</th>
+</tr>
+<tr>
+<td><strong>Corrective</strong></td>
+<td>إصلاح العيوب الموجودة</td>
+<td>Fix existing defects</td>
+<td>Bug fixes, security patches</td>
+<td>As needed when defects found</td>
+</tr>
+<tr>
+<td><strong>Adaptive</strong></td>
+<td>تكيف مع البيئة الجديدة</td>
+<td>Adapt to new environment</td>
+<td>OS upgrades, new browsers</td>
+<td>Periodic with environment changes</td>
+</tr>
+<tr>
+<td><strong>Perfective</strong></td>
+<td>تحسين الأداء والوظائف</td>
+<td>Improve performance and functions</td>
+<td>Performance optimization, new features</td>
+<td>Continuous throughout system life</td>
+</tr>
+</table>
+
+<h4>Maintenance Testing Triggers</h4>
+
+<table>
+<tr>
+<th>Trigger Category</th>
+<th>Description</th>
+<th>Examples</th>
+<th>Testing Approach</th>
+</tr>
+<tr>
+<td><strong>Modifications</strong></td>
+<td>تعديلات وتحسينات النظام</td>
+<td>• New features<br>• Bug fixes<br>• Performance improvements</td>
+<td>Focused testing + selective regression</td>
+</tr>
+<tr>
+<td><strong>Upgrades</strong></td>
+<td>ترقية البيئة التشغيلية</td>
+<td>• Operating system updates<br>• Database upgrades<br>• Framework migrations</td>
+<td>Compatibility testing + full regression</td>
+</tr>
+<tr>
+<td><strong>Retirement</strong></td>
+<td>نهاية دورة حياة النظام</td>
+<td>• Data migration<br>• System decommissioning<br>• Archive processes</td>
+<td>Data integrity + migration testing</td>
+</tr>
+</table>
+
+<h3>2.3.2 Risk Assessment for Maintenance</h3>
+
+<div class="important-formula">
+<strong>Three Key Risk Factors:</strong>
+<ul>
+<li>درجة خطر التغيير (Risk level of change)</li>
+<li>حجم النظام الموجود (Size of existing system)</li>
+<li>حجم التغيير (Size of change)</li>
+</ul>
+</div>
+
+<table class="risk-matrix">
+<tr>
+<th>Risk Level</th>
+<th>System Size</th>
+<th>Change Size</th>
+<th>Testing Scope</th>
+<th>Example Scenario</th>
+</tr>
+<tr>
+<td class="high-risk"><strong>High</strong></td>
+<td>Large</td>
+<td>Major</td>
+<td>Extensive + Full Regression</td>
+<td>Core banking system architecture change</td>
+</tr>
+<tr>
+<td class="medium-risk"><strong>Medium</strong></td>
+<td>Medium</td>
+<td>Minor</td>
+<td>Focused + Selective Regression</td>
+<td>E-commerce checkout process update</td>
+</tr>
+<tr>
+<td class="low-risk"><strong>Low</strong></td>
+<td>Small</td>
+<td>Patch</td>
+<td>Minimal + Smoke Testing</td>
+<td>Small business website bug fix</td>
+</tr>
+</table>
+
+<h3>2.3.3 Impact Analysis in Maintenance Testing</h3>
+
+<div class="important-formula">
+<strong>Six Key Impact Analysis Questions:</strong>
+</div>
+
+<table>
+<tr>
+<th>Question</th>
+<th>Arabic Translation</th>
+<th>Analysis Purpose</th>
+<th>Decision Support</th>
+</tr>
+<tr>
+<td><strong>What parts will be affected?</strong></td>
+<td>ما هي الأجزاء التي ستتأثر بالتغيير المقترح؟</td>
+<td>Identify scope of change impact</td>
+<td>Test planning and resource allocation</td>
+</tr>
+<tr>
+<td><strong>Which components are connected?</strong></td>
+<td>أي مكونات أخرى ترتبط بالجزء المتغير؟</td>
+<td>Map dependencies and relationships</td>
+<td>Integration testing requirements</td>
+</tr>
+<tr>
+<td><strong>What is the risk level?</strong></td>
+<td>ما مستوى المخاطر والعواقب المحتملة؟</td>
+<td>Assess potential consequences</td>
+<td>Risk mitigation strategies</td>
+</tr>
+<tr>
+<td><strong>What is the cost-benefit?</strong></td>
+<td>ما تكلفة التغيير مقابل الفائدة المتوقعة؟</td>
+<td>Economic impact evaluation</td>
+<td>Go/no-go decision making</td>
+</tr>
+<tr>
+<td><strong>What tests are required?</strong></td>
+<td>أي اختبارات مطلوبة للتحقق من سلامة التغيير؟</td>
+<td>Define testing requirements</td>
+<td>Test strategy and execution planning</td>
+</tr>
+<tr>
+<td><strong>Should we proceed?</strong></td>
+<td>هل يجب المضي قدماً بالتغيير أم لا؟</td>
+<td>Final decision recommendation</td>
+<td>Change approval process</td>
+</tr>
+</table>
+
+<h4>Impact Analysis Benefits</h4>
+
+<table>
+<tr>
+<th>Benefit</th>
+<th>Description</th>
+<th>Business Value</th>
+<th>Risk Reduction</th>
+</tr>
+<tr>
+<td><strong>Informed Decisions</strong></td>
+<td>قرارات مدروسة بناءً على تحليل شامل</td>
+<td>Better change management</td>
+<td>Reduced surprise issues</td>
+</tr>
+<tr>
+<td><strong>Cost Avoidance</strong></td>
+<td>تجنب تكاليف إصلاح المشاكل المستقبلية</td>
+<td>Proactive problem prevention</td>
+<td>Lower maintenance costs</td>
+</tr>
+<tr>
+<td><strong>Precise Planning</strong></td>
+<td>خطط اختبار أكثر دقة وفعالية</td>
+<td>Optimized resource utilization</td>
+<td>Focused testing efforts</td>
+</tr>
+<tr>
+<td><strong>Faster Execution</strong></td>
+<td>تنفيذ أسرع بأقل مفاجآت</td>
+<td>Shorter delivery cycles</td>
+<td>Predictable outcomes</td>
+</tr>
+</table>
+
+<div class="real-example">
+<strong>Real-Life Example:</strong> Banking System Maintenance - Priority Matrix<br>
+<table class="risk-matrix">
+<tr>
+<th>Issue Type</th>
+<th>Response Time</th>
+<th>Impact Analysis</th>
+<th>Testing Approach</th>
+</tr>
+<tr>
+<td class="high-risk"><strong>System Down</strong></td>
+<td>&lt; 1 Hour</td>
+<td>Critical business impact, all services affected</td>
+<td>Emergency fix + immediate smoke testing</td>
+</tr>
+<tr>
+<td class="high-risk"><strong>Security Issue</strong></td>
+<td>&lt; 4 Hours</td>
+<td>Data breach risk, regulatory compliance</td>
+<td>Security patch + comprehensive security testing</td>
+</tr>
+<tr>
+<td class="medium-risk"><strong>Major Feature</strong></td>
+<td>&lt; 24 Hours</td>
+<td>User experience impact, competitive pressure</td>
+<td>Feature testing + selective regression</td>
+</tr>
+<tr>
+<td class="low-risk"><strong>Minor Issue</strong></td>
+<td>&lt; 1 Week</td>
+<td>Limited user impact, enhancement opportunity</td>
+<td>Standard testing + focused regression</td>
+</tr>
+</table>
+</div>
+
+<div class="section-header">
+<h2>Chapter 2 Complete Summary</h2>
+</div>
+
+<table>
+<tr>
+<th>Section</th>
+<th>Key Concepts</th>
+<th>Main Principles</th>
+<th>Exam Importance</th>
+</tr>
+<tr>
+<td><strong>2.1 SDLC and Testing</strong></td>
+<td>• 5 factors affected by SDLC<br>• 4 good testing practices<br>• TDD, ATDD, BDD approaches<br>• DevOps integration<br>• Shift-left benefits<br>• Process improvement</td>
+<td>Testing adapts to development lifecycle</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>2.2 Test Levels & Types</strong></td>
+<td>• 5 test levels hierarchy<br>• 4 test types classification<br>• ISO/IEC 25010 quality model<br>• Confirmation vs regression<br>• Impact analysis importance</td>
+<td>Structured testing approach across levels</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>2.3 Maintenance Testing</strong></td>
+<td>• 3 maintenance types (ISO 14764)<br>• Risk assessment factors<br>• Impact analysis questions<br>• Trigger categories<br>• Production context</td>
+<td>Testing continues in production</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+</table>
+
+<div class="exam-highlight">
+<strong>Final Exam Key Points for Chapter 2:</strong><br>
+• SDLC affects 5 key testing factors: scope, timing, documentation, techniques, automation, roles<br>
+• Good testing practices: corresponding activities, distinct levels, early start, review participation<br>
+• TDD (developers), ATDD (BA+testers), BDD (all stakeholders) - know the differences<br>
+• Test levels: Component → Integration → System → System Integration → Acceptance<br>
+• Test types: Functional, Non-functional, White-box, Change-related - applicable at all levels<br>
+• ISO/IEC 25010: 7 quality characteristics for non-functional testing<br>
+• Confirmation testing verifies fix; Regression testing checks no side effects<br>
+• Impact analysis essential before regression testing and maintenance changes<br>
+• Maintenance testing: Corrective, Adaptive, Perfective - happens in production<br>
+• Shift-left moves testing earlier to reduce costs and improve quality
+</div>
+
+</body>
+</html>
